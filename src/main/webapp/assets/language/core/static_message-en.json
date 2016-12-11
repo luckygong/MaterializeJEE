@@ -1,0 +1,17 @@
+{
+	"sys":{
+		"confirm":"confirm",
+		"sure?":"Are you sure?",
+		"cancel":"cancel",
+		"close":"close",
+		"notifications":"NOTIFICATIONS",
+		"receiveNotification":"You have receive a new notification",
+		"profile":"profile",
+		"settings":"Settings",
+		"logout":"Logout",
+		"greetings":"Welcome back",
+		"menu":{
+			"home":"home"
+		}
+	}
+}

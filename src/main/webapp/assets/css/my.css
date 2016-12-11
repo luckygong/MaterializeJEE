@@ -1,0 +1,152 @@
+#content{
+	min-height:500px;
+}
+
+.collapsible .collapsible-body .card-panel{
+	margin-bottom:1px;
+	margin-top:1px;
+}
+
+.btn-suit{
+	padding-right: 1rem;
+  	padding-left: 1rem;
+}
+
+table tr td .card .card-content{
+	padding-top: 10px;
+	padding-buttom: 10px;
+}
+
+table tr td .card .card-content input[type=checkbox]{
+	margin-left: 5px;
+}
+
+table tr td .card .card-content .row span{
+	font-size: 16px;
+	line-height: 30px;
+}
+
+table tr td .card .card-action{
+	height: 18px;
+	margin-buttom:1px;
+}
+
+.input-field div.error{
+    position: relative;
+    top: -1rem;
+    left: 0rem;
+    font-size: 0.8rem;
+    color:#FF4081;
+    -webkit-transform: translateY(0%);
+    -ms-transform: translateY(0%);
+    -o-transform: translateY(0%);
+    transform: translateY(0%);
+  }
+  .input-field label.active{
+      width:100%;
+  }
+  .right-alert input[type=text] + label:after, 
+  .right-alert input[type=password] + label:after, 
+  .right-alert input[type=email] + label:after, 
+  .right-alert input[type=url] + label:after, 
+  .right-alert input[type=time] + label:after,
+  .right-alert input[type=date] + label:after, 
+  .right-alert input[type=datetime-local] + label:after, 
+  .right-alert input[type=tel] + label:after, 
+  .right-alert input[type=number] + label:after, 
+  .right-alert input[type=search] + label:after, 
+  .right-alert textarea.materialize-textarea + label:after{
+      right:70px;
+  }
+  
+  
+select.error, select:focus.error {
+  border-bottom: 1px solid #FF1744;
+  box-shadow: 0 1px 0 0 #FF1744;
+}
+select.valid, select:focus.valid {
+  border-bottom: 1px solid #00E676;
+  box-shadow: 0 1px 0 0 #00E676;
+}
+
+.input-field {
+  margin-top: 18px;
+}
+
+.input-field label {
+  top: 0.5rem;
+}
+
+.input-field .prefix+select {
+  display: block;
+  line-height: inherit;
+  margin-left: 3rem;
+  width: calc(100% - 3rem);
+}
+
+.input-field .prefix ~ label {
+  width: calc(100% - 3rem);
+}
+
+.input-field .prefix ~ label.active {
+  width: 100%;
+}
+
+table tr td .card .card-content{
+	padding-left: 15px;
+  	padding-right: 15px;
+  	padding-bottom: 10px;
+}
+
+.row input[type=checkbox] ~ label{
+	padding-left: 20px;
+}
+
+.row>.span-group{
+	padding-left: 0px;
+  	padding-right: 0px;
+}
+
+.row>.span-group>span{
+	word-break:break-all;
+	word-wrap:break-word
+}
+
+.btn-card > .card {
+	overflow: visible;
+}
+
+table tr td .card{
+	position: inherit;
+}
+
+.card .card-action img{
+	height:40px;
+	width:40px;
+	margin-right: 20px;
+}
+
+td > img{
+	height:40px;
+	width:40px;
+}
+
+.btn-group button,a{
+	margin-right: 5px;
+}
+
+.dd-item button[data-action=expand],button[data-action=collapse]{
+	font-size: 1.5rem;
+}
+
+.column-nowrap {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.table-fix{
+	table-layout:fixed ; 
+	word-break:break-all;
+	word-wrap:break-word 
+}

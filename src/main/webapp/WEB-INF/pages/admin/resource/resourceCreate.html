@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="msapplication-tap-highlight" content="no">
+<title>新增资源</title>
+
+<script type="text/javascript" src="../../../assets/scripts/path.js"></script>
+<script type="text/javascript" src="../../../assets/scripts/import-files.js"></script>
+
+</head>
+
+<body>
+	<!-- Start Page Loading -->
+	<div id="loader-wrapper">
+		<div id="loader"></div>
+		<div class="loader-section section-left"></div>
+		<div class="loader-section section-right"></div>
+	</div>
+
+	<!-- START HEADER -->
+	<header id="header" class="page-topbar"></header>
+
+	<!-- START MAIN -->
+	<div id="main">
+		<!-- START WRAPPER -->
+		<div class="wrapper">
+
+			<!-- START LEFT SIDEBAR NAV-->
+			<aside id="left-sidebar-nav"></aside>
+
+			<!-- START CONTENT -->
+			<section id="content">
+
+				<!--breadcrumbs start-->
+				<div id="breadcrumbs-wrapper">
+					<div class="container">
+						<div class="row">
+							<div class="col s12 m12 l12">
+								<h5 class="breadcrumbs-title">资源管理</h5>
+								<ol class="breadcrumbs">
+									<li><a
+										href="javascript:window.location.href=getRootPath()+'/pages/home.html';">首页</a></li>
+									<li class="active">系统管理</li>
+									<li class="active">资源管理</li>
+									<li class="active">新增资源</li>
+								</ol>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!--start container-->
+				<div class="container">
+					<div class="row">
+			        	<div class="col s12 m12 l12">
+			          		<div class="card-panel">
+			                	<h5 class="breadcrumbs-title">新增资源</h5>
+			                	<div class="row">
+			                  		<form id="form" class="col s12" method="post">
+			                    		<div class="row">
+			                      			<div class="input-field col s12 m6 s6">
+			                      				<i class="mdi-action-account-circle prefix"></i>
+			                        			<input id="name" name="name" type="text" class="validate">
+			                        			<label for="name">资源名称</label>
+			                      			</div>
+		                      				<div class="input-field col s8 m4 s4">
+			                      				<i class="mdi-social-share prefix"></i>
+			                        			<input id="parentName" name="parent.name" type="text" disabled>
+			                        			<input id="parentId" name="parent.id" class="hide" type="text" class="validate">
+			                        			<label for="refId">父资源</label>
+			                      			</div>
+											<div class="input-field col s4 m2 s2">
+			                        			<div id="resourceSelect" class="btn btn-suit modal-trigger" href="#modalResourceSelect"><span>选择</span></div>
+				                    		</div>
+			                    		</div>
+			                    		<div class="row">
+			                      			<div class="input-field col s12 m6 s6">
+			                      				<i class="mdi-hardware-keyboard prefix"></i>
+			                        			<input id="value" name="value" type="text" class="validate">
+			                        			<label for="value">资源值</label>
+			                      			</div>
+			                      			<div class="input-field col s12 m6 s6">
+			                      				<i class="mdi-image-image prefix"></i>
+			                        			<input id="icon" name="icon" type="text" class="validate">
+			                        			<label for="icon">图标class</label>
+			                      			</div>
+			                    		</div>
+			                    		<div class="row">
+			                      			<div class="input-field col s12 m6 s6">
+			                      				<i class="mdi-action-list prefix"></i>
+			                        			<input id="orders" name="orders" type="text" class="validate">
+			                        			<label for="orders">排序</label>
+			                      			</div>
+			                    		</div>
+			                    		<div class="row">
+			                      			<div class="input-field col s12 m6 l6">
+			                      				<i class="mdi-action-language prefix"></i>
+												<select id="type" name="type" class="browser-default validate"></select>
+												<label for="type"></label>
+											</div>
+											<div id="isDirDiv" class="hide">
+												<div class="input-field col s12 m6 l6">
+													<i class="mdi-editor-insert-drive-file prefix"></i>
+													<select id="isDirectory" name="isDirectory" class="browser-default validate"></select>
+													<label for="isDirectory"></label>
+												</div>
+											</div>
+			                    		</div>
+			                    		<div class="row">
+			                      			<div class="input-field col s12">
+			                      				<i class="mdi-action-subject prefix"></i>
+					                        	<textarea id="descn" name="descn" class="materialize-textarea" length="120"></textarea>
+					                          	<label for="descn">描述</label>
+					                        </div>
+			                    		</div>
+			                    		<div class="row">
+				                          	<div class="input-field col s12">
+				                            	<button id="submitButton" class="btn waves-effect waves-light" type="submit">保存
+				                              		<i class="mdi-content-send right"></i>
+				                            	</button>
+				                            	<button class="btn waves-effect waves-light grey" type="button" onclick="window.history.back()">返回
+				                              		<i class="mdi-action-history right"></i>
+				                            	</button>
+				                          	</div>
+				                        </div>
+			                  		</form>
+			                	</div>
+			              	</div>
+			            </div>
+			     	</div>
+			     	
+			     	<div id="modal-bottom-sheet">
+	                	<div id="modalResourceSelect" class="modal bottom-sheet">
+	                  		<div class="modal-content">
+	                    		<h4>选择父资源 <i class="mdi-navigation-close modal-close right"></i></h4>
+	                    		<ul class="collapsible collapsible-accordion" data-collapsible="accordion">
+				                  <li>
+				                    <div class="collapsible-header active cyan white-text">
+				                    	<i class="mdi-action-list"></i>查询条件
+				                    </div>
+				                    <div class="collapsible-body light-blue lighten-5">
+				                    	<div class="card-panel">
+											<div class="row">
+												<form id="userPageQueryForm" class="col s12">
+													<div class="row">
+														<div class="input-field col s12 m5 l5">
+															<label for="searchName">姓名</label>
+															<input id="searchName" name="name" type="text">
+														</div>
+														<div class="input-field col s12 m5 l5">
+															<label for="searchPhone">手机</label>
+															<input id="searchPhone" name="phone" type="text">
+														</div>
+														<div class="input-field col s12 m2 l2">
+															<button id="searchSubmit" class="btn cyan waves-effect waves-light right" type="button">
+																查询 <i class="mdi-content-send right"></i>
+															</button>
+														</div>
+													</div>
+												</form>
+											</div>
+										</div>
+				                    </div>
+				                  </li>
+				            	</ul>
+				            	<div id="page">
+		                    		<div id="list"></div>
+		                    		<div id="pagination"></div>
+	                    		</div>
+	                  		</div>
+	                	</div>
+			      	</div>
+					
+					<!-- Floating Action Button -->
+					<div id="floatButton" class="fixed-action-btn click-to-toggle hide-on-med-and-down" style="bottom: 50px; right: 19px;"></div>
+					<!-- Floating Action Button -->
+				</div>
+				<!--end container-->
+
+			</section>
+			<!-- END CONTENT -->
+		</div>
+		<!-- END WRAPPER -->
+
+	</div>
+	<!-- END MAIN -->
+
+	<!-- //////////////////////////////////////////////////////////////////////////// -->
+
+	<!-- START FOOTER -->
+	<footer id="page-footer" class="page-footer"></footer>
+	<!-- END FOOTER -->
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#type").initSelect({"category":"RESOURCE_TYPE","emptyOptionTxt":"-请选择资源类型-"});
+		$("#isDirectory").initSelect({"category":"RESOURCE_IS_DIR","emptyOptionTxt":"-请选择是否是目录-"});
+		
+		$("#type").change(function(){
+			if($(this).val()=="0"){
+				$("#isDirDiv").removeClass("hide");
+			}else{
+				$("#isDirDiv").addClass("hide");
+				$("#isDirectory").val('');
+			}
+		});
+		
+		$("#searchSubmit").click(function(){
+			$(".collapsible-header").click();
+			initPageData('admin/employee/employeeSearch', $("#userPageQueryForm").serialize(), "page", 1, 5);
+		});
+		
+		$("#form").validate({
+			submitHandler:function(form){
+				if($("#userType").val()=="3" && isEmpty($("#refId").val())){
+					Message.warn({"message":"请选择关联员工","time":3});
+					return;
+				}
+				blockUI.block();
+				$("#form").ajaxSubmit({
+					type: "post",
+					url: getProjectPath()+"/admin/user/save",
+					dataType: "json",
+					success: function(data){
+				  		blockUI.unblock();
+						if(data.status==1){
+							Message.info({"message":"保存成功","time":3});
+							$("#submitButton").attr("disabled","disabled")
+						}else{
+							var info = data.info;
+							if(isEmpty(info)){
+								info = "保存失败";
+							}
+							Message.danger({"message":info});
+						} 
+				     }
+				 });
+	        },    
+			onfocusout: function(element) { 
+				$(element).valid(); 
+			}, 
+    		onfocusin: function(element) { 
+    			$(element).valid(); 
+    		},  
+	        rules: {
+	        	username: {
+	                required: true,
+	                remote: {
+                        url: getProjectPath()+"/admin/user/checkOnly",
+                        type: "post",
+                        data: {
+                            fieldName: "username",
+                            fieldValue: function () { return $("#username").val(); }
+                        }
+                    }
+	            },
+	            realName: {
+	                required: true
+	            },
+	            password: {
+					required: true,
+					minlength:6
+				},
+	            phone: {
+					required: true,
+					number:true,
+					maxlength:11,
+					remote: {
+                        url: getProjectPath()+"/admin/user/checkOnly",
+                        type: "post",
+                        data: {
+                            fieldName: "phone",
+                            fieldValue: function () { return $("#phone").val(); }
+                        }
+                    }
+				},
+	            email: {
+	            	email: true
+				},
+				sex: {
+					required: true
+				},
+				userType: {
+					required: true
+				},
+				refId: {
+					required: true
+				}
+	        },
+	        //For custom messages
+	        messages: {
+	            password:{
+	                required: "请输入密码",
+	                minlength: "密码至少6位"
+	            },
+	            phone:{
+					required: "请输入手机号",
+	            	number:"请输入有效手机号",
+					maxlength:"手机号最长11位",
+					remote: "手机号已存在"
+	            },
+	            username : {
+	                required: "请输入用户名",
+	                remote: "用户名已存在"
+	            },
+	            realName : {
+	                required: "请输入真实姓名"
+	            },
+	            email : {
+	            	email: "请输入有效邮箱"
+	            },
+	            sex : {
+	                required: "请输入性别"
+	            },
+	            userType : {
+	                required: "请输入用户类型"
+	            },
+	            refId : {
+	                required: "请选择关联用户"
+	            }
+	        },
+	        errorPlacement: function(error, element) {
+	        	$(element).closest(".input-field").children("label").attr("data-error",error.text());
+            	$(element).closest(".input-field").children("label").addClass("active");
+            	$(element).addClass("invalid");
+	        }
+	     });
+		
+	});
+	
+	function initPageTable(queryResult) {
+		var tbody = $('#'+queryResult.pageContentId).find("#list");
+		var h = '<ul class="collection">';
+		var data = queryResult.data.pageData;
+		for (var i = 0; i < data.length; i++) {
+			var em = data[i];
+			
+			h+='<li class="collection-item avatar">'
+			+'<img src="'+getFtpWebPath()+'/assets/images/avatar.jpg" alt="" class="circle">'
+			+'<span class="title">'+em.name+'</span>'
+			+'<p>'+em.phone
+			+'</p>'
+			+'<input name="selectEm" type="radio" id="'+em.id+'" /><label class="secondary-content" for="'+em.id+'"></label>'
+			+'</li>';
+		}
+		h+='</ul>'
+		+'<button id="chooseEm" class="btn cyan waves-effect waves-light right" type="button">选择 <i class="mdi-content-send right"></i></button>';
+		tbody.html(h);
+		var pagination = queryResult.pagination;
+		$('#'+queryResult.pageContentId).find("#pagination").html(pagination);
+		
+		$("#chooseEm").on('click',function(){
+			var select = $("input[name=selectEm]:checked");
+			if(select.length>0){
+				var id = $(select).attr("id");
+				var name = $(select).closest("li").children("span").text();
+				$("#refId").val(id);
+				$("#refName").val(name);
+				$("#refName").closest(".input-field").children("label").addClass("active");
+			}
+			$(".modal-close").click();
+		});
+	}
+</script>
+</body>
+</html>

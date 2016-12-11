@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.materialize.jee.platform.batch.mapper.MapreduceBatchJobInstanceMapper" >
+  <resultMap id="BaseResultMap" type="com.materialize.jee.platform.batch.domain.MapreduceBatchJobInstance" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="JOB_ID" property="jobId" jdbcType="BIGINT" />
+    <result column="JOB_PARAMS" property="jobParams" jdbcType="VARCHAR" />
+    <result column="START_TIME" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="END_TIME" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="JOB_STATE" property="jobState" jdbcType="INTEGER" />
+    <result column="RESULT_CODE" property="resultCode" jdbcType="VARCHAR" />
+    <result column="RESULT_DESC" property="resultDesc" jdbcType="VARCHAR" />
+    <result column="CREATE_ID" property="createId" jdbcType="BIGINT" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    ID, JOB_ID, JOB_PARAMS, START_TIME, END_TIME, JOB_STATE, RESULT_CODE, RESULT_DESC, CREATE_ID
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select 
+	<include refid="Base_Column_List" />
+    from SYS_MAPREDUCE_BATCH_JOB_INSTANCE
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_MAPREDUCE_BATCH_JOB_INSTANCE
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <insert id="insert" parameterType="com.materialize.jee.platform.batch.domain.MapreduceBatchJobInstance" 
+  	useGeneratedKeys="true" keyProperty="id">
+    insert into SYS_MAPREDUCE_BATCH_JOB_INSTANCE (ID, JOB_ID, JOB_PARAMS, 
+      START_TIME, END_TIME, JOB_STATE, 
+      RESULT_CODE, RESULT_DESC, CREATE_ID
+      )
+    values (#{id,jdbcType=BIGINT}, #{jobId,jdbcType=BIGINT}, #{jobParams,jdbcType=VARCHAR}, 
+      #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{jobState,jdbcType=INTEGER}, 
+      #{resultCode,jdbcType=VARCHAR}, #{resultDesc,jdbcType=VARCHAR}, #{createId,jdbcType=BIGINT}
+      )
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.materialize.jee.platform.batch.domain.MapreduceBatchJobInstance" >
+    update SYS_MAPREDUCE_BATCH_JOB_INSTANCE
+    set JOB_ID = #{jobId,jdbcType=BIGINT},
+      JOB_PARAMS = #{jobParams,jdbcType=VARCHAR},
+      START_TIME = #{startTime,jdbcType=TIMESTAMP},
+      END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      JOB_STATE = #{jobState,jdbcType=INTEGER},
+      RESULT_CODE = #{resultCode,jdbcType=VARCHAR},
+      RESULT_DESC = #{resultDesc,jdbcType=VARCHAR},
+      CREATE_ID = #{createId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateSelectiveByPrimaryKey" parameterType="com.materialize.jee.platform.batch.domain.MapreduceBatchJobInstance" >
+    update SYS_MAPREDUCE_BATCH_JOB_INSTANCE
+    <set >
+      <if test="jobId != null" >
+        JOB_ID = #{jobId,jdbcType=BIGINT},
+      </if>
+      <if test="jobParams != null" >
+        JOB_PARAMS = #{jobParams,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        START_TIME = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jobState != null" >
+        JOB_STATE = #{jobState,jdbcType=INTEGER},
+      </if>
+      <if test="resultCode != null" >
+        RESULT_CODE = #{resultCode,jdbcType=VARCHAR},
+      </if>
+      <if test="resultDesc != null" >
+        RESULT_DESC = #{resultDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="findBy" resultMap="BaseResultMap" parameterType="java.util.Map">
+	select
+	<include refid="Base_Column_List" />
+	from SYS_MAPREDUCE_BATCH_JOB_INSTANCE
+	<where>
+		<include refid="where_map" />
+	</where>
+  </select>
+  
+  <select id="findCountBy" parameterType="java.util.Map">
+	select IFNULL(COUNT(1),0)
+	from SYS_MAPREDUCE_BATCH_JOB_INSTANCE
+	<where>
+		<include refid="where_map" />
+	</where>
+  </select>
+  
+  <sql id="where_map">
+      <if test="jobId != null" >
+        and JOB_ID = #{jobId,jdbcType=BIGINT}
+      </if>
+      <if test="jobParams != null" >
+        and JOB_PARAMS = #{jobParams,jdbcType=VARCHAR}
+      </if>
+      <if test="startTime != null" >
+        and START_TIME = #{startTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="endTime != null" >
+        and END_TIME = #{endTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="jobState != null" >
+        and JOB_STATE = #{jobState,jdbcType=INTEGER}
+      </if>
+      <if test="resultCode != null" >
+        and RESULT_CODE = #{resultCode,jdbcType=VARCHAR}
+      </if>
+      <if test="resultDesc != null" >
+        and RESULT_DESC = #{resultDesc,jdbcType=VARCHAR}
+      </if>
+      <if test="createId != null" >
+        and CREATE_ID = #{createId,jdbcType=BIGINT}
+      </if>
+      <if test="id != null" >
+        and ID = #{id,jdbcType=BIGINT}
+      </if>
+  </sql>
+</mapper>

@@ -1,0 +1,535 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.materialize.jee</groupId>
+  <artifactId>MaterializeJEE</artifactId>
+  <packaging>war</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>MaterializeJEE Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  
+  <properties>
+		<jdk.version>1.7</jdk.version>
+		<spring.framework.version>4.2.5.RELEASE</spring.framework.version>
+		<spring.security.version>4.1.3.RELEASE</spring.security.version>
+		<spring.batch.version>3.0.7.RELEASE</spring.batch.version>
+		<spring.hadoop.version>2.1.2.RELEASE-hadoop25</spring.hadoop.version>
+		<hbase.version>1.0.1</hbase.version>
+		<apache-phoenix-version>4.6.0-HBase-1.0</apache-phoenix-version>
+		<mybatis.version>3.4.0</mybatis.version>
+		<mybatis.spring.version>1.3.0</mybatis.spring.version>
+		<aspectj.version>1.8.5</aspectj.version>
+		<druid.version>1.0.18</druid.version>
+		<ehcache.core.version>2.6.11</ehcache.core.version>
+		<mysql.connector.version>5.1.38</mysql.connector.version>
+		<mybatis.generator.version>1.3.2</mybatis.generator.version>
+		<log4j.version>1.2.17</log4j.version>
+		<slf4j.version>1.7.21</slf4j.version>
+		<jackson.version>2.7.4</jackson.version>
+		<fastjson.version>1.2.11</fastjson.version>
+		<castor.version>1.3.3</castor.version>
+		<commons.lang3.version>3.4</commons.lang3.version>
+		<commons.io.version>2.5</commons.io.version>
+		<commons.fileupload.version>1.3.1</commons.fileupload.version>
+		<commons.codec.version>1.10</commons.codec.version>
+		<quartz.version>2.2.3</quartz.version>
+		<junit.version>4.12</junit.version>
+		<javax.servlet.version>3.1.0</javax.servlet.version>
+		<rs.api.version>2.0.1</rs.api.version>
+		<cxf.version>3.1.6</cxf.version>
+		<activiti.version>5.21.0</activiti.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
+  
+  <dependencies>
+    	<!-- spring、spring MVC start -->
+    	<dependency>  
+      		<groupId>org.springframework</groupId>  
+      		<artifactId>spring-context</artifactId>  
+      		<version>${spring.framework.version}</version>  
+    	</dependency>
+   	 	<dependency>
+	  		<groupId>org.springframework</groupId>
+	  		<artifactId>spring-context-support</artifactId>
+	  		<version>${spring.framework.version}</version>
+		</dependency>
+    	<dependency>
+      		<groupId>org.springframework</groupId>
+      		<artifactId>spring-core</artifactId>
+      		<version>${spring.framework.version}</version>
+    	</dependency>
+    	<dependency>
+	  		<groupId>org.springframework</groupId>
+	 		<artifactId>spring-beans</artifactId>
+	  		<version>${spring.framework.version}</version>
+		</dependency>
+		<dependency>
+      		<groupId>org.springframework</groupId>
+      		<artifactId>spring-aop</artifactId>
+      		<version>${spring.framework.version}</version>
+    	</dependency>
+    	<dependency>
+	  		<groupId>org.springframework</groupId>
+	  		<artifactId>spring-tx</artifactId>
+	  		<version>${spring.framework.version}</version>
+		</dependency>
+		<dependency>
+	  		<groupId>org.springframework</groupId>
+	  		<artifactId>spring-orm</artifactId>
+	  		<version>${spring.framework.version}</version>
+		</dependency>
+		<dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-oxm</artifactId>
+            <version>${spring.framework.version}</version>
+        </dependency>
+		<dependency>
+	  		<groupId>org.springframework</groupId>
+	  		<artifactId>spring-jdbc</artifactId>
+	  		<version>${spring.framework.version}</version>
+		</dependency>
+		<dependency>
+	  		<groupId>org.springframework</groupId>
+	  		<artifactId>spring-web</artifactId>
+	  		<version>${spring.framework.version}</version>
+		</dependency>
+		<dependency>
+	  		<groupId>org.springframework</groupId>
+	  		<artifactId>spring-webmvc</artifactId>
+	  		<version>${spring.framework.version}</version>
+		</dependency>
+		<dependency>
+	  		<groupId>org.springframework</groupId>
+	  		<artifactId>spring-test</artifactId>
+	  		<version>${spring.framework.version}</version>
+		</dependency>
+		<!-- spring、spring MVC end -->
+	
+		<!-- spring batch start -->
+		<dependency>
+      		<groupId>org.springframework.batch</groupId>
+      		<artifactId>spring-batch-core</artifactId>
+      		<version>${spring.batch.version}</version>
+    	</dependency>
+    	<dependency>
+      		<groupId>org.springframework.batch</groupId>
+      		<artifactId>spring-batch-infrastructure</artifactId>
+      		<version>${spring.batch.version}</version>
+    	</dependency>
+    	<!-- spring batch end -->
+	
+		<!--spring AOP依赖  start-->
+		<dependency>
+	  		<groupId>org.aspectj</groupId>
+	  		<artifactId>aspectjweaver</artifactId>
+	  		<version>${aspectj.version}</version>
+		</dependency>
+		<!--spring AOP依赖  end-->
+		
+		<!--spring-oxm依赖    BEGIN -->
+        <dependency>
+            <groupId>org.codehaus.castor</groupId>
+            <artifactId>castor-xml</artifactId>
+            <version>${castor.version}</version>
+            <exclusions>
+            	<exclusion>
+            		<artifactId>stax-api</artifactId>
+            		<groupId>stax</groupId>
+            	</exclusion>
+            	<exclusion>
+            		<artifactId>stax-api</artifactId>
+            		<groupId>javax.xml.stream</groupId>
+            	</exclusion>
+            </exclusions>
+        </dependency>
+        <!--spring-oxm依赖    END -->
+        
+        <!-- Spring Security start-->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		<!-- Spring Security end-->
+  	
+  		<!-- mybaits start-->
+		<dependency>
+	  		<groupId>org.mybatis</groupId>
+	  		<artifactId>mybatis</artifactId>
+	  		<version>${mybatis.version}</version>
+		</dependency>
+		<dependency>
+	  		<groupId>org.mybatis</groupId>
+	  		<artifactId>mybatis-spring</artifactId>
+	  		<version>${mybatis.spring.version}</version>
+		</dependency>
+		<!-- mybaits end-->
+	
+		<!-- 阿里巴巴数据源管理 start-->
+		<dependency>
+	  		<groupId>com.alibaba</groupId>
+	  		<artifactId>druid</artifactId>
+	  		<version>${druid.version}</version>
+		</dependency>
+		<!-- 阿里巴巴数据源管理 end-->
+	
+		<!-- mysql start -->
+		<dependency>
+	  		<groupId>mysql</groupId>
+	  		<artifactId>mysql-connector-java</artifactId>
+	  		<version>${mysql.connector.version}</version>
+		</dependency>
+		<!-- mysql end -->
+		
+		<!-- Ehcache缓存  BEGIN -->
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache-core</artifactId>
+			<version>${ehcache.core.version}</version>
+		</dependency>
+		<!-- Ehcache缓存  END -->
+  	
+  		<!-- json start -->
+  		<dependency>
+	  		<groupId>com.alibaba</groupId>
+	  		<artifactId>fastjson</artifactId>
+	  		<version>${fastjson.version}</version>
+		</dependency>
+  		<dependency>
+      		<groupId>com.fasterxml.jackson.core</groupId>
+      		<artifactId>jackson-core</artifactId>
+      		<version>${jackson.version}</version>
+    	</dependency>
+    	<dependency>
+      		<groupId>com.fasterxml.jackson.core</groupId>
+      		<artifactId>jackson-annotations</artifactId>
+      		<version>${jackson.version}</version>
+    	</dependency>
+    	<dependency>
+      		<groupId>com.fasterxml.jackson.core</groupId>
+      		<artifactId>jackson-databind</artifactId>
+      		<version>${jackson.version}</version>
+    	</dependency>
+    	<dependency>
+			<groupId>com.fasterxml.jackson.jaxrs</groupId>
+			<artifactId>jackson-jaxrs-json-provider</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+    	<!-- json end -->
+  	
+  		<!-- quartz start -->
+  		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>${quartz.version}</version>
+		</dependency>
+		<!-- quartz end -->
+  	
+  		<!-- cxf start -->
+  		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+			<version>${rs.api.version}</version>
+		</dependency>
+		<dependency>  
+    		<groupId>org.apache.cxf</groupId>  
+    		<artifactId>cxf-rt-frontend-jaxrs</artifactId>  
+    		<version>${cxf.version}</version>                  
+		</dependency>  
+		<dependency>  
+    		<groupId>org.apache.cxf</groupId>  
+    		<artifactId>cxf-rt-frontend-jaxws</artifactId>  
+    		<version>${cxf.version}</version>                  
+		</dependency>  
+		<dependency>  
+    		<groupId>org.apache.cxf</groupId>  
+    		<artifactId>cxf-rt-transports-http</artifactId>  
+    		<version>${cxf.version}</version>  
+		</dependency>
+		<!-- cxf end -->
+		
+		<!-- Activiti -->
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-engine</artifactId>
+			<version>${activiti.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-spring</artifactId>
+			<version>${activiti.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-modeler</artifactId>
+            <version>${activiti.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-diagram-rest</artifactId>
+			<version>${activiti.version}</version>
+		</dependency>
+	  	<dependency>
+		    <groupId>org.activiti</groupId>
+		    <artifactId>activiti-bpmn-layout</artifactId>
+		    <version>${activiti.version}</version>
+		</dependency>
+  		<!-- log start -->
+		<dependency>
+	  		<groupId>log4j</groupId>
+	  		<artifactId>log4j</artifactId>
+	  		<version>${log4j.version}</version>
+		</dependency>
+		<dependency>
+	  		<groupId>org.slf4j</groupId>
+	  		<artifactId>slf4j-api</artifactId>
+	  		<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+	  		<groupId>org.slf4j</groupId>
+	  		<artifactId>slf4j-log4j12</artifactId>
+	  		<version>${slf4j.version}</version>
+		</dependency>
+		<!-- log end -->
+	
+		<!-- commons start -->
+		<dependency>
+	  		<groupId>org.apache.commons</groupId>
+	  		<artifactId>commons-lang3</artifactId>
+	  		<version>${commons.lang3.version}</version>
+		</dependency>
+		<dependency>
+	 	 	<groupId>commons-io</groupId>
+	  		<artifactId>commons-io</artifactId>
+	  		<version>${commons.io.version}</version>
+		</dependency>
+		<dependency>
+      		<groupId>commons-fileupload</groupId>
+	  		<artifactId>commons-fileupload</artifactId>
+	  		<version>${commons.fileupload.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>${commons.codec.version}</version>
+		</dependency>
+		<!-- commons end -->
+		
+		<!-- spring hadoop start -->
+		<dependency>
+        	<groupId>org.springframework.data</groupId>
+    		<artifactId>spring-data-Hadoop</artifactId>
+         	<version>${spring.hadoop.version}</version>
+         	<exclusions>  
+         		<exclusion>  
+              		<groupId>jdk.tools</groupId>  
+              		<artifactId>jdk.tools</artifactId>  
+          		</exclusion>
+         		<exclusion>
+         			<artifactId>stax-api</artifactId>
+         			<groupId>javax.xml.stream</groupId>
+         		</exclusion>
+         	</exclusions>
+		</dependency>
+		<!-- spring hadoop end -->
+		
+		<!-- hbase start -->
+		<dependency>
+         	<groupId>org.apache.hbase</groupId>
+			<artifactId>hbase</artifactId>
+         	<version>${hbase.version}</version>
+         	<type>pom</type>
+		</dependency>
+		<dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-client</artifactId>
+            <version>${hbase.version}</version>
+            <exclusions>
+            	<exclusion>
+            		<artifactId>jdk.tools</artifactId>
+            		<groupId>jdk.tools</groupId>
+            	</exclusion>
+            </exclusions>
+		</dependency>
+		<!-- hbase end -->
+		
+		<dependency>
+			<groupId>org.apache.phoenix</groupId>
+			<artifactId>phoenix-core</artifactId>
+			<version>${apache-phoenix-version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>antlr</artifactId>
+					<groupId>antlr</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>asm</artifactId>
+					<groupId>asm</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jdk.tools</artifactId>
+					<groupId>jdk.tools</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${javax.servlet.version}</version>
+			<scope>test</scope>
+		</dependency>
+		
+    	<dependency>
+      		<groupId>junit</groupId>
+      		<artifactId>junit</artifactId>
+      		<version>${junit.version}</version>
+      		<scope>test</scope>
+    	</dependency>
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-exec</artifactId>
+		    <version>1.3</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.freemarker</groupId>
+		    <artifactId>freemarker</artifactId>
+		    <version>2.3.23</version>
+		</dependency>
+		<!-- 二维码  -->
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>core</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+		<dependency>  
+            <groupId>com.google.zxing</groupId>  
+            <artifactId>javase</artifactId>  
+            <version>3.2.1</version>  
+        </dependency>
+		<!-- 拼音工具  -->
+		<dependency>
+			<groupId>com.belerweb</groupId>
+			<artifactId>pinyin4j</artifactId>
+			<version>2.5.0</version>
+		</dependency>
+		<!--dom4j BEGIN -->
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>xml-apis</groupId>
+					<artifactId>xml-apis</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!--zip4j BEGIN -->
+		<dependency>
+        	<groupId>net.lingala.zip4j</groupId>
+	        <artifactId>zip4j</artifactId>
+	        <version>1.3.2</version>
+	    </dependency>
+	    <dependency>
+		    <groupId>com.github.axet</groupId>
+		    <artifactId>kaptcha</artifactId>
+		    <version>0.0.9</version>
+		</dependency>
+  </dependencies>
+  
+  <build>
+		<finalName>MaterializeJEE</finalName>
+    	<pluginManagement>
+			<plugins>
+				<!-- flyway数据库插件  -->
+				<plugin>
+    				<groupId>org.flywaydb</groupId>
+    				<artifactId>flyway-maven-plugin</artifactId>
+    				<version>4.0.1</version>
+    				<configuration>
+    					<url>jdbc:mysql://localhost:3306/MaterializeJEE?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false</url>
+    					<user>root</user>
+        				<password>root</password>
+        				<schemas>
+        					<schema>MaterializeJEE</schema>
+						</schemas>  
+    				</configuration>
+    				<dependencies>
+	                    <dependency>
+	                        <groupId>mysql</groupId>
+					  		<artifactId>mysql-connector-java</artifactId>
+					  		<version>${mysql.connector.version}</version>
+	                    </dependency>
+	                    <dependency>
+							<groupId>org.slf4j</groupId>
+							<artifactId>slf4j-jdk14</artifactId>
+							<version>1.7.21</version>
+						</dependency>
+                	</dependencies>
+				</plugin>
+				<!-- mybatis.generator插件  -->
+				<plugin>
+                	<groupId>org.mybatis.generator</groupId>
+                	<artifactId>mybatis-generator-maven-plugin</artifactId>
+                	<version>${mybatis.generator.version}</version>
+                	<configuration>
+                    	<configurationFile>${basedir}/src/main/resources/mybatis/generator-config.xml</configurationFile>
+                    	<!--允许覆盖生成的文件-->
+                    	<overwrite>true</overwrite>
+                    	<!--允许移动生成的文件-->
+                    	<verbose>true</verbose>
+                	</configuration>
+                	<dependencies>
+                    	<dependency>
+                        	<groupId>mysql</groupId>
+                        	<artifactId>mysql-connector-java</artifactId>
+                        	<version>${mysql.connector.version}</version>
+                    	</dependency>
+                    	<dependency>
+			            	<groupId>org.mybatis.generator</groupId>
+			            	<artifactId>mybatis-generator-core</artifactId>
+			            	<version>${mybatis.generator.version}</version>
+			        	</dependency>
+                	</dependencies>
+            	</plugin>
+            	
+            	<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.3</version>
+					<configuration>
+						<source>${jdk.version}</source>
+						<target>${jdk.version}</target>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>2.1.2</version>
+					<executions>
+						<execution>
+							<id>attach-sources</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>jar-no-fork</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+  </build>
+</project>

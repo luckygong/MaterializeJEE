@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.materialize.jee.web.hbase.test.phoenixmapper.AlarmMapper">
+	<!-- 所有字段信息 -->
+	<sql id="base_column_List">
+		ROW, MPUID, DVCCODE, ALMTYPE, ALMFROM, CALLEMP
+	</sql>
+	
+	<!-- 定义resultMap -->
+	<resultMap id="ActionResultMap" type="com.materialize.jee.web.hbase.test.domain.Alarm">
+		<id column="ROW" property="rowKey" jdbcType="VARCHAR" />  
+		<result column="MPUID" property="mpuId" jdbcType="VARCHAR" />  
+		<result column="DVCCODE" property="dvcCode" jdbcType="VARCHAR" />  
+		<result column="ALMTYPE" property="almType" jdbcType="INTEGER" />  
+		<result column="ALMFROM" property="almFrom" jdbcType="VARCHAR" />  
+		<result column="CALLEMP" property="callEmp" jdbcType="VARCHAR" />  
+	</resultMap>
+
+	
+	<!-- 查询信息 -->
+	<select id="get" resultMap="ActionResultMap">
+		SELECT
+		<include refid="base_column_List" />
+		FROM ALARM
+		<where>
+			and ROW = '${id}'
+		</where>
+	</select>
+	
+	<select id="findPage" resultMap="ActionResultMap">
+		SELECT
+		<include refid="base_column_List" />
+		FROM ALARM
+		<where>
+			<if test="currentPagefirstRowKey != null and currentPagefirstRowKey != ''">
+				and ROW >= '${currentPagefirstRowKey}'
+			</if>
+			<if test="entityMap.rowKey != null">
+				and ROW = '${entityMap.rowKey}'
+			</if>
+			<if test="entityMap.dvcCode != null">
+				and DVCCODE = '${entityMap.dvcCode}'
+			</if>  
+			<if test="entityMap.almType != null">
+				and ALMTYPE = ${entityMap.almType}
+			</if>  
+			<if test="entityMap.callEmp != null">
+				and CALLEMP = '${entityMap.callEmp}'
+			</if>  
+		</where>
+		ORDER BY ROW ASC
+		LIMIT #{querySize,jdbcType=DECIMAL}
+	</select>
+	
+	<insert id="save" parameterType="com.materialize.jee.web.hbase.test.domain.Alarm">
+		UPSERT INTO ALARM
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="rowKey != null">
+				ROW,
+			</if>
+			<if test="mpuId != null">
+				MPUID,
+			</if>  
+			<if test="dvcCode != null">
+				DVCCODE,
+			</if>  
+			<if test="almType != null">
+				ALMTYPE,
+			</if>  
+			<if test="almFrom != null">
+				ALMFROM,
+			</if>  
+			<if test="callEmp != null">
+				CALLEMP,
+			</if>  
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="rowKey != null">
+				#{rowKey,jdbcType=VARCHAR},
+			</if>
+			<if test="mpuId != null">
+				#{mpuId,jdbcType=VARCHAR},
+			</if>  
+			<if test="dvcCode != null">
+				#{dvcCode,jdbcType=VARCHAR},
+			</if>  
+			<if test="almType != null">
+				#{almType,jdbcType=INTEGER},
+			</if>  
+			<if test="almFrom != null">
+				#{almFrom,jdbcType=VARCHAR},
+			</if>  
+			<if test="callEmp != null">
+				#{callEmp,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+</mapper>

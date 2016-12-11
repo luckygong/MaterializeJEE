@@ -1,0 +1,17 @@
+{
+	"sys":{
+		"confirm":"确定",
+		"sure?":"确认?",
+		"cancel":"取消",
+		"close":"关闭",
+		"notifications":"通 知",
+		"receiveNotification":"您收到一条新通知",
+		"profile":"个人信息",
+		"settings":"设 置",
+		"logout":"退 出",
+		"greetings":"欢迎回来",
+		"menu":{
+			"home":"首页"
+		}
+	}
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:batch="http://www.springframework.org/schema/batch" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch
+	http://www.springframework.org/schema/batch/spring-batch.xsd
+	http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-lazy-init="false" >
+	<description>spring batch主配置文件</description>
+	
+	<!-- spring batch context -->
+  	<bean id="jobRepository" class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
+		<property name="transactionManager">
+			<bean class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
+		</property>
+  	</bean>
+  	<bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository" />
+		<property name="taskExecutor">
+	        <bean class="org.springframework.core.task.SimpleAsyncTaskExecutor" />
+	    </property>
+  	</bean>
+  	<bean class="org.springframework.batch.core.configuration.support.JobRegistryBeanPostProcessor">
+		<property name="jobRegistry" ref="jobRegistry" />
+  	</bean>
+  	<bean id="jobRegistry" class="org.springframework.batch.core.configuration.support.MapJobRegistry" />
+  	<!-- spring batch context -->
+	
+</beans>

@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.materialize.jee.platform.authorization.mapper.ResourceMapper">
+	<!-- 所有字段信息 -->
+	<sql id="base_column_List">
+		r.ID, r.NAME, r.TYPE, r.IS_DIRECTORY, r.VALUE, r.ICON, r.PARENT_ID, r.ORDERS, 
+		r.LEVEL, r.DESCN, r.ACTIVE_FLAG, r.CREATE_ID, r.CREATE_DATE, r.UPDATE_ID, r.UPDATE_DATE,
+		p.value PARENT_VALUE, p.name PARENT_NAME
+	</sql>
+	
+	<!-- 定义resultMap -->
+	<resultMap id="ResourceResultMap" type="com.materialize.jee.platform.authorization.domain.Resource">
+		<id column="ID" property="id" jdbcType="BIGINT" />  
+		<result column="NAME" property="name" jdbcType="VARCHAR" />  
+		<result column="TYPE" property="type" jdbcType="INTEGER" />  
+		<result column="IS_DIRECTORY" property="isDirectory" jdbcType="INTEGER" />  
+		<result column="VALUE" property="value" jdbcType="VARCHAR" />  
+		<result column="ICON" property="icon" jdbcType="VARCHAR" />  
+		<result column="ORDERS" property="orders" jdbcType="INTEGER" />  
+		<result column="LEVEL" property="level" jdbcType="INTEGER" />  
+		<result column="DESCN" property="descn" jdbcType="VARCHAR" />  
+		<result column="ACTIVE_FLAG" property="activeFlag" jdbcType="BIT" />  
+		<result column="CREATE_ID" property="createId" jdbcType="BIGINT" />  
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />  
+		<result column="UPDATE_ID" property="updateId" jdbcType="BIGINT" />  
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" /> 
+		<association property="parent" javaType="com.materialize.jee.platform.authorization.domain.Resource">
+	        <id property="id" column="PARENT_ID"/>
+	        <id property="value" column="PARENT_VALUE"/>
+	        <id property="name" column="PARENT_NAME"/>
+	    </association> 
+	</resultMap>
+
+	<!-- 保存信息 -->
+	<insert id="save" useGeneratedKeys="true" keyProperty="id"
+		parameterType="com.materialize.jee.platform.authorization.domain.Resource">
+		INSERT INTO SYS_RESOURCE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="name != null">
+				NAME,
+			</if>  
+			<if test="type != null">
+				TYPE,
+			</if>  
+			<if test="isDirectory != null">
+				IS_DIRECTORY,
+			</if>  
+			<if test="value != null">
+				VALUE,
+			</if>  
+			<if test="icon != null">
+				ICON,
+			</if>  
+			<if test="parentId != null">
+				PARENT_ID,
+			</if>  
+			<if test="orders != null">
+				ORDERS,
+			</if>  
+			<if test="level != null">
+				LEVEL,
+			</if>  
+			<if test="descn != null">
+				DESCN,
+			</if>  
+			<if test="activeFlag != null">
+				ACTIVE_FLAG,
+			</if>  
+			<if test="createId != null">
+				CREATE_ID,
+			</if>  
+			<if test="createDate != null">
+				CREATE_DATE,
+			</if>  
+			<if test="updateId != null">
+				UPDATE_ID,
+			</if>  
+			<if test="updateDate != null">
+				UPDATE_DATE,
+			</if>  
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=INTEGER},
+			</if>
+			<if test="isDirectory != null">
+				#{isDirectory,jdbcType=INTEGER},
+			</if>
+			<if test="value != null">
+				#{value,jdbcType=VARCHAR},
+			</if>
+			<if test="icon != null">
+				#{icon,jdbcType=VARCHAR},
+			</if>
+			<if test="parentId != null">
+				#{parentId,jdbcType=BIGINT},
+			</if>
+			<if test="orders != null">
+				#{orders,jdbcType=INTEGER},
+			</if>
+			<if test="level != null">
+				#{level,jdbcType=INTEGER},
+			</if>
+			<if test="descn != null">
+				#{descn,jdbcType=VARCHAR},
+			</if>
+			<if test="activeFlag != null">
+				#{activeFlag,jdbcType=BIT},
+			</if>
+			<if test="createId != null">
+				#{createId,jdbcType=BIGINT},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateId != null">
+				#{updateId,jdbcType=BIGINT},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	
+	<!-- 更新信息 -->
+	<update id="update" parameterType="com.materialize.jee.platform.authorization.domain.Resource">
+		UPDATE SYS_RESOURCE
+		<set>
+			NAME = #{name,jdbcType=VARCHAR},
+			TYPE = #{type,jdbcType=INTEGER},
+			IS_DIRECTORY = #{isDirectory,jdbcType=INTEGER},
+			VALUE = #{value,jdbcType=VARCHAR},
+			ICON = #{icon,jdbcType=VARCHAR},
+			PARENT_ID = #{parentId,jdbcType=BIGINT},
+			ORDERS = #{orders,jdbcType=INTEGER},
+			LEVEL = #{level,jdbcType=INTEGER},
+			DESCN = #{descn,jdbcType=VARCHAR},
+			ACTIVE_FLAG = #{activeFlag,jdbcType=BIT},
+			CREATE_ID = #{createId,jdbcType=BIGINT},
+			CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+			UPDATE_ID = #{updateId,jdbcType=BIGINT},
+			UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+		</set>
+		<where>
+			and ID = #{id,jdbcType=BIGINT}
+		</where>
+	</update>
+	
+	<!-- 更新信息 -->
+	<update id="updateSelective" parameterType="com.materialize.jee.platform.authorization.domain.Resource">
+		UPDATE SYS_RESOURCE
+		<set>
+			<if test="name != null">
+				NAME = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				TYPE = #{type,jdbcType=INTEGER},
+			</if>
+			<if test="isDirectory != null">
+				IS_DIRECTORY = #{isDirectory,jdbcType=INTEGER},
+			</if>
+			<if test="value != null">
+				VALUE = #{value,jdbcType=VARCHAR},
+			</if>
+			<if test="icon != null">
+				ICON = #{icon,jdbcType=VARCHAR},
+			</if>
+			<if test="parentId != null">
+				PARENT_ID = #{parentId,jdbcType=BIGINT},
+			</if>
+			<if test="orders != null">
+				ORDERS = #{orders,jdbcType=INTEGER},
+			</if>
+			<if test="level != null">
+				LEVEL = #{level,jdbcType=INTEGER},
+			</if>
+			<if test="descn != null">
+				DESCN = #{descn,jdbcType=VARCHAR},
+			</if>
+			<if test="activeFlag != null">
+				ACTIVE_FLAG = #{activeFlag,jdbcType=BIT},
+			</if>
+			<if test="createId != null">
+				CREATE_ID = #{createId,jdbcType=BIGINT},
+			</if>
+			<if test="createDate != null">
+				CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateId != null">
+				UPDATE_ID = #{updateId,jdbcType=BIGINT},
+			</if>
+			<if test="updateDate != null">
+				UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		<where>
+			and ID = #{id,jdbcType=BIGINT}
+		</where>
+	</update>
+	
+	<!-- 删除信息 -->
+	<delete id="delete" parameterType="com.materialize.jee.platform.authorization.domain.Resource">
+		DELETE FROM SYS_RESOURCE
+		<where>
+			and ID = #{id,jdbcType=BIGINT}
+		</where>
+	</delete>
+	
+	<!-- 查询信息 -->
+	<select id="get" resultMap="ResourceResultMap">
+		SELECT
+		<include refid="base_column_List" />
+		FROM SYS_RESOURCE r
+		LEFT JOIN SYS_RESOURCE p on r.PARENT_ID = p.ID
+		<where>
+			and r.ID = #{id,jdbcType=BIGINT}
+		</where>
+	</select>
+	
+	<!-- 查询数量 -->
+	<select id="findCount" resultType="java.lang.Integer">
+		SELECT COUNT(1) 
+		FROM SYS_RESOURCE r
+		LEFT JOIN SYS_RESOURCE p on r.PARENT_ID = p.ID
+		<where>
+			<include refid="search_fragement" />
+		</where>
+	</select>
+	
+	<!-- 查询(条件) -->
+	<select id="find" resultMap="ResourceResultMap">
+		SELECT
+		<include refid="base_column_List" />
+		FROM SYS_RESOURCE r
+		LEFT JOIN SYS_RESOURCE p on r.PARENT_ID = p.ID
+		<where>
+			<include refid="search_fragement" />
+		</where>
+		ORDER BY <trim prefix=" " suffix=" " suffixOverrides=",">r.ID DESC,</trim>
+	</select>
+	
+	<!-- Map拼接语句 -->
+	<sql id="search_fragement">
+		<if test="id!=null">
+			AND r.ID = #{id,jdbcType=BIGINT}
+		</if>
+		<if test="name!=null">
+			AND r.NAME = #{name,jdbcType=VARCHAR}
+		</if>
+		<if test="type!=null">
+			AND r.TYPE = #{type,jdbcType=INTEGER}
+		</if>
+		<if test="isDirectory!=null">
+			AND r.IS_DIRECTORY = #{isDirectory,jdbcType=INTEGER}
+		</if>
+		<if test="value!=null">
+			AND r.VALUE = #{value,jdbcType=VARCHAR}
+		</if>
+		<if test="icon!=null">
+			AND r.ICON = #{icon,jdbcType=VARCHAR}
+		</if>
+		<if test="parentId!=null">
+			AND r.PARENT_ID = #{parentId,jdbcType=BIGINT}
+		</if>
+		<if test="orders!=null">
+			AND r.ORDERS = #{orders,jdbcType=INTEGER}
+		</if>
+		<if test="level!=null">
+			AND r.LEVEL = #{level,jdbcType=INTEGER}
+		</if>
+		<if test="descn!=null">
+			AND r.DESCN = #{descn,jdbcType=VARCHAR}
+		</if>
+		<if test="activeFlag!=null">
+			AND r.ACTIVE_FLAG = #{activeFlag,jdbcType=BIT}
+		</if>
+		<if test="activeFlag == null and activeFlagAll == null">
+			AND r.ACTIVE_FLAG = 1
+		</if>
+		<if test="activeFlagAll != null">
+			AND 1 = 1
+		</if>
+		<if test="createId!=null">
+			AND r.CREATE_ID = #{createId,jdbcType=BIGINT}
+		</if>
+		<if test="createDate!=null">
+			AND r.CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateId!=null">
+			AND r.UPDATE_ID = #{updateId,jdbcType=BIGINT}
+		</if>
+		<if test="updateDate!=null">
+			AND r.UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP}
+		</if>
+	</sql>
+</mapper>

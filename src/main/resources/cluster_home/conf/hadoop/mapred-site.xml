@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+	<property>
+	    <name>mapreduce.framework.name</name>
+	    <value>yarn</value>
+	    <!--local:本地作业运行器  classic:经典mapreduce框架  yarn:新框架-->
+	</property>
+	<property>
+	    <name>mapreduce.cluster.local.dir</name>
+	    <value>/opt/hadoop/mapred/local</value>
+	    <!--mapreduce中间结果保存目录，默认${hadoop.tmp.dir}/mapred/local-->
+	</property>
+	<property>
+	    <name>mapreduce.jobtracker.system.dir</name>
+	    <value>/opt/hadoop/mapred/system</value>
+	    <!--mapreduce控制文件保存目录，默认${hadoop.tmp.dir}/mapred/system-->
+	</property>
+	<property>
+	    <name>mapreduce.jobtracker.staging.root.dir</name>
+	    <value>/opt/hadoop/mapred/staging</value>
+	    <!--mapreduce运行结果保存目录，默认${hadoop.tmp.dir}/mapred/staging-->
+	</property>
+	<property>
+	    <name>mapreduce.jobhistory.address</name>
+	    <value>master:10020</value>
+	    <!--jobhistory地址，默认端口10020-->
+	</property>
+	<property>
+	    <name>mapreduce.jobhistory.webapp.address</name>
+	    <value>master:19888</value>
+	    <!--jobhistory webapp地址，默认端口19888-->
+	</property>
+	<property>
+	    <name>mapreduce.jobhistory.intermediate-done-dir</name>
+	    <value>/opt/hadoop/history/tmp</value>
+	    <!--jobhistory中间结果保存目录-->
+	</property>
+	<property>
+	    <name>mapreduce.jobhistory.done-dir</name>
+	    <value>/opt/hadoop/history/done</value>
+	    <!--jobhistory结果保存目录-->
+	</property>
+	<property>
+	    <name>mapred.compress.map.output</name>
+	    <value>true</value>
+	    <!--map结果启用压缩-->
+	</property>
+	<property>
+	    <name>mapred.map.output.compression.codec</name>
+	    <value>com.hadoop.compression.lzo.LzoCodec</value>
+	    <!--map压缩的压缩算法-->
+	</property>
+	<property>
+	    <name>mapred.child.env</name>
+	    <value>LD_LIBRARY_PATH=/usr/local/java/hadoop-2.5.2/lzo/lib</value>
+	</property>
+</configuration>

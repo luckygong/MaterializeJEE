@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.materialize.jee.platform.quartz.mapper.QuartzJobMapper" >
+  <resultMap id="BaseResultMap" type="com.materialize.jee.platform.quartz.domain.QuartzJob" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="JOB_NAME" property="jobName" jdbcType="VARCHAR" />
+    <result column="JOB_GROUP" property="jobGroup" jdbcType="VARCHAR" />
+    <result column="JOB_CLASS" property="jobClass" jdbcType="VARCHAR" />
+    <result column="JOB_PARAMS" property="jobParams" jdbcType="VARCHAR" />
+    <result column="JOB_STATUS" property="jobStatus" jdbcType="INTEGER" />
+    <result column="IS_CONCURRENT" property="isConcurrent" jdbcType="INTEGER" />
+    <result column="CRON_EXPRESSION" property="cronExpression" jdbcType="VARCHAR" />
+    <result column="PREVIOUS_RUN_TIME" property="previousRunTime" jdbcType="TIMESTAMP" />
+    <result column="LAST_RUN_TIME" property="lastRunTime" jdbcType="TIMESTAMP" />
+    <result column="NEXT_RUN_TIME" property="nextRunTime" jdbcType="TIMESTAMP" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="CREATE_ID" property="createId" jdbcType="BIGINT" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    ID, JOB_NAME, JOB_GROUP, JOB_CLASS, JOB_PARAMS, JOB_STATUS, IS_CONCURRENT, CRON_EXPRESSION, 
+    PREVIOUS_RUN_TIME, LAST_RUN_TIME, NEXT_RUN_TIME, DESCRIPTION, CREATE_ID
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select 
+	<include refid="Base_Column_List" />
+    from SYS_QUARTZ_JOB
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_QUARTZ_JOB
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <insert id="insert" parameterType="com.materialize.jee.platform.quartz.domain.QuartzJob" 
+  	useGeneratedKeys="true" keyProperty="id">
+    insert into SYS_QUARTZ_JOB (ID, JOB_NAME, JOB_GROUP, 
+      JOB_CLASS, JOB_PARAMS, JOB_STATUS, IS_CONCURRENT, 
+      CRON_EXPRESSION, PREVIOUS_RUN_TIME, LAST_RUN_TIME, 
+      NEXT_RUN_TIME, DESCRIPTION, CREATE_ID
+      )
+    values (#{id,jdbcType=BIGINT}, #{jobName,jdbcType=VARCHAR}, #{jobGroup,jdbcType=VARCHAR}, 
+      #{jobClass,jdbcType=VARCHAR}, #{jobParams,jdbcType=VARCHAR},#{jobStatus,jdbcType=INTEGER}, #{isConcurrent,jdbcType=INTEGER}, 
+      #{cronExpression,jdbcType=VARCHAR}, #{previousRunTime,jdbcType=TIMESTAMP}, #{lastRunTime,jdbcType=TIMESTAMP}, 
+      #{nextRunTime,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR}, #{createId,jdbcType=BIGINT}
+      )
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.materialize.jee.platform.quartz.domain.QuartzJob" >
+    update SYS_QUARTZ_JOB
+    set JOB_NAME = #{jobName,jdbcType=VARCHAR},
+      JOB_GROUP = #{jobGroup,jdbcType=VARCHAR},
+      JOB_CLASS = #{jobClass,jdbcType=VARCHAR},
+      JOB_PARAMS = #{jobParams,jdbcType=VARCHAR},
+      JOB_STATUS = #{jobStatus,jdbcType=INTEGER},
+      IS_CONCURRENT = #{isConcurrent,jdbcType=INTEGER},
+      CRON_EXPRESSION = #{cronExpression,jdbcType=VARCHAR},
+      PREVIOUS_RUN_TIME = #{previousRunTime,jdbcType=TIMESTAMP},
+      LAST_RUN_TIME = #{lastRunTime,jdbcType=TIMESTAMP},
+      NEXT_RUN_TIME = #{nextRunTime,jdbcType=TIMESTAMP},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      CREATE_ID = #{createId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateSelectiveByPrimaryKey" parameterType="com.materialize.jee.platform.quartz.domain.QuartzJob" >
+    update SYS_QUARTZ_JOB
+    <set>
+      <if test="jobName != null" >
+        JOB_NAME = #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobGroup != null" >
+        JOB_GROUP = #{jobGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="jobClass != null" >
+        JOB_CLASS = #{jobClass,jdbcType=VARCHAR},
+      </if>
+      <if test="jobParams != null" >
+        JOB_PARAMS = #{jobParams,jdbcType=VARCHAR},
+      </if>
+      <if test="jobStatus != null" >
+        JOB_STATUS = #{jobStatus,jdbcType=INTEGER},
+      </if>
+      <if test="isConcurrent != null" >
+        IS_CONCURRENT = #{isConcurrent,jdbcType=INTEGER},
+      </if>
+      <if test="cronExpression != null" >
+        CRON_EXPRESSION = #{cronExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="previousRunTime != null" >
+        PREVIOUS_RUN_TIME = #{previousRunTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastRunTime != null" >
+        LAST_RUN_TIME = #{lastRunTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nextRunTime != null" >
+        NEXT_RUN_TIME = #{nextRunTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectAllInUse" resultMap="BaseResultMap" >
+    select 
+	<include refid="Base_Column_List" />
+    from SYS_QUARTZ_JOB
+    where JOB_STATUS = 1
+  </select>
+  
+  <select id="findBy" resultMap="BaseResultMap" parameterType="java.util.Map">
+	select
+	<include refid="Base_Column_List" />
+	from SYS_QUARTZ_JOB
+	<where>
+		<include refid="where_map" />
+	</where>
+  </select>
+  
+  <select id="findCountBy" parameterType="java.util.Map">
+	select IFNULL(COUNT(1),0)
+	from SYS_QUARTZ_JOB
+	<where>
+		<include refid="where_map" />
+	</where>
+  </select>
+  
+  <sql id="where_map">
+      <if test="jobName != null" >
+        and JOB_NAME = #{jobName,jdbcType=VARCHAR}
+      </if>
+      <if test="jobGroup != null" >
+        and JOB_GROUP = #{jobGroup,jdbcType=VARCHAR}
+      </if>
+      <if test="jobClass != null" >
+        and JOB_CLASS = #{jobClass,jdbcType=VARCHAR}
+      </if>
+      <if test="jobParams != null" >
+        and JOB_PARAMS = #{jobParams,jdbcType=VARCHAR}
+      </if>
+      <if test="jobStatus != null" >
+        and JOB_STATUS = #{jobStatus,jdbcType=INTEGER}
+      </if>
+      <if test="isConcurrent != null" >
+        and IS_CONCURRENT = #{isConcurrent,jdbcType=INTEGER}
+      </if>
+      <if test="cronExpression != null" >
+        and CRON_EXPRESSION = #{cronExpression,jdbcType=VARCHAR}
+      </if>
+      <if test="previousRunTime != null" >
+        and PREVIOUS_RUN_TIME = #{previousRunTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="lastRunTime != null" >
+        and LAST_RUN_TIME = #{lastRunTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="nextRunTime != null" >
+        and NEXT_RUN_TIME = #{nextRunTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="description != null" >
+        and DESCRIPTION = #{description,jdbcType=VARCHAR}
+      </if>
+      <if test="createId != null" >
+        and CREATE_ID = #{createId,jdbcType=BIGINT}
+      </if>
+  </sql>
+</mapper>

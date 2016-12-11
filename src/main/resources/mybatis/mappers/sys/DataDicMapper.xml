@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.materialize.jee.platform.datadic.mapper.DataDicMapper">
+	<!-- 所有字段信息 -->
+	<sql id="base_column_List">
+		ID, CATEGORY, CODE, TRANSLATION, RANKING, ACTIVE_FLAG
+	</sql>
+	
+	<!-- 定义resultMap -->
+	<resultMap id="DataDicResultMap" type="com.materialize.jee.platform.datadic.domain.DataDic">
+		<id column="ID" property="id" jdbcType="BIGINT" />  
+		<result column="CATEGORY" property="category" jdbcType="VARCHAR" />  
+		<result column="CODE" property="code" jdbcType="VARCHAR" />  
+		<result column="TRANSLATION" property="translation" jdbcType="VARCHAR" />  
+		<result column="RANKING" property="ranking" jdbcType="INTEGER" />  
+		<result column="ACTIVE_FLAG" property="activeFlag" jdbcType="INTEGER" />  
+	</resultMap>
+
+	<!-- 保存信息 -->
+	<insert id="save" useGeneratedKeys="true" keyProperty="id"
+		parameterType="com.materialize.jee.platform.datadic.domain.DataDic">
+		INSERT INTO SYS_DATA_DIC
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="category != null">
+				CATEGORY,
+			</if>  
+			<if test="code != null">
+				CODE,
+			</if>  
+			<if test="translation != null">
+				TRANSLATION,
+			</if>  
+			<if test="ranking != null">
+				RANKING,
+			</if>  
+			<if test="activeFlag != null">
+				ACTIVE_FLAG,
+			</if>  
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="category != null">
+				#{category,jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				#{code,jdbcType=VARCHAR},
+			</if>
+			<if test="translation != null">
+				#{translation,jdbcType=VARCHAR},
+			</if>
+			<if test="ranking != null">
+				#{ranking,jdbcType=INTEGER},
+			</if>
+			<if test="activeFlag != null">
+				#{activeFlag,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	
+	<!-- 更新信息 -->
+	<update id="update" parameterType="com.materialize.jee.platform.datadic.domain.DataDic">
+		UPDATE SYS_DATA_DIC
+		<set>
+			CATEGORY = #{category,jdbcType=VARCHAR},
+			CODE = #{code,jdbcType=VARCHAR},
+			TRANSLATION = #{translation,jdbcType=VARCHAR},
+			RANKING = #{ranking,jdbcType=INTEGER},
+			ACTIVE_FLAG = #{activeFlag,jdbcType=INTEGER},
+		</set>
+		<where>
+			and ID = #{id,jdbcType=BIGINT}
+		</where>
+	</update>
+	
+	<!-- 更新信息 -->
+	<update id="updateSelective" parameterType="com.materialize.jee.platform.datadic.domain.DataDic">
+		UPDATE SYS_DATA_DIC
+		<set>
+			<if test="category != null">
+				CATEGORY = #{category,jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				CODE = #{code,jdbcType=VARCHAR},
+			</if>
+			<if test="translation != null">
+				TRANSLATION = #{translation,jdbcType=VARCHAR},
+			</if>
+			<if test="ranking != null">
+				RANKING = #{ranking,jdbcType=INTEGER},
+			</if>
+			<if test="activeFlag != null">
+				ACTIVE_FLAG = #{activeFlag,jdbcType=INTEGER},
+			</if>
+		</set>
+		<where>
+			and ID = #{id,jdbcType=BIGINT}
+		</where>
+	</update>
+	
+	<!-- 删除信息 -->
+	<delete id="delete" parameterType="com.materialize.jee.platform.datadic.domain.DataDic">
+		DELETE FROM SYS_DATA_DIC
+		<where>
+			and ID = #{id,jdbcType=BIGINT}
+		</where>
+	</delete>
+	
+	<!-- 查询信息 -->
+	<select id="get" resultMap="DataDicResultMap">
+		SELECT
+		<include refid="base_column_List" />
+		FROM SYS_DATA_DIC
+		<where>
+			and ID = #{id,jdbcType=BIGINT}
+		</where>
+	</select>
+	
+	<select id="selectAllInUse" resultMap="DataDicResultMap" >
+	    select 
+		<include refid="base_column_List" />
+	    from SYS_DATA_DIC
+	    where ACTIVE_FLAG = 1
+	    order by CATEGORY, RANKING asc
+  	</select>
+	
+	<select id="selectByCategory" resultMap="DataDicResultMap" parameterType="java.lang.String">
+	    select 
+		<include refid="base_column_List" />
+	    from SYS_DATA_DIC
+	    where CATEGORY = #{category,jdbcType=VARCHAR} and ACTIVE_FLAG = 1
+	    order by RANKING asc
+	</select>
+  
+    <select id="selectByCategoryAndCode" resultMap="DataDicResultMap">
+	    select 
+		<include refid="base_column_List" />
+	    from SYS_DATA_DIC
+	    where CATEGORY = #{category,jdbcType=VARCHAR} and CODE = #{code,jdbcType=VARCHAR} and ACTIVE_FLAG = 1
+    </select>
+	
+	<!-- 查询数量 -->
+	<select id="findCount" resultType="java.lang.Integer">
+		SELECT COUNT(1) FROM SYS_DATA_DIC
+		<where>
+			<include refid="search_fragement" />
+		</where>
+	</select>
+	
+	<!-- 查询(条件) -->
+	<select id="find" resultMap="DataDicResultMap">
+		SELECT
+		<include refid="base_column_List" />
+		FROM SYS_DATA_DIC
+		<where>
+			<include refid="search_fragement" />
+		</where>
+		ORDER BY RANKING ASC
+	</select>
+	
+	<!-- Map拼接语句 -->
+	<sql id="search_fragement">
+		<if test="id != null">
+			AND ID = #{id,jdbcType=BIGINT}
+		</if>
+		<if test="category != null">
+			AND CATEGORY = #{category,jdbcType=VARCHAR}
+		</if>
+		<if test="code != null">
+			AND CODE = #{code,jdbcType=VARCHAR}
+		</if>
+		<if test="exceptValue != null">
+			AND CODE not in <foreach collection="exceptValue" item="item" index="index" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+		<if test="translation != null">
+			AND TRANSLATION = #{translation,jdbcType=VARCHAR}
+		</if>
+		<if test="ranking != null">
+			AND RANKING = #{ranking,jdbcType=INTEGER}
+		</if>
+		<if test="activeFlag != null">
+			AND ACTIVE_FLAG = #{activeFlag,jdbcType=INTEGER}
+		</if>
+	</sql>
+</mapper>

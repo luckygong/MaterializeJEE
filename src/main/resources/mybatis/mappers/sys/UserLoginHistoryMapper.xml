@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.materialize.jee.platform.authorization.mapper.UserLoginHistoryMapper">
+	<!-- 所有字段信息 -->
+	<sql id="base_column_List">
+		USER_ID, LOGIN_IP, SESSION_ID, LOGIN_TIME
+	</sql>
+	
+	<!-- 定义resultMap -->
+	<resultMap id="UserLoginHistoryResultMap" type="com.materialize.jee.platform.authorization.domain.UserLoginHistory">
+		<result column="USER_ID" property="userId" jdbcType="BIGINT" />  
+		<result column="LOGIN_IP" property="loginIp" jdbcType="VARCHAR" />  
+		<result column="SESSION_ID" property="sessionId" jdbcType="VARCHAR" />  
+		<result column="LOGIN_TIME" property="loginTime" jdbcType="TIMESTAMP" />  
+	</resultMap>
+
+	<!-- 保存信息 -->
+	<insert id="save" useGeneratedKeys="true" keyProperty="id"
+		parameterType="com.materialize.jee.platform.authorization.domain.UserLoginHistory">
+		INSERT INTO SYS_USER_LOGIN_HISTORY
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				USER_ID,
+			</if>  
+			<if test="loginIp != null">
+				LOGIN_IP,
+			</if>  
+			<if test="sessionId != null">
+				SESSION_ID,
+			</if>  
+			<if test="loginTime != null">
+				LOGIN_TIME,
+			</if>  
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				#{userId,jdbcType=BIGINT},
+			</if>
+			<if test="loginIp != null">
+				#{loginIp,jdbcType=VARCHAR},
+			</if>
+			<if test="sessionId != null">
+				#{sessionId,jdbcType=VARCHAR},
+			</if>
+			<if test="loginTime != null">
+				#{loginTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	
+	<!-- 查询数量 -->
+	<select id="findCount" resultType="java.lang.Long">
+		SELECT COUNT(1) FROM SYS_USER_LOGIN_HISTORY
+		<where>
+			<include refid="search_fragement" />
+		</where>
+	</select>
+	
+	<!-- 查询(条件) -->
+	<select id="find" resultMap="UserLoginHistoryResultMap">
+		SELECT
+		<include refid="base_column_List" />
+		FROM SYS_USER_LOGIN_HISTORY
+		<where>
+			<include refid="search_fragement" />
+		</where>
+		ORDER BY LOGIN_TIME DESC
+	</select>
+	
+	<!-- Map拼接语句 -->
+	<sql id="search_fragement">
+		<if test="userId!=null">
+			AND USER_ID = #{userId}
+		</if>
+		<if test="loginIp!=null">
+			AND LOGIN_IP = #{loginIp}
+		</if>
+		<if test="sessionId!=null">
+			AND SESSION_ID = #{sessionId}
+		</if>
+		<if test="loginTime!=null">
+			AND LOGIN_TIME = #{loginTime}
+		</if>
+	</sql>
+</mapper>

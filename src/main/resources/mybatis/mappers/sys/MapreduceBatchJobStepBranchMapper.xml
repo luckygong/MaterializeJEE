@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.materialize.jee.platform.batch.mapper.MapreduceBatchJobStepBranchMapper" >
+  <resultMap id="BaseResultMap" type="com.materialize.jee.platform.batch.domain.MapreduceBatchJobStepBranch" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="STEP_ID" property="stepId" jdbcType="BIGINT" />
+    <result column="BRANCH_TYPE" property="branchType" jdbcType="INTEGER" />
+    <result column="STEP_STATUS" property="stepStatus" jdbcType="VARCHAR" />
+    <result column="TO_STEP_ID" property="toStepId" jdbcType="BIGINT" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    ID, STEP_ID, BRANCH_TYPE, STEP_STATUS, TO_STEP_ID
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select 
+	<include refid="Base_Column_List" />
+    from SYS_MAPREDUCE_BATCH_JOB_STEP_BRANCH
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_MAPREDUCE_BATCH_JOB_STEP_BRANCH
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <insert id="insert" parameterType="com.materialize.jee.platform.batch.domain.MapreduceBatchJobStepBranch" 
+  	useGeneratedKeys="true" keyProperty="id">
+    insert into SYS_MAPREDUCE_BATCH_JOB_STEP_BRANCH (ID, STEP_ID, BRANCH_TYPE, STEP_STATUS, 
+      TO_STEP_ID)
+    values (#{id,jdbcType=BIGINT}, #{stepId,jdbcType=BIGINT},#{branchType,jdbcType=INTEGER}, #{stepStatus,jdbcType=VARCHAR}, 
+      #{toStepId,jdbcType=BIGINT})
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.materialize.jee.platform.batch.domain.MapreduceBatchJobStepBranch" >
+    update SYS_MAPREDUCE_BATCH_JOB_STEP_BRANCH
+    set STEP_ID = #{stepId,jdbcType=BIGINT},
+      BRANCH_TYPE = #{branchType,jdbcType=INTEGER},
+      STEP_STATUS = #{stepStatus,jdbcType=VARCHAR},
+      TO_STEP_ID = #{toStepId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateSelectiveByPrimaryKey" parameterType="com.materialize.jee.platform.batch.domain.MapreduceBatchJobStepBranch" >
+    update SYS_MAPREDUCE_BATCH_JOB_STEP_BRANCH
+    <set >
+      <if test="stepId != null" >
+        STEP_ID = #{stepId,jdbcType=BIGINT},
+      </if>
+      <if test="branchType != null" >
+        BRANCH_TYPE = #{branchType,jdbcType=INTEGER},
+      </if>
+      <if test="stepStatus != null" >
+        STEP_STATUS = #{stepStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="toStepId != null" >
+        TO_STEP_ID = #{toStepId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="findByStepId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+	select
+	<include refid="Base_Column_List" />
+	from SYS_MAPREDUCE_BATCH_JOB_STEP_BRANCH
+	where STEP_ID = #{stepId,jdbcType=BIGINT}
+	order by STEP_STATUS ASC
+  </select>
+  
+  <select id="findBy" resultMap="BaseResultMap" parameterType="java.util.Map">
+	select
+	<include refid="Base_Column_List" />
+	from SYS_MAPREDUCE_BATCH_JOB_STEP_BRANCH
+	<where>
+		<include refid="where_map" />
+	</where>
+  </select>
+  
+  <select id="findCountBy" parameterType="java.util.Map">
+	select IFNULL(COUNT(1),0)
+	from SYS_MAPREDUCE_BATCH_JOB_STEP_BRANCH
+	<where>
+		<include refid="where_map" />
+	</where>
+  </select>
+  
+  <sql id="where_map">
+      <if test="stepId != null" >
+        and STEP_ID = #{stepId,jdbcType=BIGINT}
+      </if>
+      <if test="branchType != null" >
+        and BRANCH_TYPE = #{branchType,jdbcType=INTEGER}
+      </if>
+      <if test="stepStatus != null" >
+        and STEP_STATUS = #{stepStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="toStepId != null" >
+        and TO_STEP_ID = #{toStepId,jdbcType=BIGINT}
+      </if>
+      <if test="id != null" >
+        and ID = #{id,jdbcType=BIGINT}
+      </if>
+  </sql>
+</mapper>

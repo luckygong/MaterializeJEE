@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.materialize.jee.platform.batch.mapper.MapreduceBatchJobStepMapper" >
+  <resultMap id="BaseResultMap" type="com.materialize.jee.platform.batch.domain.MapreduceBatchJobStep" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="JOB_ID" property="jobId" jdbcType="BIGINT" />
+    <result column="STEP_CODE" property="stepCode" jdbcType="VARCHAR" />
+    <result column="STEP_DESC" property="stepDesc" jdbcType="VARCHAR" />
+    <result column="LOCAL_JAR_FILE" property="localJarFile" jdbcType="VARCHAR" />
+    <result column="RUN_CLASS" property="runClass" jdbcType="VARCHAR" />
+    <result column="RANKING" property="ranking" jdbcType="INTEGER" />
+    <result column="PARENT_STEP_ID" property="parentStepId" jdbcType="BIGINT" />
+    <result column="CHILD_STEP_ID" property="childStepId" jdbcType="BIGINT" />
+    <result column="CREATE_ID" property="createId" jdbcType="BIGINT" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <collection property="jobStepBranchs" ofType="com.materialize.jee.platform.batch.domain.MapreduceBatchJobStepBranch">
+		<id column="BRANCH_ID" property="id"/>
+	    <result column="BRANCH_STEP_ID" property="stepId"/>
+	    <result column="BRANCH_STEP_STATUS" property="stepStatus"/>
+	    <result column="BRANCH_TO_STEP_ID" property="toStepId"/>
+	</collection>
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    step.ID, step.JOB_ID, step.STEP_CODE, step.STEP_DESC, step.LOCAL_JAR_FILE, step.RUN_CLASS, 
+    step.RANKING, step.PARENT_STEP_ID, step.CHILD_STEP_ID, step.CREATE_ID, step.CREATE_TIME,
+    branch.ID BRANCH_ID,branch.STEP_ID BRANCH_STEP_ID,branch.STEP_STATUS BRANCH_STEP_STATUS,
+    branch.TO_STEP_ID BRANCH_TO_STEP_ID
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select 
+	<include refid="Base_Column_List" />
+    from SYS_MAPREDUCE_BATCH_JOB_STEP step
+    left join SYS_MAPREDUCE_BATCH_JOB_STEP_BRANCH branch on branch.STEP_ID = step.ID
+    where step.ID = #{id,jdbcType=BIGINT}
+    order by step.JOB_ID,branch.ID ASC
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_MAPREDUCE_BATCH_JOB_STEP
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <insert id="insert" parameterType="com.materialize.jee.platform.batch.domain.MapreduceBatchJobStep" 
+  	useGeneratedKeys="true" keyProperty="id">
+    insert into SYS_MAPREDUCE_BATCH_JOB_STEP (ID, JOB_ID, STEP_CODE, 
+      STEP_DESC, LOCAL_JAR_FILE, RUN_CLASS, 
+      RANKING, PARENT_STEP_ID, CHILD_STEP_ID, 
+      CREATE_ID, CREATE_TIME)
+    values (#{id,jdbcType=BIGINT}, #{jobId,jdbcType=BIGINT}, #{stepCode,jdbcType=VARCHAR}, 
+      #{stepDesc,jdbcType=VARCHAR}, #{localJarFile,jdbcType=VARCHAR}, #{runClass,jdbcType=VARCHAR}, 
+      #{ranking,jdbcType=INTEGER}, #{parentStepId,jdbcType=BIGINT}, #{childStepId,jdbcType=BIGINT}, 
+      #{createId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.materialize.jee.platform.batch.domain.MapreduceBatchJobStep" >
+    update SYS_MAPREDUCE_BATCH_JOB_STEP
+    set JOB_ID = #{jobId,jdbcType=BIGINT},
+      STEP_CODE = #{stepCode,jdbcType=VARCHAR},
+      STEP_DESC = #{stepDesc,jdbcType=VARCHAR},
+      LOCAL_JAR_FILE = #{localJarFile,jdbcType=VARCHAR},
+      RUN_CLASS = #{runClass,jdbcType=VARCHAR},
+      RANKING = #{ranking,jdbcType=INTEGER},
+      PARENT_STEP_ID = #{parentStepId,jdbcType=BIGINT},
+      CHILD_STEP_ID = #{childStepId,jdbcType=BIGINT},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateSelectiveByPrimaryKey" parameterType="com.materialize.jee.platform.batch.domain.MapreduceBatchJobStep" >
+    update SYS_MAPREDUCE_BATCH_JOB_STEP
+    <set >
+      <if test="jobCode != null" >
+        JOB_ID = #{jobId,jdbcType=BIGINT},
+      </if>
+      <if test="jobDesc != null" >
+        STEP_CODE = #{stepCode,jdbcType=VARCHAR},
+      </if>
+      <if test="runType != null" >
+        STEP_DESC = #{stepDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="jobType != null" >
+        LOCAL_JAR_FILE = #{localJarFile,jdbcType=VARCHAR},
+      </if>
+      <if test="runTimes != null" >
+        RUN_CLASS = #{runClass,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        RANKING = #{ranking,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        PARENT_STEP_ID = #{parentStepId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        CHILD_STEP_ID = #{childStepId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="findBy" resultMap="BaseResultMap" parameterType="java.util.Map">
+	select
+	<include refid="Base_Column_List" />
+	from SYS_MAPREDUCE_BATCH_JOB_STEP step
+    left join SYS_MAPREDUCE_BATCH_JOB_STEP_BRANCH branch on branch.STEP_ID = step.ID
+	<where>
+		<include refid="where_map" />
+	</where>
+  </select>
+  
+  <select id="findCountBy" parameterType="java.util.Map">
+	select IFNULL(COUNT(1),0)
+	from SYS_MAPREDUCE_BATCH_JOB_STEP step
+    left join SYS_MAPREDUCE_BATCH_JOB_STEP_BRANCH branch on branch.STEP_ID = step.ID
+	<where>
+		<include refid="where_map" />
+	</where>
+  </select>
+  
+  <sql id="where_map">
+      <if test="jobCode != null" >
+        and step.JOB_ID = #{jobId,jdbcType=BIGINT}
+      </if>
+      <if test="jobDesc != null" >
+        and step.STEP_CODE = #{stepCode,jdbcType=VARCHAR}
+      </if>
+      <if test="runType != null" >
+        and step.STEP_DESC = #{stepDesc,jdbcType=VARCHAR}
+      </if>
+      <if test="jobType != null" >
+        and step.LOCAL_JAR_FILE = #{localJarFile,jdbcType=VARCHAR}
+      </if>
+      <if test="runTimes != null" >
+        and step.RUN_CLASS = #{runClass,jdbcType=VARCHAR}
+      </if>
+      <if test="createId != null" >
+        and step.RANKING = #{ranking,jdbcType=INTEGER}
+      </if>
+      <if test="createTime != null" >
+        and step.PARENT_STEP_ID = #{parentStepId,jdbcType=BIGINT}
+      </if>
+      <if test="createTime != null" >
+        and step.CHILD_STEP_ID = #{childStepId,jdbcType=BIGINT}
+      </if>
+      <if test="createTime != null" >
+        and step.CREATE_ID = #{createId,jdbcType=BIGINT}
+      </if>
+      <if test="createTime != null" >
+        and step.CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="id != null" >
+        and step.ID = #{id,jdbcType=BIGINT}
+      </if>
+  </sql>
+</mapper>

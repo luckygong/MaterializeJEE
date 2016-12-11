@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="msapplication-tap-highlight" content="no">
+<title>菜单管理</title>
+
+<script type="text/javascript" src="../../../assets/scripts/path.js"></script>
+<script type="text/javascript" src="../../../assets/scripts/import-files.js"></script>
+
+</head>
+
+<body>
+	<!-- Start Page Loading -->
+	<div id="loader-wrapper">
+		<div id="loader"></div>
+		<div class="loader-section section-left"></div>
+		<div class="loader-section section-right"></div>
+	</div>
+
+	<!-- START HEADER -->
+	<header id="header" class="page-topbar"></header>
+
+	<!-- START MAIN -->
+	<div id="main">
+		<!-- START WRAPPER -->
+		<div class="wrapper">
+
+			<!-- START LEFT SIDEBAR NAV-->
+			<aside id="left-sidebar-nav"></aside>
+
+			<!-- START CONTENT -->
+			<section id="content">
+
+				<!--breadcrumbs start-->
+				<div id="breadcrumbs-wrapper">
+					<div class="container">
+						<div class="row">
+							<div class="col s12 m12 l12">
+								<h5 class="breadcrumbs-title">菜单管理</h5>
+								<ol class="breadcrumbs">
+									<li><a
+										href="javascript:window.location.href=getRootPath()+'/pages/home.html';">首页</a></li>
+									<li class="active">系统管理</li>
+									<li class="active">菜单管理</li>
+								</ol>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!--start container-->
+				<div class="container">
+					<ul class="collapsible collapsible-accordion" data-collapsible="accordion">
+	                  <li>
+	                    <div id="query-header" class="collapsible-header active cyan white-text">
+	                    	<i class="mdi-action-list"></i>查询条件
+	                    </div>
+	                    <div class="collapsible-body light-blue lighten-5">
+	                    	<div class="card-panel">
+								<div class="row">
+									<form id="pageQueryForm" class="col s12">
+										<div class="row">
+											<div class="input-field col s12 m6 l6">
+												<label for="menuName">菜单类型</label>
+												<input id="menuName" name="menuName" type="text" class="validate">
+											</div>
+											<div class="input-field col s12 m6 l6">
+												<label for="isDirectory"></label>
+												<select id="isDirectory" name="isDirectory" class="browser-default">
+						                        </select>
+											</div>
+										</div>
+										<div class="row">
+											<div class="input-field col s12 btn-group">
+												<button class="btn yellow darken-4 waves-effect waves-light right resetForm" type="button">
+													重置 <i class="mdi-av-replay right"></i>
+												</button>
+												<button id="submit" class="btn cyan waves-effect waves-light right" type="button">
+													查询 <i class="mdi-content-send right"></i>
+												</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+	                    </div>
+	                  </li>
+	            	</ul>
+						
+					<div class="divider"></div>
+						
+					<div class="card" style="overflow: visible;">
+                      <div class="card-action cyan white-text">
+                      	<i class="mdi-notification-event-note" style="font-size: 1.6rem;margin-right: 1rem;"></i>查询结果
+						<a class="btn dropdown-button waves-effect waves-light btn-suit right" href="#!" data-activates="dropdown-more">更多<i class="mdi-navigation-arrow-drop-down right"></i></a>
+						<ul id="dropdown-more" class="dropdown-content">
+							<li><a href="#!" class="-text">删除<i class="mdi-content-remove-circle"></i></a></li>
+						</ul>
+                        <button id="create" class="btn waves-effect waves-light btn-suit right" style="margin-right:5px" type="button">
+							新增 <i class="mdi-content-add-circle"></i>
+						</button>
+                      </div>
+                      
+                      <div id="page">
+                      	<table id="queryTable" class="table-fix col s12 m12 l12 bordered">
+                      		<thead>
+                      			<tr>
+                      				<td width="45px"><a href="javascript:;" id="tableCheckBoxSelectAll">全选</a><a class="hide" href="javascript:;"  id="tableCheckBoxCancelSelect">取消</a></td>
+                      				<td width="20%">资源名称</td>
+                      				<td width="20%">父资源</td>
+                      				<td width="50px">类型</td>
+                      				<td>资源值</td>
+                      				<td width="50px">操作</td>
+                   				</tr>
+                			</thead>
+                    		<tbody></tbody>
+                      	</table>
+					    <div id="pagination" class="row"></div>
+                      </div>
+                    </div>
+					
+					<!-- Floating Action Button -->
+					<div id="floatButton" class="fixed-action-btn click-to-toggle hide-on-med-and-down" style="bottom: 50px; right: 19px;"></div>
+					<!-- Floating Action Button -->
+				</div>
+				<!--end container-->
+
+			</section>
+			<!-- END CONTENT -->
+		</div>
+		<!-- END WRAPPER -->
+
+	</div>
+	<!-- END MAIN -->
+
+	<!-- //////////////////////////////////////////////////////////////////////////// -->
+
+	<!-- START FOOTER -->
+	<footer id="page-footer" class="page-footer"></footer>
+	<!-- END FOOTER -->
+
+	<script type="text/javascript">
+		var resourceTypeMap = {};
+		var isDirMap = {};
+		$(document).ready(function() {
+			isDirMap = $("#isDirectory").initSelect({"category":"RESOURCE_IS_DIR","emptyOptionTxt":"-请选择资源类型-"});
+			resourceTypeMap = initCategoryMap({"category":"RESOURCE_TYPE"});
+			
+			$("#submit").click(function() {
+				initPageData('admin/resource/resourceList', $("#pageQueryForm").serialize(), "page", 1, 10);
+				$("#query-header").click();
+			});
+		});
+		
+		function initPageTable(queryResult) {
+			var tbody = $('#'+queryResult.pageContentId).find("table tbody");
+			var h = "";
+			var data = queryResult.data.pageData;
+			for (var i = 0; i < data.length; i++) {
+				var menu = data[i];
+				h +='<tr>'
+				   +'<td><input class="id" type="checkbox" id="id'+menu.id+'" name="id" value="'+menu.id+'" /><label for="id'+menu.id+'"></label></td>'
+				   +'<td>' + menu.name + '</td>'
+				   +'<td>' + getDataFromJson(menu,"parent.name") + '</td>'
+				   +'<td>' + resourceTypeMap[menu.type] + '</td>'
+				   +'<td>' + getDataFromJson(menu,"value") + '</td>'
+				   +'<td>'
+				   +'<ul id="dropdown'+menu.id+'" class="dropdown-content">'
+                   +'<li><a href="#!" class="-text">修改<i class="mdi-content-create"></i></a></li>'
+                   +'</ul>'
+                   +'<a class="dropdown-button btn-floating btn-flat waves-effect waves-light  pink accent-2 white-text" href="#!" data-activates="dropdown'+menu.id+'"><i class="mdi-navigation-expand-more"></i></a>'
+				   +'</td>'
+				   +'</tr>';
+			}
+			tbody.html(h);
+			
+			$('.dropdown-button').initDynDropDown();
+		}
+	</script>
+</body>
+
+</html>

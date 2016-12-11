@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.materialize.jee.platform.authorization.mapper.RoleResourceMapper">
+	<!-- 所有字段信息 -->
+	<sql id="base_column_List">
+		ID, ROLE_ID, RESOURCE_ID
+	</sql>
+	
+	<!-- 定义resultMap -->
+	<resultMap id="RoleResourceResultMap" type="com.materialize.jee.platform.authorization.domain.RoleResource">
+		<id column="ID" property="id" jdbcType="BIGINT" />  
+		<result column="ROLE_ID" property="roleId" jdbcType="BIGINT" />  
+		<result column="RESOURCE_ID" property="resourceId" jdbcType="BIGINT" />  
+	</resultMap>
+
+	<!-- 保存信息 -->
+	<insert id="save" useGeneratedKeys="true" keyProperty="id"
+		parameterType="com.materialize.jee.platform.authorization.domain.RoleResource">
+		INSERT INTO SYS_ROLE_RESOURCE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="roleId != null">
+				ROLE_ID,
+			</if>  
+			<if test="resourceId != null">
+				RESOURCE_ID,
+			</if>  
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="roleId != null">
+				#{roleId,jdbcType=BIGINT},
+			</if>
+			<if test="resourceId != null">
+				#{resourceId,jdbcType=BIGINT},
+			</if>
+		</trim>
+	</insert>
+	
+	<!-- 更新信息 -->
+	<update id="update" parameterType="com.materialize.jee.platform.authorization.domain.RoleResource">
+		UPDATE SYS_ROLE_RESOURCE
+		<set>
+			ROLE_ID = #{roleId,jdbcType=BIGINT},
+			RESOURCE_ID = #{resourceId,jdbcType=BIGINT},
+		</set>
+		<where>
+			and ID = #{id,jdbcType=BIGINT}
+		</where>
+	</update>
+	
+	<!-- 更新信息 -->
+	<update id="updateSelective" parameterType="com.materialize.jee.platform.authorization.domain.RoleResource">
+		UPDATE SYS_ROLE_RESOURCE
+		<set>
+			<if test="roleId != null">
+				ROLE_ID = #{roleId,jdbcType=BIGINT},
+			</if>
+			<if test="resourceId != null">
+				RESOURCE_ID = #{resourceId,jdbcType=BIGINT},
+			</if>
+		</set>
+		<where>
+			and ID = #{id,jdbcType=BIGINT}
+		</where>
+	</update>
+	
+	<!-- 删除信息 -->
+	<delete id="delete" parameterType="com.materialize.jee.platform.authorization.domain.RoleResource">
+		DELETE FROM SYS_ROLE_RESOURCE
+		<where>
+			and ID = #{id,jdbcType=BIGINT}
+		</where>
+	</delete>
+	
+	<!-- 查询信息 -->
+	<select id="get" resultMap="RoleResourceResultMap">
+		SELECT
+		<include refid="base_column_List" />
+		FROM SYS_ROLE_RESOURCE
+		<where>
+			and ID = #{id,jdbcType=BIGINT}
+		</where>
+	</select>
+	
+	<!-- 查询数量 -->
+	<select id="findCount" resultType="java.lang.Integer">
+		SELECT COUNT(1) FROM SYS_ROLE_RESOURCE
+		<where>
+			<include refid="search_fragement" />
+		</where>
+	</select>
+	
+	<!-- 查询(条件) -->
+	<select id="find" resultMap="RoleResourceResultMap">
+		SELECT
+		<include refid="base_column_List" />
+		FROM SYS_ROLE_RESOURCE
+		<where>
+			<include refid="search_fragement" />
+		</where>
+		ORDER BY <trim prefix=" " suffix=" " suffixOverrides=",">ID DESC,</trim>
+	</select>
+	
+	<!-- Map拼接语句 -->
+	<sql id="search_fragement">
+		<if test="id!=null and id!=''">
+			AND ID = #{id,jdbcType=BIGINT}
+		</if>
+		<if test="roleId!=null and roleId!=''">
+			AND ROLE_ID = #{roleId,jdbcType=BIGINT}
+		</if>
+		<if test="resourceId!=null and resourceId!=''">
+			AND RESOURCE_ID = #{resourceId,jdbcType=BIGINT}
+		</if>
+	</sql>
+</mapper>

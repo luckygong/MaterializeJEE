@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+<configuration>
+	<!--配置与zookeeper的连接地址--> 
+	<property> 
+     		<name>yarn.resourcemanager.zk-address</name> 
+		<value>master:2181,node1:2181,node2:2181</value> 
+   	</property>   
+   	<property>  
+     		<name>yarn.resourcemanager.zk-state-store.parent-path</name>  
+    		<value>/opt/hadoop/zkrmstore</value> 
+   	</property>  
+   	<property>  
+     		<name>yarn.resourcemanager.store.class</name>  
+     		<value>org.apache.hadoop.yarn.server.resourcemanager.recovery.ZKRMStateStore</value>  
+   	</property>
+   
+   	<property>  
+    		<name>yarn.resourcemanager.ha.enabled</name>  
+     		<value>true</value>
+	 	<!--开启resource manager HA,默认为false-->	  
+   	</property>
+   	<property> 
+     		<name>yarn.resourcemanager.ha.rm-ids</name> 
+     		<value>rm1,rm2</value> 
+	 	<!--配置resource manager --> 
+   	</property> 
+   	<property> 
+     		<name>yarn.resourcemanager.hostname.rm1</name> 
+     		<value>master</value> 
+   	</property>                    
+   	<property> 
+     		<name>yarn.resourcemanager.hostname.rm2</name> 
+     		<value>node2</value> 
+   	</property>
+   	<property>
+	 	<name>yarn.resourcemanager.address.rm1</name>
+	 	<value>master:8032</value>
+	 	<!--ResourceManager 对客户端暴露的地址，客户端通过该地址向RM提交应用程序 默认${yarn.resourcemanager.hostname}:8032-->
+   	</property>
+   	<property>
+	 	<name>yarn.resourcemanager.address.rm2</name>
+	 	<value>node2:8032</value>
+	 	<!--ResourceManager 对客户端暴露的地址，客户端通过该地址向RM提交应用程序 默认${yarn.resourcemanager.hostname}:8032-->
+   	</property>
+   	<property>
+	 	<name>yarn.resourcemanager.scheduler.address.rm1</name>
+	 	<value>master:8030</value>
+	 	<!--ApplicationMaster通过该地址向RM申请资源、释放资源 默认${yarn.resourcemanager.hostname}:8030-->
+   	</property>
+   	<property>
+	 	<name>yarn.resourcemanager.scheduler.address.rm2</name>
+	 	<value>node2:8030</value>
+	 	<!--ApplicationMaster通过该地址向RM申请资源、释放资源 默认${yarn.resourcemanager.hostname}:8030-->
+   	</property>
+   	<property>
+	 	<name>yarn.resourcemanager.webapp.address.rm1</name>
+	 	<value>master:8088</value>
+	 	<!-- ResourceManager对外web ui地址。用户可通过该地址在浏览器中查看集群各类信息 默认${yarn.resourcemanager.hostname}:8088-->
+   	</property>
+   	<property>
+	 	<name>yarn.resourcemanager.webapp.address.rm2</name>
+	 	<value>node2:8088</value>
+	 	<!-- ResourceManager对外web ui地址。用户可通过该地址在浏览器中查看集群各类信息 默认${yarn.resourcemanager.hostname}:8088-->
+   	</property>
+   	<property>
+	 	<name>yarn.resourcemanager.resource-tracker.address.rm1</name>
+	 	<value>master:8031</value>
+	 	<!-- NodeManager通过该地址向RM汇报心跳，领取任务 默认${yarn.resourcemanager.hostname}:8031-->
+   	</property>
+   	<property>
+	 	<name>yarn.resourcemanager.resource-tracker.address.rm2</name>
+	 	<value>node2:8031</value>
+	 	<!-- NodeManager通过该地址向RM汇报心跳，领取任务 默认${yarn.resourcemanager.hostname}:8031-->
+   	</property>
+   	<property>
+	 	<name>yarn.resourcemanager.admin.address.rm1</name>
+	 	<value>master:8033</value>
+	 	<!-- ResourceManager 对管理员暴露的访问地址。管理员通过该地址向RM发送管理命令 默认${yarn.resourcemanager.hostname}:8033-->
+   	</property>
+   	<property>
+	 	<name>yarn.resourcemanager.admin.address.rm2</name>
+	 	<value>node2:8033</value>
+	 	<!-- ResourceManager 对管理员暴露的访问地址。管理员通过该地址向RM发送管理命令 默认${yarn.resourcemanager.hostname}:8033-->
+   	</property>
+   	<property>  
+      		<name>yarn.resourcemanager.ha.id</name>  
+      		<value>rm1</value>
+      	<!--不同的节点需要配置不同id!!!!!!!!!!!!!! rm2上可以配置为rm2 -->	 
+  	</property>      
+   	<property>  
+      		<name>yarn.resourcemanager.ha.automatic-failover.enabled</name>  
+      		<value>true</value>  
+	  	<!--开启故障自动切换--> 
+   	</property>
+   	<property>  
+      		<name>yarn.resourcemanager.ha.automatic-failover.embedded</name>  
+      		<value>true</value>  
+	  	<!--故障发生时使用内嵌的领导选举来选择active RM--> 
+   	</property>
+   	<property>  
+      		<name>yarn.resourcemanager.cluster-id</name>  
+      		<value>rmcluster</value>  
+	  	<!--rm 集群ID--> 
+   	</property>
+
+	<property>
+	    	<name>yarn.scheduler.minimum-allocation-mb</name>
+	    	<value>512</value>
+	    	<!--单个可申请的最小内存资源量。运行MapRedce作业时，每个Task最少可申请内存 默认1024M-->
+	</property>
+	<property>
+	    	<name>yarn.scheduler.maximum-allocation-mb</name>
+	    	<value>2048</value>
+	    	<!--单个可申请的最大内存资源量。运行MapRedce作业时，每个Task最大可申请内存 默认8192M-->
+	</property>
+	<property>
+	    	<name>yarn.nodemanager.resource.memory-mb</name>
+	    	<value>2048</value>
+	    	<!--NodeManager总的可用物理内存 默认8192-->
+	</property>
+	<property>
+	    	<name>yarn.nodemanager.vmem-pmem-ratio</name>
+	    	<value>2.1</value>
+	    	<!--每使用1MB物理内存，最多可用的虚拟内存数比例  默认2.1-->
+	</property>
+	<property>
+	    	<name>yarn.nodemanager.local-dirs</name>
+	    	<value>/opt/hadoop/nodemanager/nm-local-dir</value>
+	    	<!--中间结果存放位置，通常会配置多个目录，以分摊磁盘IO负载。  默认${hadoop.tmp.dir}/nm-local-dir-->
+	</property>
+	<property>
+	    	<name>yarn.nodemanager.log-dirs</name>
+	    	<value>/opt/hadoop/nodemanager/userlogs</value>
+	    	<!--NM日志存放路径。  默认${yarn.log.dir}/userlogs-->
+	</property>
+	<property>
+	    	<name>yarn.nodemanager.log.retain-seconds</name>
+	    	<value>10800</value>
+	    	<!--NodeManager上日志最多存放时间（不启用日志聚集功能时有效）。  默认10800秒-->
+	</property>
+	<property>
+	    	<name>yarn.nodemanager.aux-services</name>
+	    	<value>mapreduce_shuffle</value>
+	    	<!--NodeManager上运行的附属服务。需配置成mapreduce_shuffle，才可运行MapReduce程序。-->
+	</property>
+</configuration>

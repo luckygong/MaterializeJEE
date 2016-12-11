@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.materialize.jee.platform.quartz.mapper.QuartzLogMapper" >
+  <resultMap id="BaseResultMap" type="com.materialize.jee.platform.quartz.domain.QuartzLog" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="JOB_ID" property="jobId" jdbcType="BIGINT" />
+    <result column="JOB_NAME" property="jobName" jdbcType="VARCHAR" />
+    <result column="START_TIME" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="END_TIME" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="RESULT_FLAG" property="resultFlag" jdbcType="INTEGER" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    ID, JOB_ID, JOB_NAME, START_TIME, END_TIME, RESULT_FLAG, DESCRIPTION
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select 
+	<include refid="Base_Column_List" />
+    from SYS_QUARTZ_LOG
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_QUARTZ_LOG
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <insert id="insert" parameterType="com.materialize.jee.platform.quartz.domain.QuartzLog" 
+  	useGeneratedKeys="true" keyProperty="id">
+    insert into SYS_QUARTZ_LOG (ID, JOB_ID, JOB_NAME, 
+      START_TIME, END_TIME, RESULT_FLAG, 
+      DESCRIPTION)
+    values (#{id,jdbcType=BIGINT}, #{jobId,jdbcType=BIGINT}, #{jobName,jdbcType=VARCHAR}, 
+      #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{resultFlag,jdbcType=INTEGER}, 
+      #{description,jdbcType=VARCHAR})
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.materialize.jee.platform.quartz.domain.QuartzLog" >
+    update SYS_QUARTZ_LOG
+    set JOB_ID = #{jobId,jdbcType=BIGINT},
+      JOB_NAME = #{jobName,jdbcType=VARCHAR},
+      START_TIME = #{startTime,jdbcType=TIMESTAMP},
+      END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      RESULT_FLAG = #{resultFlag,jdbcType=INTEGER},
+      DESCRIPTION = #{description,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateSelectiveByPrimaryKey" parameterType="com.materialize.jee.platform.quartz.domain.QuartzLog" >
+    update SYS_QUARTZ_LOG
+    <set>
+      <if test="jobId != null" >
+        JOB_ID = #{jobId,jdbcType=BIGINT},
+      </if>
+      <if test="jobName != null" >
+        JOB_NAME = #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        START_TIME = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="resultFlag != null" >
+        RESULT_FLAG = #{resultFlag,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_QUARTZ_LOG
+  </select>
+  
+  <select id="findBy" resultMap="BaseResultMap" parameterType="java.util.Map">
+	select
+	<include refid="Base_Column_List" />
+	from SYS_QUARTZ_LOG
+	<where>
+		<include refid="where_map" />
+	</where>
+  </select>
+  
+  <select id="findCountBy" parameterType="java.util.Map">
+	select IFNULL(COUNT(1),0)
+	from SYS_QUARTZ_LOG
+	<where>
+		<include refid="where_map" />
+	</where>
+  </select>
+  
+  <sql id="where_map">
+      <if test="jobId != null" >
+        and JOB_ID = #{jobId,jdbcType=BIGINT}
+      </if>
+      <if test="jobName != null" >
+        and JOB_NAME = #{jobName,jdbcType=VARCHAR}
+      </if>
+      <if test="startTime != null" >
+        and START_TIME = #{startTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="endTime != null" >
+        and END_TIME = #{endTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="resultFlag != null" >
+        and RESULT_FLAG = #{resultFlag,jdbcType=INTEGER}
+      </if>
+      <if test="description != null" >
+        and DESCRIPTION = #{description,jdbcType=VARCHAR}
+      </if>
+  </sql>
+</mapper>

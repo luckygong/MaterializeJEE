@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans	http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+     	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd" 
+		default-lazy-init="true" >
+
+	<description>MyBatis配置</description>
+	
+	<!-- 引入属性文件 -->
+	<context:property-placeholder location="classpath:jdbc.properties" />
+	
+	<!-- 配置数据源 -->
+	<bean id="phoenixDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">  
+        <property name="driverClassName" value="${jdbc.phoenix.driverClass}" />  
+        <property name="url" value="${jdbc.phoenix.url}" />  
+        <property name="username" value="" />  
+        <property name="password" value="" />  
+       <!-- 初始化连接大小 -->
+		<property name="initialSize" value="6" />
+		<!-- 连接池最大使用连接数量 -->
+		<property name="maxActive" value="20" />
+		<!-- 连接池最小空闲 -->
+		<property name="minIdle" value="3" />
+        <property name="defaultAutoCommit" value="true" />  
+        <property name="validationQuery" value="SELECT 'x'" />
+        <!-- 获取连接最大等待时间 -->
+		<property name="maxWait" value="60000" />
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+    </bean>  
+	
+	<!--定义了MyBatis的SessionFactory -->
+	<bean id="phoenixSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="phoenixDataSource" />
+		<!-- Mybatis的配置文件 -->
+		<property name="configLocation" value="classpath:/mybatis/mybatis-config.xml" />
+		<!-- sqlMapperXml文件 -->
+		<property name="mapperLocations" value="classpath:/mybatis/phoenix/*/*Mapper.xml" />
+	</bean>
+	
+	<!-- 使用 MapperScannerConfigurer, 自动扫描和注册mapper接口,各个 mapper接口创 建对应的 MapperFactoryBean -->
+	<bean id="phoenixScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.materialize.jee.**.phoenixmapper" />
+		<property name="sqlSessionFactoryBeanName" value="phoenixSqlSessionFactory" />
+	</bean>
+	
+	<!-- sqlSessionTemplate -->
+	<bean id="phoenixSqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate"> 
+      	<constructor-arg index="0" ref="phoenixSqlSessionFactory" /> 
+	</bean>
+	
+	<bean id="phoenixJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">  
+        <constructor-arg ref="phoenixDataSource" />  
+        <qualifier value="phoenixJdbcTemplate"></qualifier>  
+    </bean>
+
+</beans>

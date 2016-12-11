@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+	<property>
+	    <name>dfs.namenode.name.dir</name>
+	    <value>file:///opt/data/cluster/hadoop/hdfs/name</value>
+	    <!--namenode 元数据保存目录，默认file://${hadoop.tmp.dir}/dfs/name-->
+	</property>
+	<property>
+	    <name>dfs.namenode.hosts</name>
+	    <value>AIRB-RD-03,AIRB-CUSTOM-01,AIRB-CUSTOM-02</value>
+	    <!--允许连接到namenode节点的datanode节点列表-->
+	</property>
+	<property>
+	    <name>dfs.blocksize</name>
+	    <value>268435456</value>
+	    <!--hdfs文件块大小，默认256M-->
+	</property>
+	<property>
+	    <name>dfs.datanode.data.dir</name>
+	    <value>file:///opt/data/cluster/hadoop/hdfs/data</value>
+	    <!--datanode数据文件保存目录，默认file://${hadoop.tmp.dir}/dfs/data-->
+	</property>
+	<property>
+	    <name>dfs.replication</name>
+	    <value>3</value>
+	    <!--文件块备份数-->
+	</property>
+	<property>
+	    <name>dfs.nameservices</name>
+	    <value>airbcluster</value>
+	    <!--指定hdfs的nameservice --> 
+    	</property>
+        <property>
+            <name>dfs.ha.namenodes.airbcluster </name>
+            <value>nn2</value>
+            <!-- ns1下面有两个NameNode，分别是nn1，nn2 -->
+    	</property>
+        <property>
+            <name>dfs.namenode.rpc-address.airbcluster.nn2</name>
+            <value>AIRB-RD-02:9000</value>
+            <!-- nn2的RPC通信地址 --> 
+    	</property>
+        <property>
+            <name>dfs.namenode.http-address.airbcluster.nn2</name>
+            <value>AIRB-RD-02:50070</value>
+            <!-- nn2的http通信地址 --> 
+    	</property>
+    	<!-- 指定NameNode的元数据在JournalNode上的存放位置 --> 
+	<!--
+        <property>
+            <name>dfs.namenode.shared.edits.dir</name>
+            <value>qjournal://AIRB-RD-03:8485;AIRB-CUSTOM-01:8485;AIRB-CUSTOM-02:8485/share</value>
+             
+    	</property>
+    	-->
+    	<property>
+    	    <name>dfs.journalnode.edits.dir</name>
+    	    <value>/opt/data/cluster/hadoop/journal</value>
+    	    <!-- JournalNode本地数据存放位置 -->
+    	</property>
+    	<property>
+    	    <name>dfs.ha.automatic-failover.enabled.airbcluster</name>
+    	    <value>true</value>
+    	    <!-- 开启自动故障切换 -->
+	</property>
+        <property>
+            <name>dfs.client.failover.proxy.provider.airbcluster </name>
+            <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
+            <!-- 配置失败自动切换实现方式 -->
+    	</property>
+        <property>
+            <name>dfs.ha.fencing.methods</name>
+            <value>sshfence</value>
+            <!-- 配置隔离机制 -->
+    	</property>
+        <property>
+            <name>dfs.ha.fencing.ssh.private-key-files</name>
+            <value>/home/hadoop/.ssh/id_dsa</value>
+            <!-- 使用隔离机制时需要ssh免密码登陆 -->
+   	</property>
+    	<property>
+   	    <name>dfs.ha.fencing.ssh.connect-timeout</name>
+    	    <value>30000</value>
+    	</property>
+</configuration>

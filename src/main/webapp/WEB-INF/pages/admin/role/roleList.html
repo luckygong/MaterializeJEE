@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="msapplication-tap-highlight" content="no">
+<title>角色管理</title>
+
+<script type="text/javascript" src="../../../assets/scripts/path.js"></script>
+<script type="text/javascript" src="../../../assets/scripts/import-files.js"></script>
+
+</head>
+
+<body>
+	<!-- Start Page Loading -->
+	<div id="loader-wrapper">
+		<div id="loader"></div>
+		<div class="loader-section section-left"></div>
+		<div class="loader-section section-right"></div>
+	</div>
+
+	<!-- START HEADER -->
+	<header id="header" class="page-topbar"></header>
+
+	<!-- START MAIN -->
+	<div id="main">
+		<!-- START WRAPPER -->
+		<div class="wrapper">
+
+			<!-- START LEFT SIDEBAR NAV-->
+			<aside id="left-sidebar-nav"></aside>
+
+			<!-- START CONTENT -->
+			<section id="content">
+
+				<!--breadcrumbs start-->
+				<div id="breadcrumbs-wrapper">
+					<div class="container">
+						<div class="row">
+							<div class="col s12 m12 l12">
+								<h5 class="breadcrumbs-title">角色管理</h5>
+								<ol class="breadcrumbs">
+									<li><a
+										href="javascript:window.location.href=getRootPath()+'/pages/home.html';">首页</a></li>
+									<li class="active">系统管理</li>
+									<li class="active">角色管理</li>
+								</ol>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!--start container-->
+				<div class="container">
+					<div id="jsgrid">
+
+						<div class="row">
+							<div class="col s12 m12 l12">
+								<ul class="collapsible collapsible-accordion" data-collapsible="accordion">
+				                  <li>
+				                    <div id="query-header" class="collapsible-header active cyan white-text">
+				                    	<i class="mdi-action-list"></i>查询条件
+				                    </div>
+				                    <div class="collapsible-body light-blue lighten-5">
+				                    	<div class="card-panel">
+											<div class="row">
+												<form id="pageQueryForm" class="col s12">
+													<div class="row">
+														<div class="input-field col s12 m6 l6">
+															<label for="roleName">角色名</label>
+															<input id="roleName" name="roleName" type="text" class="validate">
+														</div>
+														<div class="input-field col s12 m6 l6">
+															<label for="roleCode">角色编码</label>
+															<input id="roleCode" name="roleCode" type="text" class="validate">
+														</div>
+													</div>
+													<div class="row">
+														<div class="input-field col s12 btn-group">
+															<button class="btn yellow darken-4 waves-effect waves-light right resetForm" type="button">
+																重置 <i class="mdi-av-replay right"></i>
+															</button>
+															<button id="submit" class="btn cyan waves-effect waves-light right" type="button">
+																查询 <i class="mdi-content-send right"></i>
+															</button>
+														</div>
+													</div>
+												</form>
+											</div>
+										</div>
+				                    </div>
+				                  </li>
+				            	</ul>
+							</div>
+						</div>
+						
+						<div class="divider"></div>
+						
+						<div class="row">
+							<div class="btn-card col s12 m12 l12">
+								<div class="card">
+			                      <div class="card-action cyan white-text btn-group">
+			                      	<i class="mdi-notification-event-note" style="font-size: 1.6rem;margin-right: 1rem;"></i>查询结果
+			                      	<a class="btn dropdown-button waves-effect waves-light btn-suit right" href="#!" data-activates="dropdown-more">更多<i class="mdi-navigation-arrow-drop-down right"></i></a>
+									<ul id="dropdown-more" class="dropdown-content">
+										<li><a href="#!" class="-text">禁用<i class="mdi-content-remove-circle"></i></a></li>
+										<li><a href="#!" class="-text">还原<i class="mdi-content-remove-circle"></i></a></li>
+									</ul>
+			                        <button id="create" class="btn waves-effect waves-light btn-suit right" type="button">
+										新增 <i class="mdi-content-add-circle"></i>
+									</button>
+			                      </div>
+			                      <div id="page"  class="row">
+				                      <div id="page-content" class="card-content">
+				                      	<table id="queryTable" class="col s12 bordered">
+				                      	</table>
+				                      </div>
+									  <div id="pagination"></div>
+			                      </div>
+			                    </div>
+							</div>
+						</div>
+						
+					</div>
+					<!-- Floating Action Button -->
+					<div id="floatButton" class="fixed-action-btn click-to-toggle hide-on-med-and-down" style="bottom: 50px; right: 19px;"></div>
+					<!-- Floating Action Button -->
+				</div>
+				<!--end container-->
+
+			</section>
+			<!-- END CONTENT -->
+		</div>
+		<!-- END WRAPPER -->
+
+	</div>
+	<!-- END MAIN -->
+
+	<!-- //////////////////////////////////////////////////////////////////////////// -->
+
+	<!-- START FOOTER -->
+	<footer id="page-footer" class="page-footer"></footer>
+	<!-- END FOOTER -->
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			
+			$("#create").click(function(){
+				window.location.href=getRootPath()+'/pages/admin/role/roleCreate.html';
+			});
+			
+			$("#submit").click(function() {
+				initPageData('admin/role/roleList', $("#pageQueryForm").serialize(), "page", 1, 5);
+				$("#query-header").click();
+			});
+		});
+		
+		function initPageTable(queryResult) {
+			var tbody = $('#'+queryResult.pageContentId).find("table");
+			var h = "";
+			var data = queryResult.data.pageData;
+			for (var i = 0; i < data.length; i++) {
+				var role = data[i];
+				h +='<tr>'
+				   	+'<td style="padding-bottom: 0px;padding-top: 0px;">'
+				   		+'<div class="card">'
+				   			+'<div class="card-content">'
+				   				+'<div class="row valign-wrapper">'
+				   					+'<input class="valign" type="checkbox" id="id'+role.id+'" name="id" value="'+role.id+'" /><label for="id'+role.id+'"></label>'
+				   					+'<div class="span-group col s12">'
+									   +'<span class="col s12 m4 l4"><b>角色名：</b>'+role.roleName+'</span>'
+									   +'<span class="col s12 m4 l4"><b>角色编码：</b>'+role.roleCode+'</span>'
+									   +'<span class="hide-on-med-and-down col s12 m4 l4 column-nowrap" title="'+role.description+'"><b>描述 ：</b>'+role.description+'</span>'
+								   +'</div>'
+							   +'</div>'
+				   			+'</div>'
+						   +'<div class="card-action col s12 valign-wrapper">'
+						   	   +'<a class="valign a-update" data="'+role.id+'"><b>修改</b></a>'
+				   			+'</div>'
+				   		+'</div>'
+				   +'</td>'
+				   +'</tr>';
+			}
+			tbody.html(h);
+			var pagination = queryResult.pagination;
+			$('#'+queryResult.pageContentId).find("#pagination").html(pagination);
+			
+			$(".a-update").on('click',function(){
+				var id = $(this).attr("data");
+				window.location.href=getRootPath()+'/pages/admin/role/roleUpdate.html?id='+id;
+			});
+		}
+		
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,2 @@
+项目所在主机需安装Hadoop，并配置HADOOP_HOME环境变量，如果是windows系统，将winutils目录下文件放到HADOOP_HOME/bin下
+项目主机中Hadoop无需配置，但集群中Hadoop配置修改后，需要更新本目录下文件

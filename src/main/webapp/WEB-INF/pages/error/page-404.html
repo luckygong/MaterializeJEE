@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title>404 Error Page</title>
+
+  <script type="text/javascript">
+  function getRootPath(){
+	    //获取当前网址，如： http://localhost:8080/report/login.html
+	    var curWwwPath=window.document.location.href;
+	    //获取主机地址之后的目录，如： report/login.html
+	    var pathName=window.document.location.pathname;
+	    var pos=curWwwPath.indexOf(pathName);
+	    //获取主机地址，如： http://localhost:8080
+	    var localhostPaht=curWwwPath.substring(0,pos);
+	    //获取带"/"的项目名，如：/report
+	    var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
+	    return(localhostPaht+projectName);
+  };
+  
+  +(function(){
+		var a=new Array(getRootPath()+"/assets/css/materialize.css",//CORE CSS
+						getRootPath()+"/assets/css/style.min.css",
+						getRootPath()+"/assets/css/custom/custom.min.css",//Custome CSS
+						getRootPath()+"/assets/js/plugins/perfect-scrollbar/perfect-scrollbar.css",
+						getRootPath()+"/assets/js/plugins/sweetalert/sweetalert.css",
+						getRootPath()+"/assets/js/plugins/dropify/css/dropify.min.css",
+						getRootPath()+"/assets/css/my.css",
+						getRootPath()+"/assets/js/plugins/jquery-1.11.2.min.js",//jQuery Library
+						getRootPath()+"/assets/js/plugins/jquery-cookies/jquery.cookies.min.js",
+						getRootPath()+"/assets/js/plugins/jquery.localize.min.js",
+						getRootPath()+"/assets/js/plugins/jquery-validation/jquery.validate.min.js",
+						getRootPath()+"/assets/js/plugins/jquery-validation/additional-methods.min.js",
+						getRootPath()+"/assets/js/plugins/ajaxfileupload.js",
+						getRootPath()+"/assets/js/plugins/jquery.blockUI.js",
+						getRootPath()+"/assets/js/plugins/jquery.form.js",
+						getRootPath()+"/assets/js/plugins/angular.min.js",//angularjs
+						getRootPath()+"/assets/js/materialize.js",//materialize.js
+						getRootPath()+"/assets/js/plugins/angular-materialize.js",//angular-materialize js
+						getRootPath()+"/assets/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js",//scrollbar.js
+						getRootPath()+"/assets/js/plugins/sweetalert/sweetalert.min.js",//sweetalert.js
+						getRootPath()+"/assets/js/plugins/floatThead/jquery.floatThead.min.js",//floatThead
+						getRootPath()+"/assets/js/plugins/dropify/js/dropify.min.js",
+						getRootPath()+"/assets/js/plugins.js",//custom script
+						getRootPath()+"/assets/scripts/block-ui.js",
+						getRootPath()+"/assets/js/custom-script.js",
+						getRootPath()+"/assets/js/language-cookis.js",
+						getRootPath()+"/assets/scripts/prompt-ui.js"
+		);
+		for(var i=0;i<a.length;i++){
+			var f=a[i];
+			if(f.match(/.*\.css$/)){
+	            document.write('<link href="'+f+'" rel="stylesheet" type="text/css" media="screen,projection"/>');
+			}else if(f.match(/.*\.js$/)){
+				document.write('<script src="' + f + '" type="text/javascript"><\/script>'); 
+			}
+		}
+	})();
+  </script>
+</head>
+
+<body class="cyan">
+  <!-- Start Page Loading -->
+  <div id="loader-wrapper">
+      <div id="loader"></div>        
+      <div class="loader-section section-left"></div>
+      <div class="loader-section section-right"></div>
+  </div>
+  <!-- End Page Loading -->
+
+
+
+  <div id="error-page">
+
+    <div class="row">
+      <div class="col s12">
+        <div class="browser-window">
+          <div class="top-bar">
+            <div class="circles">
+              <div id="close-circle" class="circle"></div>
+              <div id="minimize-circle" class="circle"></div>
+              <div id="maximize-circle" class="circle"></div>
+            </div>
+          </div>
+          <div class="content">
+            <div class="row">
+              <div id="site-layout-example-top" class="col s12">
+                <p class="flat-text-logo center white-text caption-uppercase">Sorry but we couldn’t find this page :(</p>
+              </div>
+              <div id="site-layout-example-right" class="col s12 m12 l12"  style="height: 350px">
+                <div class="row center">
+                  <h6 class="text-long-shadow col s12">404</h6>
+                </div>
+                <div class="row center">
+                  <p class="center white-text col s12">It seems that this page doesn’t exist.</p>
+                  <p class="center s12"><button onclick="goBack()" class="btn waves-effect waves-light">Back</button> <a href="index.html" class="btn waves-effect waves-light">Homepage</a>
+                    <p>
+                    </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <script type="text/javascript">
+    function goBack() {
+      window.history.back();
+    }
+  </script>
+</body>
+
+</html>

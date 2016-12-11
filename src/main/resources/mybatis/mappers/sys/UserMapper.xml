@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.materialize.jee.platform.authorization.mapper.UserMapper">
+	<!-- 所有字段信息 -->
+	<sql id="base_column_List">
+		ID, COMPANY_ID, USERNAME, NIKE_NAME, REAL_NAME, SEX, PASSWORD, AVATAR, TEL_PHONE, PHONE, EMAIL, USER_TYPE, REF_ID, IS_ENABLED, IS_LOCK, CREATE_ID, CREATE_TIME
+	</sql>
+	
+	<!-- 定义resultMap -->
+	<resultMap id="UserResultMap" type="com.materialize.jee.platform.authorization.domain.User">
+		<id column="ID" property="id" jdbcType="BIGINT" />  
+		<result column="USERNAME" property="username" jdbcType="VARCHAR" />  
+		<result column="NIKE_NAME" property="nikeName" jdbcType="VARCHAR" />  
+		<result column="REAL_NAME" property="realName" jdbcType="VARCHAR" />  
+		<result column="SEX" property="sex" jdbcType="CHAR" />  
+		<result column="PASSWORD" property="password" jdbcType="VARCHAR" />  
+		<result column="AVATAR" property="avatar" jdbcType="VARCHAR" />  
+		<result column="TEL_PHONE" property="telPhone" jdbcType="VARCHAR" />  
+		<result column="PHONE" property="phone" jdbcType="VARCHAR" />  
+		<result column="EMAIL" property="email" jdbcType="VARCHAR" />  
+		<result column="USER_TYPE" property="userType" jdbcType="INTEGER" />  
+		<result column="REF_ID" property="refId" jdbcType="BIGINT" />  
+		<result column="COMPANY_ID" property="companyId" jdbcType="BIGINT" />  
+		<result column="IS_ENABLED" property="isEnabled" jdbcType="BIT" />  
+		<result column="IS_LOCK" property="isLock" jdbcType="INTEGER" />  
+		<result column="CREATE_ID" property="createId" jdbcType="BIGINT" />  
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 保存信息 -->
+	<insert id="save" useGeneratedKeys="true" keyProperty="id"
+		parameterType="com.materialize.jee.platform.authorization.domain.User">
+		INSERT INTO SYS_USER
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="username != null">
+				USERNAME,
+			</if>  
+			<if test="nikeName != null">
+				NIKE_NAME,
+			</if>  
+			<if test="realName != null">
+				REAL_NAME,
+			</if>  
+			<if test="sex != null">
+				SEX,
+			</if>  
+			<if test="password != null">
+				PASSWORD,
+			</if>  
+			<if test="avatar != null">
+				AVATAR,
+			</if>  
+			<if test="telPhone != null">
+				TEL_PHONE,
+			</if>  
+			<if test="phone != null">
+				PHONE,
+			</if>  
+			<if test="email != null">
+				EMAIL,
+			</if>  
+			<if test="userType != null">
+				USER_TYPE,
+			</if>  
+			<if test="refId != null">
+				REF_ID,
+			</if>  
+			<if test="companyId != null">
+				COMPANY_ID,
+			</if>  
+			<if test="isEnabled != null">
+				IS_ENABLED,
+			</if>  
+			<if test="isLock != null">
+				IS_LOCK,
+			</if>  
+			<if test="createId != null">
+				CREATE_ID,
+			</if>  
+			<if test="createTime != null">
+				CREATE_TIME,
+			</if>  
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="username != null">
+				#{username,jdbcType=VARCHAR},
+			</if>
+			<if test="nikeName != null">
+				#{nikeName,jdbcType=VARCHAR},
+			</if>
+			<if test="realName != null">
+				#{realName,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				#{sex,jdbcType=CHAR},
+			</if>
+			<if test="password != null">
+				#{password,jdbcType=VARCHAR},
+			</if>
+			<if test="avatar != null">
+				#{avatar,jdbcType=VARCHAR},
+			</if>
+			<if test="telPhone != null">
+				#{telPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				#{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="userType != null">
+				#{userType,jdbcType=INTEGER},
+			</if>
+			<if test="refId != null">
+				#{refId,jdbcType=BIGINT},
+			</if>
+			<if test="companyId != null">
+				#{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="isEnabled != null">
+				#{isEnabled,jdbcType=BIT},
+			</if>
+			<if test="isLock != null">
+				#{isLock,jdbcType=INTEGER},
+			</if>
+			<if test="createId != null">
+				#{createId,jdbcType=BIGINT},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	
+	<!-- 更新信息 -->
+	<update id="update" parameterType="com.materialize.jee.platform.authorization.domain.User">
+		UPDATE SYS_USER
+		<set>
+			USERNAME = #{username,jdbcType=VARCHAR},
+			NIKE_NAME = #{nikeName,jdbcType=VARCHAR},
+			REAL_NAME = #{realName,jdbcType=VARCHAR},
+			SEX = #{sex,jdbcType=CHAR},
+			PASSWORD = #{password,jdbcType=VARCHAR},
+			AVATAR = #{avatar,jdbcType=VARCHAR},
+			TEL_PHONE = #{telPhone,jdbcType=VARCHAR},
+			PHONE = #{phone,jdbcType=VARCHAR},
+			EMAIL = #{email,jdbcType=VARCHAR},
+			USER_TYPE = #{userType,jdbcType=INTEGER},
+			REF_ID = #{refId,jdbcType=BIGINT},
+			COMPANY_ID = #{companyId,jdbcType=BIGINT},
+			IS_ENABLED = #{isEnabled,jdbcType=BIT},
+			IS_LOCK = #{isLock,jdbcType=INTEGER},
+			CREATE_ID = #{createId,jdbcType=BIGINT},
+			CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+		</set>
+		<where>
+			and ID = #{id,jdbcType=BIGINT}
+		</where>
+	</update>
+	
+	<!-- 更新信息 -->
+	<update id="updateSelective" parameterType="com.materialize.jee.platform.authorization.domain.User">
+		UPDATE SYS_USER
+		<set>
+			<if test="username != null">
+				USERNAME = #{username,jdbcType=VARCHAR},
+			</if>
+			<if test="nikeName != null">
+				NIKE_NAME = #{nikeName,jdbcType=VARCHAR},
+			</if>
+			<if test="realName != null">
+				REAL_NAME = #{realName,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				SEX = #{sex,jdbcType=CHAR},
+			</if>
+			<if test="password != null">
+				PASSWORD = #{password,jdbcType=VARCHAR},
+			</if>
+			<if test="avatar != null">
+				AVATAR = #{avatar,jdbcType=VARCHAR},
+			</if>
+			<if test="telPhone != null">
+				TEL_PHONE = #{telPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				PHONE = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				EMAIL = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="userType != null">
+				USER_TYPE = #{userType,jdbcType=INTEGER},
+			</if>
+			<if test="refId != null">
+				REF_ID = #{refId,jdbcType=BIGINT},
+			</if>
+			<if test="companyId != null">
+				COMPANY_ID = #{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="isEnabled != null">
+				IS_ENABLED = #{isEnabled,jdbcType=BIT},
+			</if>
+			<if test="isLock != null">
+				IS_LOCK = #{isLock,jdbcType=INTEGER},
+			</if>
+			<if test="createId != null">
+				CREATE_ID = #{createId,jdbcType=BIGINT},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		<where>
+			and ID = #{id,jdbcType=BIGINT}
+		</where>
+	</update>
+	
+	<!-- 删除信息 -->
+	<delete id="delete" parameterType="com.materialize.jee.platform.authorization.domain.User">
+		DELETE FROM SYS_USER
+		<where>
+			and ID = #{id,jdbcType=BIGINT}
+		</where>
+	</delete>
+	
+	<!-- 查询信息 -->
+	<select id="get" resultMap="UserResultMap">
+		SELECT
+		<include refid="base_column_List" />
+		FROM SYS_USER
+		<where>
+			and ID = #{id,jdbcType=BIGINT}
+		</where>
+	</select>
+	
+	<!-- 查询数量 -->
+	<select id="findCount" resultType="java.lang.Long">
+		SELECT COUNT(1) FROM SYS_USER
+		<where>
+			<include refid="search_fragement" />
+		</where>
+	</select>
+	
+	<!-- 查询(条件) -->
+	<select id="find" resultMap="UserResultMap">
+		SELECT
+		<include refid="base_column_List" />
+		FROM SYS_USER
+		<where>
+			<include refid="search_fragement" />
+		</where>
+		ORDER BY <trim prefix=" " suffix=" " suffixOverrides=",">ID,</trim>
+	</select>
+	
+	<!-- Map拼接语句 -->
+	<sql id="search_fragement">
+		<if test="id!=null">
+			AND ID = #{id}
+		</if>
+		<if test="username!=null">
+			AND USERNAME = #{username}
+		</if>
+		<if test="nikeName!=null">
+			AND NIKE_NAME = #{nikeName}
+		</if>
+		<if test="realName!=null">
+			AND REAL_NAME = #{realName}
+		</if>
+		<if test="sex!=null">
+			AND SEX = #{sex}
+		</if>
+		<if test="password!=null">
+			AND PASSWORD = #{password}
+		</if>
+		<if test="avatar!=null">
+			AND AVATAR = #{avatar}
+		</if>
+		<if test="telPhone!=null">
+			AND TEL_PHONE = #{telPhone}
+		</if>
+		<if test="phone!=null">
+			AND PHONE = #{phone}
+		</if>
+		<if test="email!=null">
+			AND EMAIL = #{email}
+		</if>
+		<if test="userType != null">
+			AND USER_TYPE = #{userType}
+		</if>
+		<if test="refId != null">
+			AND REF_ID = #{refId}
+		</if>
+		<if test="companyId != null">
+			AND COMPANY_ID = #{companyId}
+		</if>
+		<if test="isEnabled!=null">
+			AND IS_ENABLED = #{isEnabled}
+		</if>
+		<if test="isLock!=null">
+			AND IS_LOCK = #{isLock}
+		</if>
+		<if test="createId!=null">
+			AND CREATE_ID = #{createId}
+		</if>
+		<if test="createTime!=null">
+			AND CREATE_TIME = #{createTime}
+		</if>
+		<if test="excludeId!=null">
+			AND ID != #{excludeId}
+		</if>
+	</sql>
+</mapper>

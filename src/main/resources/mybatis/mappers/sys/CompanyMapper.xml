@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.materialize.jee.platform.organization.mapper.CompanyMapper">
+	<!-- 所有字段信息 -->
+	<sql id="base_column_List">
+		ID, COMPANY_NAME, COMPANY_TYPE, PARENT_ID, COMPANY_ADDRESS, COMPANY_TELPHONE, COMPANY_FAX, COMPANY_POST, ORG_CODE, BUSSINESS_LICENCE, COMPANY_LINKMAN, LINKMAN_TELPHONE, DESCRIPTION, ACTIVE_FLAG, CREATE_ID, CREATE_DATE, UPDATE_ID, UPDATE_DATE
+	</sql>
+	
+	<!-- 定义resultMap -->
+	<resultMap id="CompanyResultMap" type="com.materialize.jee.platform.organization.domain.Company">
+		<id column="ID" property="id" jdbcType="BIGINT" />  
+		<result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />  
+		<result column="COMPANY_TYPE" property="companyType" jdbcType="INTEGER" />  
+		<result column="PARENT_ID" property="parentId" jdbcType="BIGINT" />  
+		<result column="COMPANY_ADDRESS" property="companyAddress" jdbcType="VARCHAR" />  
+		<result column="COMPANY_TELPHONE" property="companyTelphone" jdbcType="VARCHAR" />  
+		<result column="COMPANY_FAX" property="companyFax" jdbcType="VARCHAR" />  
+		<result column="COMPANY_POST" property="companyPost" jdbcType="VARCHAR" />  
+		<result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />  
+		<result column="BUSSINESS_LICENCE" property="bussinessLicence" jdbcType="VARCHAR" />  
+		<result column="COMPANY_LINKMAN" property="companyLinkman" jdbcType="VARCHAR" />  
+		<result column="LINKMAN_TELPHONE" property="linkmanTelphone" jdbcType="VARCHAR" />  
+		<result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />  
+		<result column="ACTIVE_FLAG" property="activeFlag" jdbcType="BIT" />  
+		<result column="CREATE_ID" property="createId" jdbcType="BIGINT" />  
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />  
+		<result column="UPDATE_ID" property="updateId" jdbcType="BIGINT" />  
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />  
+	</resultMap>
+
+	<!-- 保存信息 -->
+	<insert id="save" useGeneratedKeys="true" keyProperty="id"
+		parameterType="com.materialize.jee.platform.organization.domain.Company">
+		INSERT INTO SYS_COMPANY
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="companyName != null">
+				COMPANY_NAME,
+			</if>  
+			<if test="companyType != null">
+				COMPANY_TYPE,
+			</if>  
+			<if test="parentId != null">
+				PARENT_ID,
+			</if>  
+			<if test="companyAddress != null">
+				COMPANY_ADDRESS,
+			</if>  
+			<if test="companyTelphone != null">
+				COMPANY_TELPHONE,
+			</if>  
+			<if test="companyFax != null">
+				COMPANY_FAX,
+			</if>  
+			<if test="companyPost != null">
+				COMPANY_POST,
+			</if>  
+			<if test="orgCode != null">
+				ORG_CODE,
+			</if>  
+			<if test="bussinessLicence != null">
+				BUSSINESS_LICENCE,
+			</if>  
+			<if test="companyLinkman != null">
+				COMPANY_LINKMAN,
+			</if>  
+			<if test="linkmanTelphone != null">
+				LINKMAN_TELPHONE,
+			</if>  
+			<if test="description != null">
+				DESCRIPTION,
+			</if>  
+			<if test="activeFlag != null">
+				ACTIVE_FLAG,
+			</if>  
+			<if test="createId != null">
+				CREATE_ID,
+			</if>  
+			<if test="createDate != null">
+				CREATE_DATE,
+			</if>  
+			<if test="updateId != null">
+				UPDATE_ID,
+			</if>  
+			<if test="updateDate != null">
+				UPDATE_DATE,
+			</if>  
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="companyName != null">
+				#{companyName,jdbcType=VARCHAR},
+			</if>
+			<if test="companyType != null">
+				#{companyType,jdbcType=INTEGER},
+			</if>
+			<if test="parentId != null">
+				#{parentId,jdbcType=BIGINT},
+			</if>
+			<if test="companyAddress != null">
+				#{companyAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="companyTelphone != null">
+				#{companyTelphone,jdbcType=VARCHAR},
+			</if>
+			<if test="companyFax != null">
+				#{companyFax,jdbcType=VARCHAR},
+			</if>
+			<if test="companyPost != null">
+				#{companyPost,jdbcType=VARCHAR},
+			</if>
+			<if test="orgCode != null">
+				#{orgCode,jdbcType=VARCHAR},
+			</if>
+			<if test="bussinessLicence != null">
+				#{bussinessLicence,jdbcType=VARCHAR},
+			</if>
+			<if test="companyLinkman != null">
+				#{companyLinkman,jdbcType=VARCHAR},
+			</if>
+			<if test="linkmanTelphone != null">
+				#{linkmanTelphone,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				#{description,jdbcType=VARCHAR},
+			</if>
+			<if test="activeFlag != null">
+				#{activeFlag,jdbcType=BIT},
+			</if>
+			<if test="createId != null">
+				#{createId,jdbcType=BIGINT},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateId != null">
+				#{updateId,jdbcType=BIGINT},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	
+	<!-- 更新信息 -->
+	<update id="update" parameterType="com.materialize.jee.platform.organization.domain.Company">
+		UPDATE SYS_COMPANY
+		<set>
+			COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+			COMPANY_TYPE = #{companyType,jdbcType=INTEGER},
+			PARENT_ID = #{parentId,jdbcType=BIGINT},
+			COMPANY_ADDRESS = #{companyAddress,jdbcType=VARCHAR},
+			COMPANY_TELPHONE = #{companyTelphone,jdbcType=VARCHAR},
+			COMPANY_FAX = #{companyFax,jdbcType=VARCHAR},
+			COMPANY_POST = #{companyPost,jdbcType=VARCHAR},
+			ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+			BUSSINESS_LICENCE = #{bussinessLicence,jdbcType=VARCHAR},
+			COMPANY_LINKMAN = #{companyLinkman,jdbcType=VARCHAR},
+			LINKMAN_TELPHONE = #{linkmanTelphone,jdbcType=VARCHAR},
+			DESCRIPTION = #{description,jdbcType=VARCHAR},
+			ACTIVE_FLAG = #{activeFlag,jdbcType=BIT},
+			CREATE_ID = #{createId,jdbcType=BIGINT},
+			CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+			UPDATE_ID = #{updateId,jdbcType=BIGINT},
+			UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+		</set>
+		<where>
+			and ID = #{id,jdbcType=BIGINT}
+		</where>
+	</update>
+	
+	<!-- 更新信息 -->
+	<update id="updateSelective" parameterType="com.materialize.jee.platform.organization.domain.Company">
+		UPDATE SYS_COMPANY
+		<set>
+			<if test="companyName != null">
+				COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+			</if>
+			<if test="companyType != null">
+				COMPANY_TYPE = #{companyType,jdbcType=INTEGER},
+			</if>
+			<if test="parentId != null">
+				PARENT_ID = #{parentId,jdbcType=BIGINT},
+			</if>
+			<if test="companyAddress != null">
+				COMPANY_ADDRESS = #{companyAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="companyTelphone != null">
+				COMPANY_TELPHONE = #{companyTelphone,jdbcType=VARCHAR},
+			</if>
+			<if test="companyFax != null">
+				COMPANY_FAX = #{companyFax,jdbcType=VARCHAR},
+			</if>
+			<if test="companyPost != null">
+				COMPANY_POST = #{companyPost,jdbcType=VARCHAR},
+			</if>
+			<if test="orgCode != null">
+				ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+			</if>
+			<if test="bussinessLicence != null">
+				BUSSINESS_LICENCE = #{bussinessLicence,jdbcType=VARCHAR},
+			</if>
+			<if test="companyLinkman != null">
+				COMPANY_LINKMAN = #{companyLinkman,jdbcType=VARCHAR},
+			</if>
+			<if test="linkmanTelphone != null">
+				LINKMAN_TELPHONE = #{linkmanTelphone,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				DESCRIPTION = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="activeFlag != null">
+				ACTIVE_FLAG = #{activeFlag,jdbcType=BIT},
+			</if>
+			<if test="createId != null">
+				CREATE_ID = #{createId,jdbcType=BIGINT},
+			</if>
+			<if test="createDate != null">
+				CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateId != null">
+				UPDATE_ID = #{updateId,jdbcType=BIGINT},
+			</if>
+			<if test="updateDate != null">
+				UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		<where>
+			and ID = #{id,jdbcType=BIGINT}
+		</where>
+	</update>
+	
+	<!-- 删除信息 -->
+	<delete id="delete" parameterType="com.materialize.jee.platform.organization.domain.Company">
+		DELETE FROM SYS_COMPANY
+		<where>
+			and ID = #{id,jdbcType=BIGINT}
+		</where>
+	</delete>
+	
+	<!-- 查询信息 -->
+	<select id="get" resultMap="CompanyResultMap">
+		SELECT
+		<include refid="base_column_List" />
+		FROM SYS_COMPANY
+		<where>
+			and ID = #{id,jdbcType=BIGINT}
+		</where>
+	</select>
+	
+	<!-- 查询数量 -->
+	<select id="findCount" resultType="java.lang.Integer">
+		SELECT COUNT(1) FROM SYS_COMPANY
+		<where>
+			<include refid="search_fragement" />
+		</where>
+	</select>
+	
+	<!-- 查询(条件) -->
+	<select id="find" resultMap="CompanyResultMap">
+		SELECT
+		<include refid="base_column_List" />
+		FROM SYS_COMPANY
+		<where>
+			<include refid="search_fragement" />
+		</where>
+		ORDER BY <trim prefix=" " suffix=" " suffixOverrides=",">ID DESC,</trim>
+	</select>
+	
+	<!-- Map拼接语句 -->
+	<sql id="search_fragement">
+		<if test="id != null">
+			AND ID = #{id,jdbcType=BIGINT}
+		</if>
+		<if test="companyName != null">
+			AND COMPANY_NAME = #{companyName,jdbcType=VARCHAR}
+		</if>
+		<if test="companyType != null">
+			AND COMPANY_TYPE = #{companyType,jdbcType=INTEGER}
+		</if>
+		<if test="parentId != null">
+			AND PARENT_ID = #{parentId,jdbcType=BIGINT}
+		</if>
+		<if test="companyAddress != null">
+			AND COMPANY_ADDRESS = #{companyAddress,jdbcType=VARCHAR}
+		</if>
+		<if test="companyTelphone != null">
+			AND COMPANY_TELPHONE = #{companyTelphone,jdbcType=VARCHAR}
+		</if>
+		<if test="companyFax != null">
+			AND COMPANY_FAX = #{companyFax,jdbcType=VARCHAR}
+		</if>
+		<if test="companyPost != null">
+			AND COMPANY_POST = #{companyPost,jdbcType=VARCHAR}
+		</if>
+		<if test="orgCode != null">
+			AND ORG_CODE = #{orgCode,jdbcType=VARCHAR}
+		</if>
+		<if test="bussinessLicence != null">
+			AND BUSSINESS_LICENCE = #{bussinessLicence,jdbcType=VARCHAR}
+		</if>
+		<if test="companyLinkman != null">
+			AND COMPANY_LINKMAN = #{companyLinkman,jdbcType=VARCHAR}
+		</if>
+		<if test="linkmanTelphone != null">
+			AND LINKMAN_TELPHONE = #{linkmanTelphone,jdbcType=VARCHAR}
+		</if>
+		<if test="description != null">
+			AND DESCRIPTION = #{description,jdbcType=VARCHAR}
+		</if>
+		<if test="activeFlag != null">
+			AND ACTIVE_FLAG = #{activeFlag,jdbcType=BIT}
+		</if>
+		<if test="createId != null">
+			AND CREATE_ID = #{createId,jdbcType=BIGINT}
+		</if>
+		<if test="createDate != null">
+			AND CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateId != null">
+			AND UPDATE_ID = #{updateId,jdbcType=BIGINT}
+		</if>
+		<if test="updateDate != null">
+			AND UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="noAuth != null">
+			AND 1=2
+		</if>
+	</sql>
+</mapper>

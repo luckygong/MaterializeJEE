@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.materialize.jee.platform.batch.mapper.MapreduceBatchJobMapper" >
+  <resultMap id="BaseResultMap" type="com.materialize.jee.platform.batch.domain.MapreduceBatchJob" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="JOB_CODE" property="jobCode" jdbcType="VARCHAR" />
+    <result column="JOB_DESC" property="jobDesc" jdbcType="VARCHAR" />
+    <result column="RUN_TYPE" property="runType" jdbcType="INTEGER" />
+    <result column="JOB_TYPE" property="jobType" jdbcType="INTEGER" />
+    <result column="RUN_TIMES" property="runTimes" jdbcType="INTEGER" />
+    <result column="CREATE_ID" property="createId" jdbcType="BIGINT" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <collection property="steps" ofType="com.materialize.jee.platform.batch.domain.MapreduceBatchJobStep">
+		<id column="STEP_ID" property="id"/>
+	    <result column="STEP_CODE" property="stepCode" />
+	    <result column="STEP_DESC" property="stepDesc"/>
+	    <result column="LOCAL_JAR_FILE" property="localJarFile" />
+	    <result column="RUN_CLASS" property="runClass" />
+	    <result column="RANKING" property="ranking" />
+	    <result column="PARENT_STEP_ID" property="parentStepId" />
+	    <result column="CHILD_STEP_ID" property="childStepId" />
+	</collection>
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    job.ID, job.JOB_CODE, job.JOB_DESC, job.RUN_TYPE, job.JOB_TYPE, job.RUN_TIMES, job.CREATE_ID, job.CREATE_TIME,
+    step.ID STEP_ID, step.STEP_CODE, step.STEP_DESC, step.LOCAL_JAR_FILE, step.RUN_CLASS, step.RUN_CLASS, step.RANKING,
+    step.PARENT_STEP_ID, step.CHILD_STEP_ID
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select 
+	<include refid="Base_Column_List" />
+    from SYS_MAPREDUCE_BATCH_JOB job
+    left join SYS_MAPREDUCE_BATCH_JOB_STEP step on step.JOB_ID = job.ID
+    where job.ID = #{id,jdbcType=BIGINT}
+    order by job.ID,step.RANKING ASC
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_MAPREDUCE_BATCH_JOB
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <insert id="insert" parameterType="com.materialize.jee.platform.batch.domain.MapreduceBatchJob" 
+  	useGeneratedKeys="true" keyProperty="id">
+    insert into SYS_MAPREDUCE_BATCH_JOB (ID, JOB_CODE, JOB_DESC, 
+      RUN_TYPE, JOB_TYPE, RUN_TIMES, 
+      CREATE_ID, CREATE_TIME)
+    values (#{id,jdbcType=BIGINT}, #{jobCode,jdbcType=VARCHAR}, #{jobDesc,jdbcType=VARCHAR}, 
+      #{runType,jdbcType=INTEGER}, #{jobType,jdbcType=INTEGER}, #{runTimes,jdbcType=INTEGER}, 
+      #{createId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.materialize.jee.platform.batch.domain.MapreduceBatchJob" >
+    update SYS_MAPREDUCE_BATCH_JOB
+    set JOB_CODE = #{jobCode,jdbcType=VARCHAR},
+      JOB_DESC = #{jobDesc,jdbcType=VARCHAR},
+      RUN_TYPE = #{runType,jdbcType=INTEGER},
+      JOB_TYPE = #{jobType,jdbcType=INTEGER},
+      RUN_TIMES = #{runTimes,jdbcType=INTEGER},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateSelectiveByPrimaryKey" parameterType="com.materialize.jee.platform.batch.domain.MapreduceBatchJob" >
+    update SYS_MAPREDUCE_BATCH_JOB
+    <set >
+      <if test="jobCode != null" >
+        JOB_CODE = #{jobCode,jdbcType=VARCHAR},
+      </if>
+      <if test="jobDesc != null" >
+        JOB_DESC = #{jobDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="runType != null" >
+        RUN_TYPE = #{runType,jdbcType=INTEGER},
+      </if>
+      <if test="jobType != null" >
+        JOB_TYPE = #{jobType,jdbcType=INTEGER},
+      </if>
+      <if test="runTimes != null" >
+        RUN_TIMES = #{runTimes,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null" >
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="findBy" resultMap="BaseResultMap" parameterType="java.util.Map">
+	select
+	<include refid="Base_Column_List" />
+	from SYS_MAPREDUCE_BATCH_JOB job
+    left join SYS_MAPREDUCE_BATCH_JOB_STEP step on step.JOB_ID = job.ID
+	<where>
+		<include refid="where_map" />
+	</where>
+  </select>
+  
+  <select id="findCountBy" parameterType="java.util.Map">
+	select IFNULL(COUNT(1),0)
+	from SYS_MAPREDUCE_BATCH_JOB job
+    left join SYS_MAPREDUCE_BATCH_JOB_STEP step on step.JOB_ID = job.ID
+	<where>
+		<include refid="where_map" />
+	</where>
+  </select>
+  
+  <sql id="where_map">
+      <if test="jobCode != null" >
+        and job.JOB_CODE = #{jobCode,jdbcType=VARCHAR}
+      </if>
+      <if test="jobDesc != null" >
+        and job.JOB_DESC = #{jobDesc,jdbcType=VARCHAR}
+      </if>
+      <if test="runType != null" >
+        and job.RUN_TYPE = #{runType,jdbcType=INTEGER}
+      </if>
+      <if test="jobType != null" >
+        and job.JOB_TYPE = #{jobType,jdbcType=INTEGER}
+      </if>
+      <if test="runTimes != null" >
+        and job.RUN_TIMES = #{runTimes,jdbcType=INTEGER}
+      </if>
+      <if test="createId != null" >
+        and job.CREATE_ID = #{createId,jdbcType=BIGINT}
+      </if>
+      <if test="createTime != null" >
+        and job.CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="id != null" >
+        and job.ID = #{id,jdbcType=BIGINT}
+      </if>
+  </sql>
+</mapper>
