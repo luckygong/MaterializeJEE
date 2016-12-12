@@ -10,7 +10,7 @@
 >常用maven命令：flyway:clean ,flyway:migrate  
 
 2. ORM为mybatis，并配置了mysql和Phoenix双数据源，phoenix可用于操作hbase数据库    
->需要启用Phoenix数据源时，将spring-context-mybatis-phoenix.xml中default-lazy-init设置为true，否则首次连接耗时较长    
+>需要启用Phoenix数据源时，将spring-context-datasourse.xml中phoenix配置注释取消    
 >同时，jdbc.properties文件中dbc.phoenix.url配置hbase集群zookeeper地址    
 >mysql的mapper文件路径：resources/mybatis/mappers/  
 >phoenix的mapper文件路径：resources/mybatis/phoenix/  
@@ -48,6 +48,13 @@
 >select-dropdown：自动从后台数据字典表中加载下拉框选项；或加载数据字典到map中
 >header：加载页面顶部导航条
 >left-sidebar：加载页面左侧菜单栏
+
+4. 用户上传的文件设计为保存在ftp/sftp工作目录下
+>将文件保存在项目目录外部，再配置apache或nginx进行访问
+>前端中有3个路径，配置在path.js中，分别为：
+>>RootPath：前端访问路径，若未使用apache或nginx单独部署，则与ProjectPath相同
+>>ProjectPath：前端ajax请求后台数据路径
+>>FtpWebPath：访问用户上传资源路径
 
 ###前端效果展示
 
