@@ -33,7 +33,7 @@ insert  into `SYS_RESOURCE`(`ID`,`NAME`,`TYPE`,`IS_DIRECTORY`,`VALUE`,`ICON`,`PA
 
 
 #用户数据
-insert into `SYS_USER` (`ID`, `USERNAME`, `NIKE_NAME`, `REAL_NAME`, `SEX`, `PASSWORD`, `AVATAR`, `TEL_PHONE`, `PHONE`, `EMAIL`, `USER_TYPE`, `IS_ENABLED`, `IS_LOCK`, `CREATE_ID`, `CREATE_TIME`) values('1','zhaosk','不动明王','shukun','M','d215288e9ea0159c5a246c0374649803','assets/images/avatar.jpg',NULL,'18663875410','893599733@qq.com','3','1','0',NULL,'2016-06-07 22:34:24');
+insert into `SYS_USER` (`ID`, `USERNAME`, `NIKE_NAME`, `REAL_NAME`, `SEX`, `PASSWORD`, `AVATAR`, `TEL_PHONE`, `PHONE`, `EMAIL`, `USER_TYPE`, `IS_ENABLED`, `IS_LOCK`, `CREATE_ID`, `CREATE_TIME`) values('1','zhaosk','不动明王','shukun','1','d215288e9ea0159c5a246c0374649803','assets/images/avatar.jpg',NULL,'18663875410','893599733@qq.com','3','1','0',NULL,'2016-06-07 22:34:24');
 
 #用户机构关系
 insert into `SYS_USER_ORGANIZATION` (`ID`, `USER_ID`, `ORGANIZATION_ID`) values('1','1','5');
