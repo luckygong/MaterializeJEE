@@ -33,28 +33,28 @@
 
 ###前端
 
-1. jquery + html 架构 ，前后端数据交互采用json格式 
+1. jquery + html 架构 ，前后端数据交互采用json格式   
 >理论上可以使用apache或nginx独立部署，但还没实验过，不知是否会出现跨域问题。  
 
-2. 使用materialize template的html模板
->materialize是基于谷歌Material Design Language(MDL)设计语言所构建的一套CSS/HTML库 
->能适应手机、平板等小屏设备 
+2. 使用materialize template的html模板      
+>materialize是基于谷歌Material Design Language(MDL)设计语言所构建的一套CSS/HTML库          
+>能适应手机、平板等小屏设备     
 
-3. 对前端常用功能进行了封装。脚本位于webapp/assets/scripts
->bind-data：根据json数据，自动回填数据到表单，适合修改功能页面数据的初始化
->block-ui：遮罩层
->page-plugin：分页查询组件
->prompt-ui：materialize风格消息提示的封装，相当于alert、confirm
->select-dropdown：自动从后台数据字典表中加载下拉框选项；或加载数据字典到map中
->header：加载页面顶部导航条
->left-sidebar：加载页面左侧菜单栏
+3. 对前端常用功能进行了封装。脚本位于webapp/assets/scripts  
+>bind-data：根据json数据，自动回填数据到表单，适合修改功能页面数据的初始化  
+>block-ui：遮罩层   
+>page-plugin：分页查询组件   
+>prompt-ui：materialize风格消息提示的封装，相当于alert、confirm   
+>select-dropdown：自动从后台数据字典表中加载下拉框选项；或加载数据字典到map中   
+>header：加载页面顶部导航条   
+>left-sidebar：加载页面左侧菜单栏   
 
-4. 用户上传的文件设计为保存在ftp/sftp工作目录下
->将文件保存在项目目录外部，再配置apache或nginx进行访问
->前端中有3个路径，配置在path.js中，分别为：
->>RootPath：前端访问路径，若未使用apache或nginx单独部署，则与ProjectPath相同
->>ProjectPath：前端ajax请求后台数据路径
->>FtpWebPath：访问用户上传资源路径
+4. 用户上传的文件设计为保存在ftp/sftp工作目录下    
+>将文件保存在项目目录外部，再配置apache或nginx进行访问    
+>前端中有3个路径，配置在path.js中，分别为：   
+>>RootPath：前端访问路径，若未使用apache或nginx单独部署，则与ProjectPath相同   
+>>ProjectPath：前端ajax请求后台数据路径   
+>>FtpWebPath：访问用户上传资源路径   
 
 ###前端效果展示
 
