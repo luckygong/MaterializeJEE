@@ -3198,8 +3198,8 @@ Vel = $ ? $.Velocity : Velocity, function(a) {
         };
         var c = "input[type=text], input[type=password], input[type=email], input[type=url], input[type=tel], input[type=number], input[type=search], textarea";
         a("input[autofocus]").siblings("label, i").addClass("active"), a(document).on("change", c, function() {
-            (0 !== a(this).val().length || void 0 !== a(this).attr("placeholder")) && a(this).siblings("label").addClass("active"), 
-            validate_field(a(this));
+            (0 !== a(this).val().length || void 0 !== a(this).attr("placeholder")) && a(this).siblings("label").addClass("active"); 
+            //validate_field(a(this));
         }), a(document).ready(function() {
             Materialize.updateTextFields();
         }), a(document).on("reset", function(b) {
@@ -4355,7 +4355,7 @@ Vel = $ ? $.Velocity : Velocity, function(a) {
             a = null != i ? i.day : h.day;
             var b = c.weekdaysFull[a];
             return b;
-        }, f.node("div", f.node("div", createWeekdayLabel(), "picker__weekday-display") + f.node("div", q("short_months"), c.klass.month_display) + f.node("div", createDayLabel(), c.klass.day_display) + f.node("div", r("raw"), c.klass.year_display), c.klass.date_display) + f.node("div", f.node("div", (c.selectYears ? q() + r() : q() + r()) + p() + p(1), c.klass.header) + f.node("table", o + f.node("tbody", f.group({
+        }, f.node("div", f.node("div", q("short_months"), c.klass.month_display) + f.node("div", createDayLabel(), c.klass.day_display) + f.node("div", r("raw"), c.klass.year_display), c.klass.date_display) + f.node("div", f.node("div", (c.selectYears ? q() + r() : q() + r()) + p() + p(1), c.klass.header) + f.node("table", o + f.node("tbody", f.group({
             min: 0,
             max: e - 1,
             i: 1,
@@ -4401,19 +4401,19 @@ Vel = $ ? $.Velocity : Velocity, function(a) {
         })), c.klass.footer);
     }, c.defaults = function(a) {
         return {
-            labelMonthNext: "Next month",
-            labelMonthPrev: "Previous month",
-            labelMonthSelect: "Select a month",
-            labelYearSelect: "Select a year",
-            monthsFull: [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ],
-            monthsShort: [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ],
-            weekdaysFull: [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ],
-            weekdaysShort: [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" ],
-            weekdaysLetter: [ "S", "M", "T", "W", "T", "F", "S" ],
-            today: "Today",
-            clear: "Clear",
-            close: "Close",
-            format: "d mmmm, yyyy",
+            labelMonthNext: "下一月",
+            labelMonthPrev: "上一月",
+            labelMonthSelect: "选择年",
+            labelYearSelect: "选择月",
+            monthsFull: [ "一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月" ],
+            monthsShort: [ "一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月" ],
+            weekdaysFull: [ "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
+            weekdaysShort: [ "日", "一", "二", "三", "四", "五", "六"],
+            weekdaysLetter: [ "日", "一", "二", "三", "四", "五", "六" ],
+            today: "今日",
+            clear: "清除",
+            close: "关闭",
+            format: "yyyy-mm-dd",
             klass: {
                 table: a + "table",
                 header: a + "header",

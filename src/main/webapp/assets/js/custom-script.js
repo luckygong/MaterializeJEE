@@ -28,7 +28,8 @@ $(function() {
 		 $(this).closest("form").get(0).reset();
 	 });
 	 
-	 $(".timepicker").click(function(){
+	 $(".md_timepicker").click(function(event){
+		 event.preventDefault();
 		 moment.locale("zh-cn");
 		 var date = new Date();
 		 var c = new mdDateTimePicker.default({

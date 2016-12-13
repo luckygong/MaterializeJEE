@@ -1192,11 +1192,6 @@ return _.node(
         // Date presentation View
         'div',
             _.node(
-                'div',
-                createWeekdayLabel(),
-                "picker__weekday-display"
-            )+
-            _.node(
                 // Div for short Month
                 'div',
                 createMonthLabel("short_months"),
