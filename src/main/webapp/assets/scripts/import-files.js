@@ -12,6 +12,7 @@
 					getRootPath()+"/assets/js/plugins/jquery.nestable/nestable.css",
 					getRootPath()+"/assets/js/plugins/sweetalert/sweetalert.css",
 					getRootPath()+"/assets/js/plugins/dropify/css/dropify.min.css",
+					getRootPath()+"/assets/js/plugins/md-datetime-picker/css/mdDateTimePicker.min.css",
 					getRootPath()+"/assets/css/my.css"
 	);
 	for(var i=0;i<a.length;i++){
@@ -41,6 +42,11 @@
 			getRootPath()+"/assets/js/plugins/sweetalert/sweetalert.min.js",//sweetalert.js
 			getRootPath()+"/assets/js/plugins/floatThead/jquery.floatThead.min.js",//floatThead
 			getRootPath()+"/assets/js/plugins/dropify/js/dropify.min.js",
+			getRootPath()+"/assets/js/plugins/md-datetime-picker/js/moment.min.js",
+			getRootPath()+"/assets/js/plugins/md-datetime-picker/js/lang/zh-cn.js",
+			getRootPath()+"/assets/js/plugins/md-datetime-picker/js/scroll-into-view-if-needed.min.js",
+			getRootPath()+"/assets/js/plugins/md-datetime-picker/js/draggabilly.pkgd.min.js",
+			getRootPath()+"/assets/js/plugins/md-datetime-picker/js/mdDateTimePicker.min.js",
 			getRootPath()+"/assets/js/plugins.js",//custom script
 			getRootPath()+"/assets/js/custom-script.js",
 			getRootPath()+"/assets/js/language-cookis.js",

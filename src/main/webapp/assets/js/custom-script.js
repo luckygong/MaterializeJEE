@@ -28,6 +28,21 @@ $(function() {
 		 $(this).closest("form").get(0).reset();
 	 });
 	 
+	 $(".timepicker").click(function(){
+		 moment.locale("zh-cn");
+		 var date = new Date();
+		 var c = new mdDateTimePicker.default({
+		      type: 'time',
+		      init: moment(date.getHours()+":"+date.getMinutes(), 'H:mm'),
+		      mode: true,
+		      orientation: 'PORTRAIT'
+		    });
+		 c.toggle();
+		 c.trigger = this;
+		 this.addEventListener('onOk', function() {
+		      this.value = moment(c.time).format("HH:mm");
+		 });
+	 });
 });
 
 function isEmpty(value){
