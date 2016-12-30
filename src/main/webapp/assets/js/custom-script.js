@@ -28,6 +28,17 @@ $(function() {
 		 $(this).closest("form").get(0).reset();
 	 });
 	 
+	 $("div").delegate(".reveal-progress-next","click",function(e){
+		 e.stopPropagation();
+		 $(this).closest(".reveal").find(".controls .navigate-right").click();
+		 return;
+	 });
+	 
+	 $("div").delegate(".reveal-progress-pre","click",function(e){
+		 e.stopPropagation();
+		 $(this).closest(".reveal").find(".controls .navigate-left").click();
+		 return;
+	 });
 });
 
 function isEmpty(value){

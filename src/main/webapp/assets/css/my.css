@@ -131,7 +131,7 @@ td > img{
 	width:40px;
 }
 
-.btn-group button,a{
+.btn-group>button, .btn-group>a{
 	margin-right: 5px;
 }
 
