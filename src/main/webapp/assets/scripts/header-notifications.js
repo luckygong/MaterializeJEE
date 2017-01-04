@@ -11,7 +11,7 @@ $(window).load(function() {
 	+'</li>';
 	$("#notifications-dropdown").html(h);
 	
-	var h2='<ul id="chat-out" class="side-nav rightside-navigation" style="height:'+window.innerHeight+'">'
+	var h2='<ul id="chat-out" class="side-nav rightside-navigation hide-on-med-and-down" style="height:'+window.innerHeight+'">'
 		+'<li class="li-hover">'
 		+'<a href="#" data-activates="chat-out" class="chat-close-collapse right"><i class="mdi-navigation-close"></i></a>'
 		+'<div class="row"></div>'

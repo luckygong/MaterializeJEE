@@ -7,9 +7,10 @@
 ##一. 更新内容
 1.2016-12-17 添加自己实现的日期和时间选择控件，效果见：[Material-Date-Time-Picker](https://github.com/shukun-zhao/Material-Date-Time-Picker)      
 2.2016-12-30 增加幻灯片侧边滑动效果式用户引导页面，效果见下文     
+3.2016-01-03 图片异步加载        
 
   
-##二. 描述
+##二. 工程描述
 ##a. 后台
 
 ####1. 数据库脚本使用flyway插件进行管理.      
