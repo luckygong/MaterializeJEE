@@ -13,6 +13,7 @@ var Reveal = (function(){
 		HORIZONTAL_SLIDES_SELECTOR = '.reveal .slides>section',
 		VERTICAL_SLIDES_SELECTOR = '.reveal .slides>section.present>section',
 		HOME_SLIDE_SELECTOR = '.reveal .slides>section:first-of-type',
+		WINDOW_SCREEN_HEIGHT = $(window).height(),
 
 		// Configurations defaults, can be overridden at initialization time
 		config = {
@@ -20,7 +21,7 @@ var Reveal = (function(){
 			// The "normal" size of the presentation, aspect ratio will be preserved
 			// when the presentation is scaled to fit different resolutions
 			//width: 960,
-			height: 500,
+			height: WINDOW_SCREEN_HEIGHT - 120,
 
 			// Factor of the display size that should remain empty around the content
 			margin: 0.1,
@@ -33,7 +34,7 @@ var Reveal = (function(){
 			controls: true,
 
 			// Display a presentation progress bar
-			progress: true,
+			progress: false,
 
 			// Display the page number of the current slide
 			slideNumber: false,

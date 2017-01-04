@@ -14,7 +14,7 @@ $(document).ready(function(){
 					+'<li class="user-details cyan darken-2">'
 					+'<div class="row">'
                     +'<div class="col col s4 m4 l4">'
-                  	+'<img src="'+getFtpWebPath()+'/'+result.data.avatar+'" alt="" class="circle responsive-img valign profile-image">'
+                  	+'<img data-original="'+getFtpWebPath()+'/'+result.data.avatar+'" src="'+getRootPath()+'/assets/images/avatar.jpg" class="circle responsive-img valign profile-image lazy">'
                   	+'</div>'
                   	+'<div class="col col s8 m8 l8">'
                   	+'<ul id="profile-dropdown" class="dropdown-content">'
@@ -60,6 +60,7 @@ $(document).ready(function(){
                 });
                 
                 $('.collapsible').collapsible();
+                $("img.lazy").lazyload();
                 
                 // Perfect Scrollbar
                 $('select').not('.disabled').material_select();

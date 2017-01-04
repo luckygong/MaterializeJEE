@@ -3216,7 +3216,7 @@ Vel = $ ? $.Velocity : Velocity, function(a) {
             var b = a(this);// remove b.siblings("label")
             0 === b.val().length && b[0].validity.badInput !== !0 && void 0 === b.attr("placeholder") && b.siblings("i").removeClass("active"), 
             0 === b.val().length && b[0].validity.badInput !== !0 && void 0 !== b.attr("placeholder") && b.siblings("i").removeClass("active")
-            ;//, validate_field(b);
+            , validate_field(b);
         }), window.validate_field = function(a) {//modify by zhaosk
             var b = void 0 !== a.attr("length"), c = parseInt(a.attr("length")), d = a.val().length;
             0 === a.val().length && a[0].validity.badInput === !1 ? a.hasClass("validate") && (a.removeClass("valid"), 

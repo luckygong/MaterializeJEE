@@ -42,7 +42,7 @@
                 <div class="container">
                 <div class="row">
         
-			       <div class="reveal col s12">
+			       <div class="reveal rightside-navigation col s12">
 			
 						<!-- Any section element inside of this container is displayed as a slide -->
 						<div class="slides">
@@ -214,11 +214,6 @@
     <script type="text/javascript">
     $(window).load(function() {
     	Reveal.initialize({
-			controls: true,
-			progress: true,
-			history: true,
-			center: true,
-
 			transition: 'slide', // none/fade/slide/convex/concave/zoom
 
 			// Optional reveal.js plugins
@@ -232,6 +227,14 @@
                 { src: '../assets/js/plugins/teaching-materials/plugin/accessibility-helper/js/accessibility-helper.js', async: true, condition: function() { return !!document.body.classList; } }
 			]
 		});
+    	
+    	$('.slides section').collapsible({
+    	    accordion: false
+    	});
+    	var righttnav = $(".slides").height();
+    	$('.rightside-navigation').height(righttnav).perfectScrollbar({
+    		suppressScrollX: true
+    	});
     });
     </script>
 </body>

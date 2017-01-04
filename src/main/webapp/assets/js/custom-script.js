@@ -31,12 +31,14 @@ $(function() {
 	 $("div").delegate(".reveal-progress-next","click",function(e){
 		 e.stopPropagation();
 		 $(this).closest(".reveal").find(".controls .navigate-right").click();
+		 $('.reveal').animate({ scrollTop: 0 }, 200);
 		 return;
 	 });
 	 
 	 $("div").delegate(".reveal-progress-pre","click",function(e){
 		 e.stopPropagation();
 		 $(this).closest(".reveal").find(".controls .navigate-left").click();
+		 $('.reveal').animate({ scrollTop: 0 }, 200);
 		 return;
 	 });
 });

@@ -33,6 +33,7 @@
 			getRootPath()+"/assets/js/plugins/jquery-validation/additional-methods.min.js",
 			getRootPath()+"/assets/js/plugins/jquery.nestable/jquery.nestable.js",
 			getRootPath()+"/assets/js/plugins/ajaxfileupload.js",
+			getRootPath()+"/assets/js/plugins/jquery.lazyload.js",
 			getRootPath()+"/assets/js/plugins/jquery.blockUI.js",
 			getRootPath()+"/assets/js/plugins/jquery.form.js",
 			getRootPath()+"/assets/js/plugins/angular.min.js",//angularjs
