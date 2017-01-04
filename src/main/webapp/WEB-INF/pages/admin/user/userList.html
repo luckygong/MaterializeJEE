@@ -177,7 +177,7 @@
 			var user = data[i];
 			h +='<tr>'
 			   +'<td><input class="id" type="checkbox" id="id'+user.id+'" name="id" value="'+user.id+'" /><label for="id'+user.id+'"></label></td>'
-			   +'<td><img src="'+getFtpWebPath()+'/'+user.avatar+'" alt="" class="circle"></td>'
+			   +'<td><img data-original="'+getFtpWebPath()+'/'+user.avatar+'" alt="" class="circle lazy"></td>'
 			   +'<td>' + user.username + '</td>'
 			   +'<td>' + user.realName + '</td>'
 			   +'<td>' + sexMap[user.sex] + '</td>'
@@ -194,6 +194,7 @@
 		tbody.html(h);
 		
 		$('.dropdown-button').initDynDropDown();
+		setTimeout("$('img.lazy').lazyload();",400); 
 	}
 		
 	</script>

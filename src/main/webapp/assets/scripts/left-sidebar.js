@@ -60,7 +60,6 @@ $(document).ready(function(){
                 });
                 
                 $('.collapsible').collapsible();
-                $("img.lazy").lazyload();
                 
                 // Perfect Scrollbar
                 $('select').not('.disabled').material_select();
@@ -79,6 +78,7 @@ $(document).ready(function(){
                     	}
                     }
                 });
+                setTimeout("$('img.lazy').lazyload();",400); 
 			}else{
 				Message.danger({"message":"菜单加载失败，将返回登录页面","callBack":function(){window.location.href=getRootPath()+'/login.html';}});
 			}

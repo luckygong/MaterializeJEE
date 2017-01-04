@@ -339,7 +339,7 @@
 			var em = data[i];
 			
 			h+='<li class="collection-item avatar">'
-			+'<img src="'+getFtpWebPath()+'/assets/images/avatar.jpg" alt="" class="circle">'
+			+'<img data-original="'+getFtpWebPath()+'/assets/images/avatar.jpg" alt="" class="circle lazy">'
 			+'<span class="title">'+em.name+'</span>'
 			+'<p>'+em.phone
 			+'</p>'
@@ -363,6 +363,8 @@
 			}
 			$(".modal-close").click();
 		});
+		
+		setTimeout("$('img.lazy').lazyload();",400); 
 	}
 </script>
 </body>

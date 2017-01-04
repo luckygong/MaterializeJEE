@@ -182,7 +182,7 @@
 							   +'</div>'
 				   			+'</div>'
 						   +'<div class="card-action col s12 valign-wrapper">'
-								+'<img src="'+getFtpWebPath()+'/assets/images/avatar.jpg" alt="" class="circle">'
+								+'<img data-original="'+getFtpWebPath()+'/assets/images/avatar.jpg" alt="" class="circle lazy">'
 						   	   +'<a class="valign"><b>详情</b></a>'
 						   	   +'<a class="valign a-update" data="'+user.id+'"><b>修改</b></a>'
 						   	   +'<a class="valign" href="#"><b>分配角色</b></a>'
@@ -203,6 +203,8 @@
 				var id = $(this).attr("data");
 				window.location.href=getRootPath()+'/pages/admin/user/userUpdate.html?id='+id;
 			});
+			
+			setTimeout("$('img.lazy').lazyload();",400); 
 		}
 		
 	</script>
