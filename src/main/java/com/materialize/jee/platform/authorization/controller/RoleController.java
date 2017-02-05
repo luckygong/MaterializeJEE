@@ -102,7 +102,7 @@ public class RoleController extends BaseController{
 			return json;
 		}
 		
-		roleService.update(role);
+		roleService.updateSelective(role);
 		return json;
 	}  
 	

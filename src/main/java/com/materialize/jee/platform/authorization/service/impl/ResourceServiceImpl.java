@@ -25,6 +25,7 @@ import com.materialize.jee.platform.authorization.service.ResourceService;
 import com.materialize.jee.platform.base.DefaultBaseService;
 import com.materialize.jee.platform.base.page.Page;
 import com.materialize.jee.platform.base.page.Pagination;
+import com.materialize.jee.platform.utils.DateUtils;
 
 /**
  * @ClassName: ResourceServiceImpl
@@ -54,6 +55,8 @@ public class ResourceServiceImpl extends DefaultBaseService implements ResourceS
 	 */
 	public Integer save(Resource resource){
 		setLevel(resource);
+		resource.setCreateDate(DateUtils.getCurrent());
+		resource.setUpdateDate(DateUtils.getCurrent());
 		return resourceMapper.save(resource);
 	}
 	
@@ -64,6 +67,7 @@ public class ResourceServiceImpl extends DefaultBaseService implements ResourceS
 	 */
 	public Integer update(Resource resource){
 		setLevel(resource);
+		resource.setUpdateDate(DateUtils.getCurrent());
 		return resourceMapper.update(resource);
 	}
 	
@@ -74,6 +78,7 @@ public class ResourceServiceImpl extends DefaultBaseService implements ResourceS
 	 */
 	public Integer updateSelective(Resource resource){
 		setLevel(resource);
+		resource.setUpdateDate(DateUtils.getCurrent());
 		return resourceMapper.updateSelective(resource);
 	}
 

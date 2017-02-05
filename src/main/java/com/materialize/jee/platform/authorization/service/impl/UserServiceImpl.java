@@ -52,6 +52,7 @@ public class UserServiceImpl extends DefaultBaseService implements UserService {
 	 * @return  返回保存对象的主键
 	 */
 	public Long save(User user){
+		user.setCreateTime(DateUtils.getCurrent());
 		return userMapper.save(user);
 	}
 	

@@ -23,6 +23,7 @@ import com.materialize.jee.platform.authorization.service.RoleService;
 import com.materialize.jee.platform.base.DefaultBaseService;
 import com.materialize.jee.platform.base.page.Page;
 import com.materialize.jee.platform.base.page.Pagination;
+import com.materialize.jee.platform.utils.DateUtils;
 
 /**
  * @ClassName: RoleServiceImpl
@@ -41,6 +42,8 @@ public class RoleServiceImpl extends DefaultBaseService implements RoleService {
 	 * @return  返回保存对象的主键
 	 */
 	public Long save(Role role){
+		role.setCreateDate(DateUtils.getCurrent());
+		role.setUpdateDate(DateUtils.getCurrent());
 		return roleMapper.save(role);
 	}
 
@@ -50,6 +53,7 @@ public class RoleServiceImpl extends DefaultBaseService implements RoleService {
 	 * @param record 要更新的对象
 	 */
 	public long update(Role role){
+		role.setUpdateDate(DateUtils.getCurrent());
 		return roleMapper.update(role);
 	}
 	
@@ -59,6 +63,7 @@ public class RoleServiceImpl extends DefaultBaseService implements RoleService {
 	 * @param record 要更新的对象
 	 */
 	public long updateSelective(Role role){
+		role.setUpdateDate(DateUtils.getCurrent());
 		return roleMapper.updateSelective(role);
 	}
 
