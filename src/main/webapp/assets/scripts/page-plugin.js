@@ -42,7 +42,7 @@
 		ajaxSend : function(options) {
 			$.ajax({
 				type : options.method,
-				url : getRootPath()+'/'+options.url,
+				url : getProjectName()+'/'+options.url,
 				dataType : 'json',
 				data : options.data,
 				timeout : options.timeout,

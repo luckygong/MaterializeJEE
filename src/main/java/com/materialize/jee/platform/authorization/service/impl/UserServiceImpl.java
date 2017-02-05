@@ -143,6 +143,22 @@ public class UserServiceImpl extends DefaultBaseService implements UserService {
 		User user = this.get(id);
 		return userMapper.delete(user);
 	}
+	
+	/**
+	 * @Title: delete
+	 * @Description: (删除动作)
+	 * @param record 要删除的对象
+	 */
+	public Long delete(java.lang.Long[] ids){
+		Long res = 0L;
+		if(ids!=null && ids.length>0){
+			for(Long id:ids){
+				User user = this.get(id);
+				res+=userMapper.delete(user);
+			}
+		}
+		return res;
+	}
 
 	/**
 	 * @Title: get

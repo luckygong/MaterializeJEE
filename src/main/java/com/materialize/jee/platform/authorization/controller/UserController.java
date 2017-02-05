@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,7 +31,12 @@ public class UserController extends BaseController{
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping(value = "/userList") 
+	@RequestMapping(method = RequestMethod.GET,value = "/userList")
+	public String userList(HttpServletRequest request, Model model) {
+		return viewName("userList");
+	}
+	
+	@RequestMapping(value = "/listUser") 
 	public @ResponseBody JsonResponseModel menuList(HttpServletRequest request, 
 			HttpServletResponse response) {  
 		
@@ -49,6 +56,17 @@ public class UserController extends BaseController{
         return json;
     }  
 	
+	@RequestMapping(value = "/{id}") 
+	public String view(@PathVariable("id")Long id, Model model) {  
+		model.addAttribute("id", id);
+		return viewName("userView");
+    }  
+	
+	@RequestMapping(value = "/userCreate") 
+	public String userCreate(HttpServletRequest request, HttpServletResponse response) {  
+		return viewName("userCreate");
+	}  
+	
 	@RequestMapping(value = "/save", method = RequestMethod.POST) 
 	public @ResponseBody JsonResponseModel save(HttpServletRequest request,HttpServletResponse response, 
 			@ModelAttribute User user) {  
@@ -62,6 +80,12 @@ public class UserController extends BaseController{
 		userService.save(user, request);
 		return json;
 	}  
+	
+	@RequestMapping(value = "{id}/userUpdate", method = RequestMethod.GET)
+	public String userUpdate(@PathVariable("id")Long id, Model model) {
+		model.addAttribute("id", id);
+		return viewName("userUpdate");
+	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST) 
 	public @ResponseBody JsonResponseModel update(HttpServletRequest request,HttpServletResponse response, 
@@ -79,6 +103,15 @@ public class UserController extends BaseController{
 		}
 		
 		userService.update(user, request);
+		return json;
+	}  
+	
+	@RequestMapping(value = "/delete") 
+	public @ResponseBody JsonResponseModel delete(HttpServletRequest request,
+			HttpServletResponse response, 
+			@RequestParam(value = "id", required = false) Long[] ids) {  
+		JsonResponseModel json = new JsonResponseModel();
+		userService.delete(ids);
 		return json;
 	}  
 	

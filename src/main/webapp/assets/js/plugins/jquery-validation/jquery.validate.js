@@ -260,12 +260,23 @@ $.extend( $.validator, {
 				}
 				this.hideThese( this.errorsFor( element ) );
 			}
+			if($(element).valid()){
+            	$(element).removeClass("invalid");
+			}
 		},
 		onfocusout: function( element ) {
 			if ( !this.checkable( element ) && ( element.name in this.submitted || !this.optional( element ) ) ) {
 				this.element( element );
 			}
+			if($(element).valid()){
+            	$(element).removeClass("invalid");
+			}
 		},
+		errorPlacement: function(error, element) {
+        	$(element).closest(".input-field").children("label").attr("data-error",error.text());
+        	$(element).closest(".input-field").children("label").addClass("active");
+        	$(element).addClass("invalid");
+        },
 		onkeyup: function( element, event ) {
 			// Avoid revalidate the field when pressing one of the following keys
 			// Shift       => 16

@@ -9,13 +9,13 @@
  <http pattern="/ws/**" security="none"/>  
  <http pattern="/rs/**" security="none"/>  
  <http pattern="/assets/**" security="none"/>  
- <http pattern="/index.html" security="none" />  
- <http pattern="/login.html" security="none" />  
+ <http pattern="/index.jsp" security="none" />  
+ <http pattern="/login.jsp" security="none" />  
  <http pattern="/pages/error/**" security="none" />  
   
  <http auto-config="false" use-expressions='true' entry-point-ref="myAuthenticationEntryPoint">  
     <access-denied-handler ref="accessDeniedHandler"/>
-    <session-management invalid-session-url="/login.html"/>
+    <session-management invalid-session-url="/sessionTimeout"/>
     
     <!-- 使用自己自定义的登陆认证过滤器 -->
     <!-- 认证和授权 --><!-- 重写登陆认证的过滤器，使我们可以拿到任何参数  -->  
@@ -28,7 +28,7 @@
     
 	<!-- 未登录的切入点 --> 
 	<b:bean id="myAuthenticationEntryPoint" class="com.materialize.jee.platform.authorization.security.MyAuthenticationEntryPoint">  
-        <b:constructor-arg value="/login.html"/> 
+        <b:constructor-arg value="/login.jsp"/> 
     </b:bean>  
           
 	<!-- 登录验证器：用户有没有登录的资格 --><!-- 这个就是重写的认证过滤器 -->  
@@ -43,11 +43,11 @@
 	<b:bean id="myAuthenticationSuccessHandler" class="com.materialize.jee.platform.authorization.security.MySimpleLoginSuccessHandler"  depends-on="jdbcTemplate">
 		<b:property name="sessionRegistry" ref="sessionRegistry" /> 
 		<b:property name="jdbcTemplate" ref="jdbcTemplate" />
-		<b:property name="defaultTargetUrl" value="/pages/home.html" />
+		<b:property name="defaultTargetUrl" value="/main" />
 	</b:bean>
 	<!-- 登录验证失败处理者 -->
 	<b:bean id="myAuthenticationFailureHandler" class="com.materialize.jee.platform.authorization.security.MySimpleLoginFailureHandler">  
-        <b:constructor-arg name="defaultFailureUrl" value="/login.html" />  
+        <b:constructor-arg name="defaultFailureUrl" value="/login.jsp" />  
     </b:bean> 
           
     <!--一个自定义的filter，必须包含 authenticationManager,accessDecisionManager,securityMetadataSource三个属性，我们的所有控制将在这三个类中实现，解释详见具体配置 -->  
@@ -93,14 +93,14 @@
 	<!-- SESSION并发处理 -->  
 	<b:bean id="concurrencyFilter" class="com.materialize.jee.platform.authorization.security.MyConcurrentSessionFilter">  
 	    <b:constructor-arg name="sessionRegistry" ref="sessionRegistry" />  
-	    <b:constructor-arg name="expiredUrl" value="/login.html" />  
+	    <b:constructor-arg name="expiredUrl" value="/sessionTimeout" />  
 	    <b:constructor-arg name="excludeUrl" value="(.*)/(doLogin)(.*)" />  
 	</b:bean>  
 	<b:bean id="sessionRegistry" class="com.materialize.jee.platform.authorization.security.MySessionRegistryImpl" />  
     
     <!-- 退出过滤器 -->
 	<b:bean id="logoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
-		<b:constructor-arg value="/login.html" />
+		<b:constructor-arg value="/login.jsp" />
 		<b:constructor-arg>
 			<b:array>
 				<b:ref bean="myLogoutHandler" />
@@ -112,6 +112,6 @@
 	<b:bean id="myLogoutHandler" class="com.materialize.jee.platform.authorization.security.MyLogoutHandler" />
 	
 	<b:bean id="accessDeniedHandler" class="com.materialize.jee.platform.authorization.security.MyAccessDeniedHandler">  
-		<b:property name="accessDeniedUrl" value="/pages/error/page-403.html" />  
+		<b:property name="accessDeniedUrl" value="/accessDenied" />  
 	</b:bean>  
  </b:beans>  

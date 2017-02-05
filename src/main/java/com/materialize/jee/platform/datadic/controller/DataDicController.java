@@ -31,12 +31,14 @@ public class DataDicController {
 	@RequestMapping(value = "/initSelectOption",method = { RequestMethod.GET, RequestMethod.POST }) 
 	public @ResponseBody JsonResponseModel login(
 			@RequestParam(value = "category", required = false) String category,
-			@RequestParam(value = "exceptValueArray[]", required = false) String[] exceptValue) {  
+			@RequestParam(value = "exceptValueArray[]", required = false) String[] exceptValue, 
+			@RequestParam(value = "onlyShowArray[]", required = false) String[] onlyShow) {  
 		logger.debug("initSelectOption:"+category);
 		
 		Map<String,Object> params = new HashMap<String,Object>();
 		params.put("category", category);
 		params.put("exceptValue", exceptValue);
+		params.put("onlyShow", onlyShow);
 		params.put("activeFlag", SysConstants.ACTIVE_FLAG_YES);
         List<DataDic> dics = dataDicService.find(params);
         

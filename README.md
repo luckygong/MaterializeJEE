@@ -7,7 +7,8 @@
 ##一. 更新内容
 1.2016-12-17 添加自己实现的日期和时间选择控件，效果见：[Material-Date-Time-Picker](https://github.com/shukun-zhao/Material-Date-Time-Picker)      
 2.2016-12-30 增加幻灯片侧边滑动效果式用户引导页面，效果见下文     
-3.2016-01-03 图片异步加载        
+3.2017-01-03 图片异步加载        
+4.2017-02-05 页面改为jsp，点击菜单后页面进行局部刷新，地址栏url不变        
 
   
 ##二. 工程描述
@@ -42,7 +43,6 @@
 ##b. 前端
 
 ####1. jquery + html 架构 ，前后端数据交互采用json格式   
->理论上可以使用apache或nginx独立部署，但还没实验过，不知是否会出现跨域问题。  
 
 ####2. 使用materialize template的html模板      
 >materialize是基于谷歌Material Design Language(MDL)设计语言所构建的一套CSS/HTML库          
@@ -59,9 +59,6 @@
 
 ####4. 用户上传的文件设计为保存在ftp/sftp工作目录下    
 >将文件保存在项目目录外部，再配置apache或nginx进行访问    
->前端中有3个路径，配置在path.js中，分别为：   
->>RootPath：前端访问路径，若未使用apache或nginx单独部署，则与ProjectPath相同   
->>ProjectPath：前端ajax请求后台数据路径   
 >>FtpWebPath：访问用户上传资源路径   
 
 ###前端效果展示

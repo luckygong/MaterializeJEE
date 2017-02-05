@@ -212,5 +212,8 @@
 		<if test="updateDate!=null">
 			AND UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP}
 		</if>
+		<if test="excludeId!=null">
+			AND ID != #{excludeId}
+		</if>
 	</sql>
 </mapper>

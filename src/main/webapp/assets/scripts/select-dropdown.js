@@ -13,6 +13,7 @@
 			'emptyOptionTxt' : '', //空值选项显示内容
 			'defaultSelected' : '', //默认选择的option
 			'exceptValueArray':null,//需要过滤的值
+			'onlyShowArray':null,//只需要显示的值
 			'load' : false,
 			'timeout' : 5000
 		},
@@ -43,9 +44,9 @@
 			var options = $(element).data("options");
 			$.ajax({
 				type : options.method,
-				url : getRootPath()+'/initSelectOption',
+				url : getProjectName()+'/initSelectOption',
 				dataType : 'json',
-				data : {"category":options.category,"exceptValueArray":options.exceptValueArray},
+				data : {"category":options.category,"exceptValueArray":options.exceptValueArray,"onlyShowArray":options.onlyShowArray},
 				timeout : options.timeout,
 				cache : false,
 				async: false,
@@ -116,8 +117,6 @@
 	var initDynDropDown = {
 		
 		options:{
-      		inDuration: 300,
-      		outDuration: 125,
       		constrain_width: false, 
       		hover: false, 
       		alignment: 'left', 
@@ -132,8 +131,8 @@
 		init : function(element) {
 			var options = $(element).data("options");
 			$(element).dropdown({
-			    inDuration: options.inDuration,
-			    outDuration: options.outDuration,
+			    inDuration: 300,
+			    outDuration: 125,
 			    constrain_width: options.constrain_width, 
 			    hover: options.hover, 
 			    alignment: options.alignment, 
@@ -164,7 +163,7 @@ function initCategoryMap(option){
 	
 	$.ajax({
 		type : options.method,
-		url : getRootPath()+'/initSelectOption',
+		url : getProjectName()+'/initSelectOption',
 		dataType : 'json',
 		data : {"category":options.category},
 		timeout : options.timeout,

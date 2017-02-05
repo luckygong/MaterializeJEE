@@ -138,7 +138,10 @@ var Alert = {
 				+'</button>'
 				+'</div>';
 			$("body").append(h);
-			$('#card-alert').openModal();
+			$('#card-alert').openModal({dismissible:false});
+			$(".modal-close").click(function(){
+				$(this).closest('.modal').remove();
+			});
 			getLocalize($(".data-localize"));
 		},
 		simpleConfirm:function(options){
@@ -162,8 +165,12 @@ var Alert = {
             	+'</button>'
             	+'</div>';
 			$("body").append(h);
-			$('#card-alert').openModal();
+			$('#card-alert').openModal({dismissible:false});
 			getLocalize($(".data-localize"));
+			
+			$(".modal-close").click(function(){
+				$(this).closest('.modal').remove();
+			});
 			
 			$('#card-alert-confirm').on('click',function(){
 				var func = options.confirmAction;
@@ -218,11 +225,15 @@ var Alert = {
 					 			 global : false,
 					 			 timeout : 30 * 1000,
 					 			 dataType : 'json',
-					 			 successCallBack:function(){return true}
+					 			 successCallBack:function(){return true;}
 					 		 }};
 		  	if(!options) {
 		  		options = {};
 		 	}
+		  	var ajaxOpts =  options.ajaxOptions;
+		  	ajaxOpts = $.extend({}, defaults.ajaxOptions, ajaxOpts);
+		  	options.ajaxOptions = ajaxOpts;
+		  	
 		 	options = $.extend({}, defaults, options);
 			swal({title: options.title,   
                   text: options.message,   
@@ -243,20 +254,67 @@ var Alert = {
                 				if(data.status==1){
                 					var func = options.ajaxOptions.successCallBack;
                 					if(func()){
-                						swal("操作成功！");
+                						setTimeout(function(){swal("操作成功！", "选择记录已删除.", "success");}, 400); 
                 					}
                 				}else{
                 					var info = data.info;
-                					swal((isEmpty(info)?"操作失败！":info));
+                					swal("操作失败！", info, "error"); 
                 				}
                 			},
                 			error : function(XMLHttpRequest, status, thrownError) {
             					if(status == "timeout"){
-            						swal("请求超时！");
+            						swal("请求超时", "请求超时", "error"); 
             					}
-            					swal("操作失败！");
+            					swal("操作失败！", "操作失败！", "error"); 
             				}
                 		});
+                		return true;
            });
+		}
+}
+
+var Modal = {
+		show:function(options){
+			var defaults = { title : '', height : 450, loadUrl : undefined , loadParams : {}, loadType : 'GET' , loadSucess : function(){} };
+		   	if(!options) {
+		   		options = {};
+		  	}
+		  	options = $.extend({}, defaults, options);
+		  	if(isEmpty(options.loadUrl)){
+		  		return;
+		  	}
+		  	
+		  	$.ajax({
+				url : getProjectName()+'/'+options.loadUrl,
+				data : options.loadParams,
+				type : options.loadType,
+				dataType : "html",
+				beforeSend : function() {
+				},
+				success : function(htmlData) {
+					var m='<div id="popmodal" class="modal" style="height:'+options.height+'">'
+						+'<nav class="task-modal-nav">'
+						+'<div class="nav-wrapper">'
+						+'<ul>'
+						+'<li><a style="font-size:1.5rem">'+options.title+'</a></li>'
+						+'<li class="right"><a href="javascript:;"><i class="modal-action modal-close  mdi-navigation-close"></i></a></li>'
+						+'</ul>'
+						+'</div>'
+						+'</nav>'
+						+'<div class="modal-content">';
+					 m+=htmlData;
+						m+='</div>'
+						+'</div>';
+					
+					$("#content").append(m);
+					initPlugsAfterLoad();
+					$("#popmodal").openModal({dismissible:false});
+					var func = options.loadSucess;
+					func();
+					$(".modal-close").click(function(){
+						$(this).closest('.modal').remove();
+					});
+				}
+			});
 		}
 }

@@ -9,6 +9,7 @@
  */
 package com.materialize.jee.platform.authorization.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -69,6 +70,22 @@ public class RoleServiceImpl extends DefaultBaseService implements RoleService {
 	public Long delete(java.lang.Long id){
 		Role role = this.get(id);
 		return roleMapper.delete(role);
+	}
+	
+	/**
+	 * @Title: delete
+	 * @Description: (删除动作)
+	 * @param record 要删除的对象
+	 */
+	public Long delete(java.lang.Long[] ids){
+		Long res = 0L;
+		if(ids!=null && ids.length>0){
+			for(Long id:ids){
+				Role role = this.get(id);
+				res+=roleMapper.delete(role);
+			}
+		}
+		return res;
 	}
 
 	/**
@@ -136,5 +153,19 @@ public class RoleServiceImpl extends DefaultBaseService implements RoleService {
 	 */
 	public Long findCount(Map<String, Object> entityMap){
 		return roleMapper.findCount(entityMap);
+	}
+	
+	/**
+	 * 校验指定字段值是否唯一 ，true-不存在；false-存在
+	 * @param fieldName 字段名
+	 * @param fieldValue 值
+	 * @param excludeId 本身ID，用于排除本身
+	 */
+	public boolean checkOnly(String fieldName, String fieldValue, Long excludeId){
+		Map<String,Object> params = new HashMap<String,Object>();
+		params.put(fieldName, fieldValue);
+		params.put("excludeId", excludeId);
+		Long num = this.findCount(params);
+		return (num==null || num==0);
 	}
 }

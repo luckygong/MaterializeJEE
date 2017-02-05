@@ -1,30 +1,121 @@
-﻿
-$(function() {  
+﻿$(function() {  
+	  $("body").delegate('.header-search-input','focus', function(){
+	      $(this).parent('div').addClass('header-search-wrapper-focus');
+	  });
+	  $("body").delegate('.header-search-input','.blur', function(){
+	      $(this).parent('div').removeClass('header-search-wrapper-focus');
+	  });  
+
+	  $("body").delegate('.task-card input:checkbox','change', function() {
+		  checkbox_check(this);
+	  });
+	  
 	 $('table thead').css('background','#ECEFF1');
 	 
-	 $("#tableCheckBoxSelectAll").click(function(){
-		  $(this).closest("table").find("tr input[type='checkbox'].id").each(function(){
-			 $(this).prop("checked",true);
-		  });;
-		  $("#tableCheckBoxSelectAll").addClass("hide");
-		  $("#tableCheckBoxCancelSelect").removeClass("hide");
+	 $("body").delegate(".tableCheckBoxSelectAll",'click', function(){
+		  var clazz = $(this).attr("data-action-attr");
+		  if(clazz){
+			  $(this).closest("table").find("tr input[type='checkbox'][data-action-attr='"+clazz+"']").each(function(){
+				  $(this).prop("checked",true);
+			  });
+			  $(this).addClass("hide");
+			  $(this).closest("table").find(".tableCheckBoxCancelSelect[data-action-attr='"+clazz+"']").removeClass("hide");
+		  }
 	 });
-	 $("#tableCheckBoxCancelSelect").click(function(){
-		 $(this).closest("table").find("tr input[type='checkbox'].id").each(function(){
-			 $(this).prop("checked",false);
-		 });;
-		 $("#tableCheckBoxCancelSelect").addClass("hide");
-		 $("#tableCheckBoxSelectAll").removeClass("hide");
-	 });
-	 
-	 $("table").delegate('input[type="checkbox"].id','click',function(){
-		 if($(this).closest("table").find("tr input[type='checkbox'].id:checked").length==0){
-			 $("#tableCheckBoxCancelSelect").addClass("hide");
-			 $("#tableCheckBoxSelectAll").removeClass("hide");
+	 $("body").delegate(".tableCheckBoxCancelSelect",'click',function(){
+		 var clazz = $(this).attr("data-action-attr");
+		 if(clazz){
+			 $(this).closest("table").find("tr input[type='checkbox'][data-action-attr='"+clazz+"']").each(function(){
+				 $(this).prop("checked",false);
+			 });
+			 $(this).addClass("hide");
+			 $(this).closest("table").find(".tableCheckBoxSelectAll[data-action-attr='"+clazz+"']").removeClass("hide");
 		 }
 	 });
 	 
-	 $(".resetForm").click(function(){
+	 $("body").delegate('input[type="checkbox"]','change',function(){
+		 var clazz = $(this).attr("data-action-attr");
+		 if(clazz){
+			 if($(this).closest("table").find("tr input[type='checkbox'][data-action-attr='"+clazz+"']:checked").length==0){
+				 $(".tableCheckBoxCancelSelect[data-action-attr='"+clazz+"']").addClass("hide");
+				 $(".tableCheckBoxSelectAll[data-action-attr='"+clazz+"']").removeClass("hide");
+			 }else{
+				 $(".tableCheckBoxCancelSelect[data-action-attr='"+clazz+"']").removeClass("hide");
+				 $(".tableCheckBoxSelectAll[data-action-attr='"+clazz+"']").addClass("hide");
+			 }
+		 }
+		 
+		 if($(this).closest("tr").find("input[type='checkbox']:checked").length==0){
+			 $(this).closest("tr").removeClass("active");
+		 }else{
+			 $(this).closest("tr").addClass("active");
+		 }
+	 });
+	 
+	 $("body").delegate('.nestable.cascade input[type="checkbox"]','click',function(){
+		 var checked = $(this).is(":checked");
+		 //选择子树
+		 $(this).closest(".dd-item").find(".dd-list .dd-item").each(function(){
+			 var checkbox = $(this).find(".dd3-content input[type='checkbox']");
+			 checkbox.prop("checked",checked);
+		 });
+		 $(this).trigger("parentcheck");
+	 });
+	 
+	 $("body").delegate('.nestable.cascade input[type="checkbox"]','parentcheck',function(){
+		//选择父节点
+		 var parent = $(this).closest(".dd-list").closest(".dd-item").children(".dd3-content").find("input[type='checkbox']");
+		 var clength = $(this).closest(".dd-list").children(".dd-item").find("input[type='checkbox']").length;
+		 var cclength = $(this).closest(".dd-list").children(".dd-item").find("input[type='checkbox']:checked").length;
+		 if(clength == cclength){
+			 if(parent){
+				 parent.prop("checked",true);
+			 }
+		 }else{
+			 if(parent){
+				 parent.prop("checked",false);
+			 }
+		 }
+		 $(parent).trigger("parentcheck");
+	 });
+	 
+	 $("body").delegate(".action-more",'click', function(){
+		 if($(this).closest(".card-action").find(".action-more-div").hasClass("hide")){
+			 $(this).closest(".card-action").find(".action-more-div").removeClass("hide");
+			 $(this).children("i").addClass("rotate-180");
+		 }else{
+			 $(this).closest(".card-action").find(".action-more-div").addClass("hide");
+			 $(this).children("i").removeClass("rotate-180");
+		 }
+	 });
+	 
+	 $("body").delegate(".btn-update-inline", "click" ,function(){
+		var id = $(this).attr("data-id");
+		var url = $(this).attr("data-url");
+		if(!isEmpty(id) && !isEmpty(url)){
+			loadHTMLToContent('content', url, 'GET');
+		}
+	});
+	$("body").delegate(".btn-view-inline", "click", function(){
+		var id = $(this).attr("data-id");
+		var url = $(this).attr("data-url");
+		if(!isEmpty(id) && !isEmpty(url)){
+			Modal.show({title:"查看", loadUrl:url});
+		}
+	});
+	$("body").delegate(".btn-delete", "click", function(){
+		var checkbox = getAllSelectedCheckbox("id");
+	    if(!checkbox.length) return;
+	    var url = $(this).attr("data-url");
+	    if(isEmpty(url)) return;
+	    Alert.AjaxConfirm({message:"确认删除选中记录？",type:"warning",ajaxOptions:{
+	    	url:url,
+	    	data:checkbox.serialize(),
+	    	successCallBack:function(){$(".querySubmit").click();return true;}
+	    }});
+	});
+	 
+	 $("body").delegate(".resetForm",'click', function(){
 		 $(this).closest("form").get(0).reset();
 	 });
 	 
@@ -42,6 +133,14 @@ $(function() {
 		 return;
 	 });
 });
+
+function checkbox_check(el){
+    if (!$(el).is(':checked')) {
+        $(el).next().css('text-decoration', 'none');            
+    } else {
+        $(el).next().css('text-decoration', 'line-through');
+    }    
+}
 
 function isEmpty(value){
 	if(value==null || typeof(value)==undefined || value==undefined || value==''){
@@ -76,4 +175,125 @@ function getDataFromJson(json,field,def){
 	}else{
 		return o;
 	}
+}
+
+function perfectScroll($elem, height){
+	if(height){
+		$elem.height(height).perfectScrollbar({
+		    suppressScrollX: true
+		}); 
+	}else{
+		$elem.perfectScrollbar({
+			suppressScrollX: true
+		}); 
+	}
+}
+
+function loadHTMLToContent(contentId, URL, type ,params, backURL) {
+	var backurl = $("body .breadcrumbs .currentPage").attr("data-init-page-url");
+	if(isEmpty(backurl)){
+		backurl = "home"
+	}
+	if(!isEmpty(backURL)){
+		backurl = backURL;
+	}
+	
+	if(isEmpty(type)){
+		type = "GET";
+	}
+	
+	$.ajax({
+		url : getProjectName()+'/'+URL,
+		data : params,
+		type : type,
+		dataType : "html",
+		beforeSend : function() {
+			$("#"+contentId).html("");
+			blockUI.block();
+		},
+		success : function(htmlData) {
+			$("#"+contentId).html(htmlData);
+			blockUI.unblock();
+			$("#"+contentId+" .goBack").click(function(){
+				loadHTMLToContent(contentId, backurl, 'GET');
+			});
+			initPlugsAfterLoad();
+		},
+		error : function(XMLHttpRequest, status, thrownError) {
+			blockUI.unblock();
+			Massage.danger({message:'加载页面失败'});
+		}
+	});
+}
+
+function initPlugsAfterLoad(){
+	$('.collapsible').collapsible({
+		  accordion : false 
+    });
+	
+	$('.modal-trigger').leanModal({
+	      dismissible: true,
+	      opacity: .5, 
+	      in_duration: 300, 
+	      out_duration: 200, 
+	      ready: function() {}, // Callback for Modal open
+	      complete: function() {} // Callback for Modal close
+	});
+	
+	$('.modal-content').height($(".modal").height()-88).perfectScrollbar({
+        suppressScrollX: true
+    });
+	
+	$('.dropify').dropify();
+	$(".dropify-message p").css("text-align","center");
+}
+
+function getAllSelectedCheckbox(checkboxName) {
+	var checkbox = $("body").find(":checkbox[name="+checkboxName+"]:checked");
+
+    if(!checkbox.length) {
+    	Message.info({message:"未选择记录",time:3});
+    }
+    return checkbox;
+}
+
+function getFirstSelectedCheckbox(checkboxName) {
+	var checkbox = $("body").find(":checkbox[name="+checkboxName+"]:checked:first");
+    
+    if(!checkbox.length) {
+    	Message.info({message:"未选择记录",time:3});
+    }
+    return checkbox;
+}
+
+//type: menu or method
+function checkAuth(URL, type, callback) {
+	var auth = false;
+	$.ajax({
+		url : getProjectName()+'/checkAuth',
+		data : {"url" : URL, "type" : type},
+		dataType : "json",
+		timeout : 3000,
+		async : false,
+		error : function(XMLHttpRequest, status, thrownError) {
+			if(status == "timeout"){
+				Message.danger({"message":"权限验证超时"});
+			}else{
+				Message.danger({"message":"权限验证出错"});
+			}
+		},
+		success : function(data) {
+			if(data.status==1){
+				if(callback){
+					callback(true);
+				}
+				auth = true;
+			}else{
+				if(callback){
+					callback(false);
+				}
+			}
+		}
+	});
+	return auth;
 }

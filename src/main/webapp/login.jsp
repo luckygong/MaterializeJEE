@@ -1,3 +1,5 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +19,7 @@
   <!-- For Windows Phone -->
 
   <!-- CORE CSS-->
-  <link href="assets/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="assets/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
   <link href="assets/css/style.min.css" type="text/css" rel="stylesheet" media="screen,projection">
   <!-- Custome CSS-->    
   <link href="assets/css/custom/custom.min.css" type="text/css" rel="stylesheet" media="screen,projection">
@@ -82,7 +84,6 @@
               <p class="margin right-align medium-small"><a href="page-forgot-password.html">忘记密码</a></p>
           </div>          
         </div>
-
       </form>
     </div>
   </div>
@@ -106,12 +107,6 @@
   <script type="text/javascript">
 	$(document).ready(function() {
 		$("#form").validate({
-			onfocusout: function(element) { 
-				$(element).valid(); 
-			}, 
-    		onfocusin: function(element) { 
-    			$(element).valid(); 
-    		},  
 	        rules: {
 	        	username: {
 	                required: true
@@ -130,25 +125,20 @@
 	            username : {
 	                required: "请输入用户名"
 	            }
-	        },
-	        errorPlacement: function(error, element) {
-	        	$(element).closest(".input-field").children("label").attr("data-error",error.text());
-            	$(element).closest(".input-field").children("label").addClass("active");
-            	$(element).addClass("invalid");
 	        }
 	     });
 		
 		$("#submit").click(function(){
 			 $.ajax({
 				cache: false,
-				url:getProjectPath()+'/doLogin',
+				url:getProjectName()+'/doLogin',
 				dataType:'json',
 				data:$("#form").serialize(),
 				type: "POST",
 				async: true,
 				success:function(result){
 					if(result.status==1){
-						window.location.href='pages/home.html';
+						window.location.href='main';
 					}else{
 						$("#password").closest(".input-field").children("label").attr("data-error",result.info);
 						$("#password").addClass("invalid");

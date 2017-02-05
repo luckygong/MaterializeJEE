@@ -36,6 +36,16 @@ public class ResourceServiceImpl extends DefaultBaseService implements ResourceS
 	@javax.annotation.Resource
 	private ResourceMapper resourceMapper;
 	
+	protected void setLevel(Resource resource){
+		Resource parent = resource.getParent();
+		if(parent!=null && parent.getId()!=null){
+			parent = get(parent.getId());
+			resource.setLevel(parent.getLevel()+1);
+		}else{
+			resource.setLevel(1);
+		}
+	}
+	
 	/**
 	 * @Title: save
 	 * @Description: (保存动作)
@@ -43,15 +53,17 @@ public class ResourceServiceImpl extends DefaultBaseService implements ResourceS
 	 * @return  返回保存对象的主键
 	 */
 	public Integer save(Resource resource){
+		setLevel(resource);
 		return resourceMapper.save(resource);
 	}
-
+	
 	/**
 	 * @Title: update
 	 * @Description: (更新动作)
 	 * @param record 要更新的对象
 	 */
 	public Integer update(Resource resource){
+		setLevel(resource);
 		return resourceMapper.update(resource);
 	}
 	
@@ -61,6 +73,7 @@ public class ResourceServiceImpl extends DefaultBaseService implements ResourceS
 	 * @param record 要更新的对象
 	 */
 	public Integer updateSelective(Resource resource){
+		setLevel(resource);
 		return resourceMapper.updateSelective(resource);
 	}
 
@@ -72,6 +85,22 @@ public class ResourceServiceImpl extends DefaultBaseService implements ResourceS
 	public Integer delete(java.lang.Long id){
 		Resource resource = this.get(id);
 		return resourceMapper.delete(resource);
+	}
+	
+	/**
+	 * @Title: delete
+	 * @Description: (删除动作)
+	 * @param record 要删除的对象
+	 */
+	public Integer delete(java.lang.Long[] ids){
+		Integer res = 0;
+		if(ids!=null && ids.length>0){
+			for(Long id:ids){
+				Resource resource = this.get(id);
+				res+=resourceMapper.delete(resource);
+			}
+		}
+		return res;
 	}
 
 	/**
@@ -156,7 +185,7 @@ public class ResourceServiceImpl extends DefaultBaseService implements ResourceS
 		//合并指定层级，且同一父菜单下的所有菜单
 		for (int i = 0; i < menus.size(); i++) {
 			Resource subMenu = (Resource) menus.get(i);
-			if(subMenu.getParent()!=null){
+			if(subMenu.getParent()!=null && subMenu.getParent().getId()!=null){
 				if(subMenu.getLevel()==level){
 					if(groups.get(subMenu.getParent().getId())!=null){
 						groups.get(subMenu.getParent().getId()).add(subMenu);
@@ -165,13 +194,18 @@ public class ResourceServiceImpl extends DefaultBaseService implements ResourceS
 						list.add(subMenu);
 						groups.put(subMenu.getParent().getId(), list);
 					}
+				}else{
+					menuTree.add(subMenu);
 				}
 			}else{
 				menuTree.add(subMenu);
 			}
 		}
 		
-		if(groups.size()>0){
+		if(level==1){
+			Collections.sort(menuTree);
+			return menuTree;
+		}else{
 			//生成父菜单对象
 			Set<Long> keys = groups.keySet();
 			Iterator<Long> it = keys.iterator();
@@ -182,6 +216,7 @@ public class ResourceServiceImpl extends DefaultBaseService implements ResourceS
 				for(int i=0;i<menuTree.size();i++){
 					if(parentId == menuTree.get(i).getId()){
 						parent = menuTree.get(i);
+						parent.getChilds().clear();
 						break;
 					}
 				}
@@ -193,9 +228,20 @@ public class ResourceServiceImpl extends DefaultBaseService implements ResourceS
 				Collections.sort(parent.getChilds());
 			}
 			return createSubTree(menuTree, --level);
-		}else{
-			Collections.sort(menuTree);
-			return menuTree;
 		}
+	}
+	
+	/**
+	 * 校验指定字段值是否唯一 ，true-不存在；false-存在
+	 * @param fieldName 字段名
+	 * @param fieldValue 值
+	 * @param excludeId 本身ID，用于排除本身
+	 */
+	public boolean checkOnly(String fieldName, String fieldValue, Long excludeId){
+		Map<String,Object> params = new HashMap<String,Object>();
+		params.put(fieldName, fieldValue);
+		params.put("excludeId", excludeId);
+		Integer num = this.findCount(params);
+		return (num==null || num==0);
 	}
 }

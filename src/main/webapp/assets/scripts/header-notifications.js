@@ -34,7 +34,7 @@ $(window).load(function() {
 		+'<div class="collapsible-header red white-text"><i class="mdi-action-stars"></i>Favorite Associates</div>'
 		+'<div class="collapsible-body favorite-associates">'
 		+'<div class="favorite-associate-list chat-out-list row">'
-		+'<div class="col s4"><img src="'+getRootPath()+'/assets/images/avatar.jpg" alt="" class="circle responsive-img online-user valign profile-image"></div>'
+		+'<div class="col s4"><img src="'+getProjectName()+'/assets/images/avatar.jpg" alt="" class="circle responsive-img online-user valign profile-image"></div>'
 		+'<div class="col s8">'
 		+'<p>Eileen Sideways</p>'
 		+'<p class="place">Los Angeles, CA</p>'

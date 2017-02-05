@@ -25,11 +25,11 @@ insert  into `SYS_RESOURCE`(`ID`,`NAME`,`TYPE`,`IS_DIRECTORY`,`VALUE`,`ICON`,`PA
 (3,'任务设定',0,0,'#','mdi-action-invert-colors',1,1,2,NULL,1,NULL,NULL,NULL,NULL),
 (4,'任务调度',0,0,'#','mdi-action-invert-colors',1,2,2,NULL,1,NULL,NULL,NULL,NULL),
 (5,'任务查看',0,0,'#','mdi-action-invert-colors',1,3,2,NULL,1,NULL,NULL,NULL,NULL),
-(6,'用户管理',0,0,'/pages/admin/user/userList.html','mdi-action-invert-colors',2,1,2,NULL,1,NULL,NULL,NULL,NULL),
+(6,'用户管理',0,0,'admin/user/userList','mdi-action-invert-colors',2,1,2,NULL,1,NULL,NULL,NULL,NULL),
 (7,'机构管理',0,0,'#','mdi-action-invert-colors',2,2,2,NULL,1,NULL,NULL,NULL,NULL),
 (8,'定时任务',0,0,'#','mdi-action-invert-colors',2,3,2,NULL,1,NULL,NULL,NULL,NULL),
-(9,'资源管理',0,0,'/pages/admin/resource/resourceList.html','mdi-action-invert-colors',2,4,2,NULL,1,NULL,NULL,NULL,NULL),
-(10,'角色管理',0,0,'#','mdi-action-invert-colors',2,5,2,NULL,1,NULL,NULL,NULL,NULL);
+(9,'资源管理',0,0,'admin/resource/resourceList','mdi-action-invert-colors',2,4,2,NULL,1,NULL,NULL,NULL,NULL),
+(10,'角色管理',0,0,'admin/role/roleList','mdi-action-invert-colors',2,5,2,NULL,1,NULL,NULL,NULL,NULL);
 
 
 #用户数据

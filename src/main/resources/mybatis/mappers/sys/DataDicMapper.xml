@@ -175,8 +175,11 @@
 		<if test="code != null">
 			AND CODE = #{code,jdbcType=VARCHAR}
 		</if>
-		<if test="exceptValue != null">
+		<if test="exceptValue != null and exceptValue.length != 0">
 			AND CODE not in <foreach collection="exceptValue" item="item" index="index" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+		<if test="onlyShow != null and onlyShow.length != 0">
+			AND CODE in <foreach collection="onlyShow" item="item" index="index" open="(" separator="," close=")">#{item}</foreach>
 		</if>
 		<if test="translation != null">
 			AND TRANSLATION = #{translation,jdbcType=VARCHAR}

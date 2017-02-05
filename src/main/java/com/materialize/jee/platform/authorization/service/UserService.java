@@ -69,6 +69,13 @@ public interface UserService {
 	 * @param record 要删除的对象
 	 */
 	Long delete(java.lang.Long id);
+	
+	/**
+	 * @Title: delete
+	 * @Description: (删除动作)
+	 * @param record 要删除的对象
+	 */
+	Long delete(java.lang.Long[] ids);
 
 	/**
 	 * @Title: get

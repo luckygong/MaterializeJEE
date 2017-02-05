@@ -258,7 +258,7 @@ var polarData = [
 
 
 
-window.onload = function(){
+$(document).ready(function(){
 	var trendingLineChart = document.getElementById("trending-line-chart").getContext("2d");
 	window.trendingLineChart = new Chart(trendingLineChart).Line(data, {		
 		scaleShowGridLines : true,///Boolean - Whether grid lines are shown across the chart		
@@ -354,4 +354,4 @@ window.onload = function(){
 				responsive:true
 			});
 		}
-};
+});

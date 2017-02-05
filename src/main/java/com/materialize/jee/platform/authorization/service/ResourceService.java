@@ -50,6 +50,13 @@ public interface ResourceService {
 	 * @param record 要删除的对象
 	 */
 	Integer delete(java.lang.Long id);
+	
+	/**
+	 * @Title: delete
+	 * @Description: (删除动作)
+	 * @param record 要删除的对象
+	 */
+	Integer delete(java.lang.Long[] id);
 
 	/**
 	 * @Title: get
@@ -98,4 +105,12 @@ public interface ResourceService {
 	 * @return 菜单树
 	 */
 	List<Resource> createMenuTree(List<Resource> unTree);
+	
+	/**
+	 * 校验指定字段值是否唯一 ，true-不存在；false-存在
+	 * @param fieldName 字段名
+	 * @param fieldValue 值
+	 * @param excludeId 本身ID，用于排除本身
+	 */
+	public boolean checkOnly(String fieldName, String fieldValue, Long excludeId);
 }

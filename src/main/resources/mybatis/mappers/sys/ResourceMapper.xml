@@ -56,7 +56,7 @@
 			<if test="icon != null">
 				ICON,
 			</if>  
-			<if test="parentId != null">
+			<if test="parent != null">
 				PARENT_ID,
 			</if>  
 			<if test="orders != null">
@@ -103,8 +103,8 @@
 			<if test="icon != null">
 				#{icon,jdbcType=VARCHAR},
 			</if>
-			<if test="parentId != null">
-				#{parentId,jdbcType=BIGINT},
+			<if test="parent != null">
+				#{parent.id,jdbcType=BIGINT},
 			</if>
 			<if test="orders != null">
 				#{orders,jdbcType=INTEGER},
@@ -142,7 +142,7 @@
 			IS_DIRECTORY = #{isDirectory,jdbcType=INTEGER},
 			VALUE = #{value,jdbcType=VARCHAR},
 			ICON = #{icon,jdbcType=VARCHAR},
-			PARENT_ID = #{parentId,jdbcType=BIGINT},
+			PARENT_ID = #{parent.id,jdbcType=BIGINT},
 			ORDERS = #{orders,jdbcType=INTEGER},
 			LEVEL = #{level,jdbcType=INTEGER},
 			DESCN = #{descn,jdbcType=VARCHAR},
@@ -176,8 +176,8 @@
 			<if test="icon != null">
 				ICON = #{icon,jdbcType=VARCHAR},
 			</if>
-			<if test="parentId != null">
-				PARENT_ID = #{parentId,jdbcType=BIGINT},
+			<if test="parent != null">
+				PARENT_ID = #{parent.id,jdbcType=BIGINT},
 			</if>
 			<if test="orders != null">
 				ORDERS = #{orders,jdbcType=INTEGER},
@@ -258,7 +258,10 @@
 		<if test="name!=null">
 			AND r.NAME = #{name,jdbcType=VARCHAR}
 		</if>
-		<if test="type!=null">
+		<if test="nameLike!=null and nameLike!=''">
+			AND r.NAME like concat('%', #{nameLike,jdbcType=VARCHAR}, '%')
+		</if>
+		<if test="type!=null and type!=''">
 			AND r.TYPE = #{type,jdbcType=INTEGER}
 		</if>
 		<if test="isDirectory!=null">
@@ -266,6 +269,9 @@
 		</if>
 		<if test="value!=null">
 			AND r.VALUE = #{value,jdbcType=VARCHAR}
+		</if>
+		<if test="valueLike!=null and valueLike!=''">
+			AND r.VALUE like concat('%', #{valueLike,jdbcType=VARCHAR} ,'%')
 		</if>
 		<if test="icon!=null">
 			AND r.ICON = #{icon,jdbcType=VARCHAR}
@@ -302,6 +308,9 @@
 		</if>
 		<if test="updateDate!=null">
 			AND r.UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="excludeId!=null">
+			AND r.ID != #{excludeId}
 		</if>
 	</sql>
 </mapper>
