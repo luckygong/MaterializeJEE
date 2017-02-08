@@ -18,6 +18,14 @@
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
 	<jaxrs:server id="testRestService" address="/testRest">
+		<jaxrs:inInterceptors>  
+           <ref bean="inMessageInterceptor"/>  
+           <ref bean="cxfRestfulJsonInInterceptor"/>  
+        </jaxrs:inInterceptors>  
+        <jaxrs:outInterceptors>  
+            <ref bean="outMessageInterceptor"/>  
+            <ref bean="cxfRestfulJsonOutInterceptor"/>  
+        </jaxrs:outInterceptors>
 		<jaxrs:serviceBeans>
 			<ref bean="cxfServerTestImpl" />
 		</jaxrs:serviceBeans>
@@ -30,4 +38,13 @@
 		</jaxrs:providers>
 	</jaxrs:server>
 	<bean id="jacksonJsonProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider" />
+	
+	<bean id="inMessageInterceptor" class="org.apache.cxf.interceptor.LoggingInInterceptor" />
+	<bean id="outMessageInterceptor" class="org.apache.cxf.interceptor.LoggingOutInterceptor"/> 
+	<bean id="cxfRestfulJsonOutInterceptor"  class="com.materialize.jee.platform.listener.CxfRestfulJsonOutInterceptor"/>
+	<bean id="cxfRestfulJsonInInterceptor"  class="com.materialize.jee.platform.listener.CxfRestfulJsonInInterceptor">
+		<property name="signFieldName" value="sign" />
+		<property name="validateService" ref="cxfWebServiceMd5SignValidate" />
+	</bean>
+	<bean id="cxfWebServiceMd5SignValidate" class="com.materialize.jee.web.cxf.service.impl.CxfWebServiceMd5SignValidate"></bean>  
 </beans>
