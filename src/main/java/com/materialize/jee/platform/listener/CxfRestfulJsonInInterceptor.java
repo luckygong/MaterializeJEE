@@ -1,23 +1,18 @@
 package com.materialize.jee.platform.listener;
 
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.cxf.interceptor.Fault;
-import org.apache.cxf.io.CachedOutputStream;
 import org.apache.cxf.message.Message;
 import org.apache.cxf.phase.AbstractPhaseInterceptor;
 import org.apache.cxf.phase.Phase;
-import org.codehaus.jackson.JsonEncoding;
-import org.codehaus.jackson.JsonGenerator;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -27,7 +22,6 @@ import org.springframework.util.StringUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.materialize.jee.platform.base.IWebServiceSignValidate;
-import com.materialize.jee.platform.base.JsonResponseModel;
 
 public class CxfRestfulJsonInInterceptor extends AbstractPhaseInterceptor<Message> implements InitializingBean {
 	private static Logger logger = LoggerFactory.getLogger(CxfRestfulJsonInInterceptor.class);
@@ -62,18 +56,22 @@ public class CxfRestfulJsonInInterceptor extends AbstractPhaseInterceptor<Messag
 	        String json = IOUtils.toString(in,"UTF-8"); 
 	        jsonObject = JSON.parseObject(json);
         }catch(Exception e){
-        	throw new Fault("check sign fault",java.util.logging.Logger.getGlobal(),e);
+        	throw new RuntimeException("check sign fault");
         }
         
         //查找签名字段
-        String sign = (String)protocolHeaders.get(signFieldName);
+        String sign = null;
+        List<Object> signArray = (List<Object>)protocolHeaders.get(signFieldName);
+        if(signArray!=null && signArray.size()>0){
+        	sign = (String)signArray.get(0);
+        }
         if(StringUtils.isEmpty(sign) && jsonObject!=null){
         	sign = jsonObject.getString(signFieldName);
         }
         
         if(StringUtils.isEmpty(sign)){
         	logger.info("not found sign field");
-        	throw new Fault("not found sign field",java.util.logging.Logger.getGlobal());
+        	throw new RuntimeException("not found sign field");
         }
         
         //将报文体和报文体内容添加到map中，传给验证方法进行验证
@@ -94,25 +92,6 @@ public class CxfRestfulJsonInInterceptor extends AbstractPhaseInterceptor<Messag
         }
     } 
 	
-	public void handleFault(Message message) {
-		Fault fault = (Fault)message.getContent(Exception.class); 
-		JsonResponseModel jsonData = new JsonResponseModel(); 
-		jsonData.setStatus(0);
-		jsonData.setInfo(StringUtils.isEmpty(fault.getMessage())?"操作失败":fault.getMessage());
-		
-		OutputStream os = message.getContent(OutputStream.class); 
-		if(os==null){
-			os = new CachedOutputStream();
-		}
-		try {  
-			IOUtils.copy(new ByteArrayInputStream(JSON.toJSON(jsonData).toString().getBytes()), os); 
-			os.flush();
-			message.setContent(OutputStream.class, os);
-		} catch (Exception ex) { 
-			logger.error("handle fault exception");
-		}  
-	}
-
 	public String getSignFieldName() {
 		return signFieldName;
 	}
