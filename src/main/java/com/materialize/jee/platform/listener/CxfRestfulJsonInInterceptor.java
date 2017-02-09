@@ -88,7 +88,7 @@ public class CxfRestfulJsonInInterceptor extends AbstractPhaseInterceptor<Messag
         
         if(!validateService.validate(requests, sign)){
         	logger.info("sign field not match");
-        	throw new Fault("sign field not match",java.util.logging.Logger.getGlobal());
+        	throw new RuntimeException("sign field not match");
         }
     } 
 	
