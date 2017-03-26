@@ -24,9 +24,11 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <div class="container">
 	<div class="card-panel">
-		<div class="breadcrumbs-title"><span>角色基本信息</span></div>
-		<div class="row">
-			<form id="form" class="col s12 right-alert" method="post">
+		<form id="form" class="col s12 right-alert" method="post">
+			<div class="row">
+				<div class="breadcrumbs-title"><span>角色基本信息</span></div>
+			</div>
+			<div class="row">
 				<div class="row">
 					<div class="input-field col s12 m6 s6">
 						<i class="mdi-action-account-circle prefix"></i> 
@@ -46,14 +48,22 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 						<label for="description">描述</label>
 					</div>
 				</div>
-				<div class="row">
-					<div class="input-field col s12">
-						<button id="submitButton" class="btn waves-effect waves-light" type="submit">保存 <i class="mdi-content-send right"></i></button>
-						<button class="btn waves-effect waves-light grey goBack" type="button"> 返回 <i class="mdi-action-history right"></i></button>
-					</div>
+			</div>
+			<div class="row">
+				<div class="breadcrumbs-title"><span>权限信息</span></div>
+			</div>
+			<div class="row">
+				<div class="col s12">
+					<div id="menuTreeDiv" style="height:200px;overflow: hidden;"></div>
 				</div>
-			</form>
-		</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s12">
+					<button id="submitButton" class="btn waves-effect waves-light" type="submit">保存 <i class="mdi-content-send right"></i></button>
+					<button class="btn waves-effect waves-light grey goBack" type="button"> 返回 <i class="mdi-action-history right"></i></button>
+				</div>
+			</div>
+		</form>
 	</div>
 </div>
 <!--end container-->
@@ -61,6 +71,8 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <script type="text/javascript">
 $(document).ready(function() {
+	$("#menuTreeDiv").initZTree({'submitName':'resourceIds','ztree':{'url':getProjectName() + "/admin/resource/loadResourseZTree",'checkable':true}});
+	
 	$("#form").validate({
 		submitHandler : function(form) {
 			blockUI.block();

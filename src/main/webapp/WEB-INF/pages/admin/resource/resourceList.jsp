@@ -117,7 +117,7 @@ function initPageTable(queryResult) {
 	var contentor = $('#resourceTree');
 	var h = "";
 	var tree = queryResult.data;
-	var h='<div class="dd nestable cascade" style="max-width: 1200px;">'
+	var h='<div class="dd nestable" style="max-width: 1200px;">'
 		+'<ol class="dd-list">'
 		for (var i = 0; i < tree.length; i++) {
 			var node = tree[i];

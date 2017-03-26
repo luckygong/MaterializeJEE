@@ -1,6 +1,8 @@
 package com.materialize.jee.platform.base;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.core.annotation.AnnotationUtils;
@@ -99,4 +101,58 @@ public class BaseController {
 		return model;
 	}
 	
+	@SuppressWarnings("unchecked")
+	protected <ID,T> List<ZTreeNode<ID>> convertToZtreeList(List<T> datas, String idField, String pidField, 
+			String[] nameFields, String iconField, List<ID> selectIds){
+		List<ZTreeNode<ID>> result = new ArrayList<ZTreeNode<ID>>();
+		if(datas==null || datas.size()==0){
+			return result;
+		}
+		
+		Boolean pidIsObject = pidField.indexOf(".")>0;
+		String[] pidPath = pidField.split("\\.");
+		
+		for (T data : datas) {
+			ZTreeNode<ID> node = new ZTreeNode<ID>();
+			//id
+			ID id = (ID)ReflectionUtils.invokeGetterMethod(data,idField);
+			node.setId(id);
+			
+			//pid
+			Object temObj = data;
+			if(!pidIsObject){
+				node.setpId((ID)ReflectionUtils.invokeGetterMethod(data,pidField));
+			}else{
+				for(int i=0;i<pidPath.length;i++){
+					if(i==pidPath.length-1){
+						if(temObj!=null){
+							node.setpId((ID)ReflectionUtils.invokeGetterMethod(temObj,pidPath[i]));
+						}
+					}else{
+						temObj = ReflectionUtils.invokeGetterMethod(temObj,pidPath[i]);
+					}
+				}
+			}
+			
+			//name
+			String name = "";
+			for(String field:nameFields){
+				name+=" "+(ID)ReflectionUtils.invokeGetterMethod(data,field);
+			}
+			node.setName(name.length()==0?name:name.substring(1));
+			
+			//icon
+			if(!StringUtils.isEmpty(iconField)){
+				node.setIcon((String)ReflectionUtils.invokeGetterMethod(data,pidField));
+			}
+			
+			//checked
+			if(selectIds!=null && selectIds.size()>0){
+				node.setChecked(selectIds.contains(id));
+			}
+			
+			result.add(node);
+		}
+		return result;
+	}
 }

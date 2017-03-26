@@ -24,6 +24,7 @@ import com.materialize.jee.platform.authorization.domain.Resource;
 import com.materialize.jee.platform.authorization.service.ResourceService;
 import com.materialize.jee.platform.base.BaseController;
 import com.materialize.jee.platform.base.JsonResponseModel;
+import com.materialize.jee.platform.base.ZTreeNode;
 import com.materialize.jee.platform.base.page.Page;
 import com.materialize.jee.platform.base.page.Pagination;
 import com.materialize.jee.platform.utils.RequestUtils;
@@ -173,5 +174,16 @@ public class ResourceController extends BaseController{
 		params.put(fieldName, fieldValue);
 		params.put("excludeId", excludeId);
 		return resourceService.checkOnly(fieldName, fieldValue, excludeId);
+	}  
+	
+	@RequestMapping(value = "/loadResourseZTree") 
+	public @ResponseBody List<ZTreeNode<Long>> loadResourseZTree(HttpServletRequest request, 
+			HttpServletResponse response,@RequestParam Map<String, Object> parameterMap) {  
+		
+		List<Resource> resourses = resourceService.find(parameterMap);
+		
+		List<ZTreeNode<Long>> nodes = convertToZtreeList(resourses, "id", "parent.id", 
+				new String[]{"name"}, null, null);
+		return nodes;
 	}  
 }

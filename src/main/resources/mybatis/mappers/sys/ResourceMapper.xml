@@ -247,7 +247,7 @@
 		<where>
 			<include refid="search_fragement" />
 		</where>
-		ORDER BY <trim prefix=" " suffix=" " suffixOverrides=",">r.ID DESC,</trim>
+		ORDER BY r.ORDERS ASC
 	</select>
 	
 	<!-- Map拼接语句 -->

@@ -22,7 +22,8 @@
 	<link href="${pageContext.request.contextPath}/assets/js/plugins/dropify/css/dropify.min.css" rel="stylesheet" type="text/css" media="screen,projection"/>
 	<link href="${pageContext.request.contextPath}/assets/js/plugins/material-datetime-picker/css/date-time-picker.css" rel="stylesheet" type="text/css" media="screen,projection"/>
 	<link href="${pageContext.request.contextPath}/assets/css/my.css" rel="stylesheet" type="text/css" media="screen,projection"/>
-
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/js/plugins/zTree/css/metroStyle/metroStyle.css" type="text/css">
+	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/plugins/jquery-1.11.2.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/plugins/jquery-cookies/jquery.cookies.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/plugins/jquery.localize.min.js"></script>
@@ -41,6 +42,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/plugins/material-datetime-picker/js/moment.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/plugins/material-datetime-picker/js/lang/zh-cn.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/plugins/material-datetime-picker/js/date-time-picker.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/plugins/zTree/js/jquery.ztree.all.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/plugins.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/scripts/path.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/custom-script.js"></script>
@@ -51,6 +53,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/scripts/left-sidebar.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/scripts/page-plugin.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/scripts/select-dropdown.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/scripts/init-ztree.js"></script>
 </head>
 
 <body>

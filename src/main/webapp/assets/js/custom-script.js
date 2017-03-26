@@ -52,33 +52,6 @@
 		 }
 	 });
 	 
-	 $("body").delegate('.nestable.cascade input[type="checkbox"]','click',function(){
-		 var checked = $(this).is(":checked");
-		 //选择子树
-		 $(this).closest(".dd-item").find(".dd-list .dd-item").each(function(){
-			 var checkbox = $(this).find(".dd3-content input[type='checkbox']");
-			 checkbox.prop("checked",checked);
-		 });
-		 $(this).trigger("parentcheck");
-	 });
-	 
-	 $("body").delegate('.nestable.cascade input[type="checkbox"]','parentcheck',function(){
-		//选择父节点
-		 var parent = $(this).closest(".dd-list").closest(".dd-item").children(".dd3-content").find("input[type='checkbox']");
-		 var clength = $(this).closest(".dd-list").children(".dd-item").find("input[type='checkbox']").length;
-		 var cclength = $(this).closest(".dd-list").children(".dd-item").find("input[type='checkbox']:checked").length;
-		 if(clength == cclength){
-			 if(parent){
-				 parent.prop("checked",true);
-			 }
-		 }else{
-			 if(parent){
-				 parent.prop("checked",false);
-			 }
-		 }
-		 $(parent).trigger("parentcheck");
-	 });
-	 
 	 $("body").delegate(".action-more",'click', function(){
 		 if($(this).closest(".card-action").find(".action-more-div").hasClass("hide")){
 			 $(this).closest(".card-action").find(".action-more-div").removeClass("hide");
@@ -264,36 +237,4 @@ function getFirstSelectedCheckbox(checkboxName) {
     	Message.info({message:"未选择记录",time:3});
     }
     return checkbox;
-}
-
-//type: menu or method
-function checkAuth(URL, type, callback) {
-	var auth = false;
-	$.ajax({
-		url : getProjectName()+'/checkAuth',
-		data : {"url" : URL, "type" : type},
-		dataType : "json",
-		timeout : 3000,
-		async : false,
-		error : function(XMLHttpRequest, status, thrownError) {
-			if(status == "timeout"){
-				Message.danger({"message":"权限验证超时"});
-			}else{
-				Message.danger({"message":"权限验证出错"});
-			}
-		},
-		success : function(data) {
-			if(data.status==1){
-				if(callback){
-					callback(true);
-				}
-				auth = true;
-			}else{
-				if(callback){
-					callback(false);
-				}
-			}
-		}
-	});
-	return auth;
 }
