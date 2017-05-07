@@ -1,11 +1,4 @@
 ﻿$(function() {  
-	  $("body").delegate('.header-search-input','focus', function(){
-	      $(this).parent('div').addClass('header-search-wrapper-focus');
-	  });
-	  $("body").delegate('.header-search-input','.blur', function(){
-	      $(this).parent('div').removeClass('header-search-wrapper-focus');
-	  });  
-
 	  $("body").delegate('.task-card input:checkbox','change', function() {
 		  checkbox_check(this);
 	  });
@@ -60,6 +53,18 @@
 			 $(this).closest(".card-action").find(".action-more-div").addClass("hide");
 			 $(this).children("i").removeClass("rotate-180");
 		 }
+	 });
+	 
+	 $("body").delegate(".query-more",'click', function(){
+		 if($(this).closest(".card-action").find(".query-div").hasClass("hide")){
+			 $(this).closest(".card-action").find(".query-div").removeClass("hide");
+		 }else{
+			 $(this).closest(".card-action").find(".query-div").addClass("hide");
+		 }
+	 });
+	 
+	 $("body").delegate(".querySubmit",'click', function(){
+		 $(this).closest(".query-div").addClass("hide");
 	 });
 	 
 	 $("body").delegate(".btn-update-inline", "click" ,function(){

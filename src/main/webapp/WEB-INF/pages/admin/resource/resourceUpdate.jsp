@@ -11,8 +11,7 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 			<div class="col s12 m12 l12">
 				<h5 class="breadcrumbs-title">资源管理</h5>
 				<ol class="breadcrumbs">
-					<li><a
-						href="javascript:window.location.href='${pageContext.request.contextPath}/main';">首页</a></li>
+					<li class="active">首页</li>
 					<li class="active">系统管理</li>
 					<li class="active">资源管理</li>
 					<li class="active">修改资源</li>

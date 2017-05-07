@@ -11,8 +11,7 @@
 			<div class="col s12 m12 l12">
 				<h5 class="breadcrumbs-title">用户管理</h5>
 				<ol class="breadcrumbs">
-					<li><a
-						href="javascript:window.location.href='${pageContext.request.contextPath}/main';">首页</a></li>
+					<li class="active">首页</li>
 					<li class="active">系统管理</li>
 					<li class="active currentPage" data-init-page-url="admin/user/userList">用户管理</li>
 				</ol>
@@ -24,15 +23,20 @@
 <!--start container-->
 <div class="container">
 
-	<ul class="row collapsible collapsible-accordion" data-collapsible="accordion">
-		<li>
-      		<div id="query-header" class="collapsible-header cyan white-text">
-            	<i class="mdi-action-list"></i>查询条件
-         	</div>
-         	<div class="collapsible-body light-blue lighten-5">
-           		<div class="card-panel">
-					<div class="row">
-						<form id="pageQueryForm" class="col s12">
+	<div class="btn-card">
+		<div class="card row">
+           	<div class="card-action cyan white-text btn-group">
+               	<i class="title-icon mdi-action-list"></i>
+               	<button class="btn waves-effect waves-light  pink accent-2 action-more white-text btn-suit right" type="button">更多<i class="mdi-image-details"></i></button>
+                <button class="btn waves-effect waves-light  pink accent-2 white-text btn-suit right create" type="button">新增 <i class="mdi-content-add"></i></button>
+               	<button class="btn waves-effect waves-light  pink accent-2 white-text btn-suit right query-more" type="button"><i class="mdi-action-search"></i></button>
+	          	<div class="action-more-div white-text btn-group hide">
+	                <button class="btn-delete btn waves-effect waves-light  pink accent-2 white-text btn-suit right" data-url="admin/user/delete" type="button">删除 <i class="mdi-content-remove"></i></button>
+	                <button class="btn-update btn waves-effect waves-light  pink accent-2 white-text btn-suit right" type="button">修改 <i class="mdi-content-create"></i></button>
+	          	</div>
+	          	<div class="query-div hide">
+	               <div class="row">
+						<form id="pageQueryForm" class="col s12" style="padding-top: 15px;">
 							<div class="row">
 								<div class="input-field col s12 m4 l3">
 									<label for="username">用户名</label>
@@ -47,30 +51,16 @@
 									<input id="phone" name="phone" type="text" class="validate">
 								</div>
 								<div class="input-field col s12 m12 l3 btn-group">
-									<button class="btn btn-suit yellow darken-4 waves-effect waves-light right resetForm" type="button">
+									<button class="btn btn-suit yellow darken-4 white-text waves-effect waves-light right resetForm" type="button">
 										重置 <i class="mdi-av-replay right"></i>
 									</button>
-									<button class="btn btn-suit cyan waves-effect waves-light right querySubmit" type="button">
+									<button class="btn btn-suit pink accent-2 white-text waves-effect waves-light right querySubmit" type="button">
 										查询 <i class="mdi-content-send right"></i>
 									</button>
 								</div>
 							</div>
 						</form>
 					</div>
-				</div>
-         	</div>
-  		</li>
-  	</ul>
-	
-	<div class="btn-card">
-		<div class="card row">
-           	<div class="card-action cyan white-text btn-group">
-               	<i class="title-icon mdi-notification-event-note" style=""></i>查询结果
-               	<button class="btn-flat waves-effect waves-light  pink accent-2 action-more white-text btn-suit right" type="button"><i class="mdi-image-details"></i></button>
-                <button id="create" class="btn-flat waves-effect waves-light  pink accent-2 white-text btn-suit right" type="button">新增 <i class="mdi-content-add right"></i></button>
-	          	<div class="action-more-div cyan white-text btn-group hide">
-	                <button class="btn-delete btn-flat waves-effect waves-light  pink accent-2 white-text btn-suit right" data-url="admin/user/delete" type="button">删除 <i class="mdi-content-remove right"></i></button>
-	                <button class="btn-update btn-flat waves-effect waves-light  pink accent-2 white-text btn-suit right" type="button">修改 <i class="mdi-content-create right"></i></button>
 	          	</div>
           	</div>
             <div id="page">
@@ -103,7 +93,7 @@ $(document).ready(function() {
 	sexMap = initCategoryMap({"category":"SEX"});
 	userTypeMap = initCategoryMap({"category":"SYS_USER_TYPE"});
 	
-	$("#create").click(function(){
+	$(".create").click(function(){
 		loadHTMLToContent('content', 'admin/user/userCreate', 'GET');
 	});
 	

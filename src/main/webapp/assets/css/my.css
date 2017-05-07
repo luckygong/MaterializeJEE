@@ -11,6 +11,18 @@
 	margin-top:1px;
 }
 
+.query-div .input-field label{
+	color:#FFFFFF;
+}
+
+.query-div .input-field input,.query-div .input-field select{
+	border-bottom: 1px solid #FFFFFF;
+}
+
+.query-div .input-field select option{
+	color: black;
+}
+
 .btn-suit{
 	padding-right: 1rem;
   	padding-left: 1rem;
@@ -26,9 +38,10 @@
 	overflow-y: auto;
 }
 
-.btn-group>button, .btn-group>a, .btn-group>.btn{
+.btn-group>button, .btn-group>a, .btn-group>.btn, .btn-group>.btn-flat{
 	margin-right: 5px !important;
-	margin-top: 5px;
+	margin-bottom: 5px;
+	border-radius: 20px;
 }
 
 .rotate-180{

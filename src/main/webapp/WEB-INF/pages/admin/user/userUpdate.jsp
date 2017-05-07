@@ -11,8 +11,7 @@
 			<div class="col s12 m12 l12">
 				<h5 class="breadcrumbs-title">用户管理</h5>
 				<ol class="breadcrumbs">
-					<li><a
-						href="javascript:window.location.href='${pageContext.request.contextPath}/main';">首页</a></li>
+					<li class="active">首页</li>
 					<li class="active">系统管理</li>
 					<li class="active">用户管理</li>
 					<li class="active">修改用户</li>
