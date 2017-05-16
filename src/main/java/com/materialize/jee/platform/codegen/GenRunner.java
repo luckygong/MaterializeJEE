@@ -7,14 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.commons.httpclient.util.DateUtil;
-
 import com.materialize.jee.platform.codegen.model.Configuration;
 import com.materialize.jee.platform.codegen.model.Table;
 import com.materialize.jee.platform.codegen.tools.DBToObject;
 import com.materialize.jee.platform.codegen.tools.GenConstants;
 import com.materialize.jee.platform.codegen.tools.GenerateFile;
 import com.materialize.jee.platform.codegen.tools.NameFormatUtils;
+import com.materialize.jee.platform.utils.DateUtils;
 import com.materialize.jee.platform.utils.PropertiesUtils;
 
 public class GenRunner {
@@ -33,7 +32,7 @@ public class GenRunner {
 			model.put(GenConstants.OVER_WRITE, conf.getOverwriteExistsFiles());
 			model.put(GenConstants.CHAR_SET, conf.getFileEncoding());
 			model.put(GenConstants.AUTHER, System.getProperty("user.name"));
-			model.put(GenConstants.TIME, DateUtil.formatDate(new Date(), "yyyy-MM-dd hh:mm:ss"));
+			model.put(GenConstants.TIME, DateUtils.formatDate(new Date(), "yyyy-MM-dd hh:mm:ss"));
 			model.put(GenConstants.TEMPLATE_BASE_PATH, conf.getTemplatePath());
 			model.put(GenConstants.TABLE_NAME, tableName);
 			model.put(GenConstants.JAVA_MODEL_NAME, models[i]);

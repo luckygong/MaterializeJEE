@@ -258,14 +258,15 @@ var Alert = {
                 					}
                 				}else{
                 					var info = data.info;
-                					swal("操作失败！", info, "error"); 
+                					setTimeout(function(){swal("操作成功！", info, "error");}, 400); 
                 				}
                 			},
                 			error : function(XMLHttpRequest, status, thrownError) {
             					if(status == "timeout"){
-            						swal("请求超时", "请求超时", "error"); 
+            						setTimeout(function(){swal("请求超时！", "请求超时", "error");}, 400);
+            					}else{
+            						setTimeout(function(){swal("操作失败！", "操作失败！", "error");}, 400);
             					}
-            					swal("操作失败！", "操作失败！", "error"); 
             				}
                 		});
                 		return true;
